@@ -1,0 +1,10 @@
+[earth]
+"Earth"
+image=/home/julien/.xplanet/images/ground.jpg
+night_map=/home/julien/.xplanet/images/night.jpg
+
+# true if the cloud map is from the University of Wisconsin Space Science and Engineering Center 
+cloud_ssec=false
+cloud_map=/home/julien/.xplanet/images/clouds.jpg
+cloud_gamma=0.4
+cloud_threshold=256

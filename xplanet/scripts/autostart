@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+set -x
+pushd ~/.xplanet/scripts
+./desk &>> desk.$(date +%Y.%m.%d-%H-%M-%S).log &
+popd

@@ -1,0 +1,37 @@
+#!/bin/bash
+
+PATH=$PATH:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+IMAGESDIR=/home/julien/.xplanet/images
+IMAGEFILE=$IMAGESDIR/global.jpg
+
+# Get latest remote checksum
+ORIGINSHA=$(wget https://raw.githubusercontent.com/apollo-ng/cloudmap/master/global.sha256 --no-cache -q -O - | awk {'print $1;'})
+
+# Generate local checksum
+if [ -e $IMAGEFILE ];
+then
+    LOCALSHA=$(sha256sum $IMAGEFILE | awk {'print $1;'})
+fi
+
+# Check if we're behind origin
+if [ "${ORIGINSHA}" != "${LOCALSHA}" ];
+then
+
+    # Download raw global.jpg from master
+    wget https://raw.githubusercontent.com/apollo-ng/cloudmap/master/global.jpg?${ORIGINSHA} --no-cache -q -O $IMAGEFILE
+
+    # Generate checksum of downloaded file
+    NEWSHA=$(sha256sum $IMAGEFILE | awk {'print $1;'})
+
+    # Check if download's chksum corresponds to origin
+    if [ "$NEWSHA" == "$ORIGINSHA" ];
+    then
+	echo "ok - good";
+    else
+	echo "sha mismatch"
+	exit 1
+    fi
+else
+	echo "apollog-ng: cloud image is up-to-date"
+fi
+exit 0

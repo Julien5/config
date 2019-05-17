@@ -1,0 +1,54 @@
+#!/bin/bash
+
+set -e
+set -x
+
+# wget -N http://www.ssec.wisc.edu/data/comp/latest_moll.gif 
+# wget -N https://raw.githubusercontent.com/apollo-ng/cloudmap/master/global.jpg
+
+pushd ~/.xplanet/images
+find ~/.xplanet/ -mmin +60 -name "clouds.jpg" -delete
+if [ ! -f "clouds.jpg" ]; then
+    # this will run one time per hour
+    /home/julien/.xplanet/scripts/apollo-ng
+    cp -v global.jpg clouds.jpg
+    #convert -verbose -resize 1920x1080 global.jpg clouds.jpg
+fi
+popd
+
+# do once.
+if [ ! -d "static" ]; then
+    mkdir static
+    pushd static
+    wget -O 00_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/55000/55167/earth_lights_lrg.jpg 
+    wget -O 01_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73580/world.topo.bathy.200401.3x5400x2700.jpg 
+    wget -O 02_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73605/world.topo.bathy.200402.3x5400x2700.jpg 
+    wget -O 03_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73630/world.topo.bathy.200403.3x5400x2700.jpg 
+    wget -O 04_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73655/world.topo.bathy.200404.3x5400x2700.jpg 
+    wget -O 05_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73701/world.topo.bathy.200405.3x5400x2700.jpg 
+    wget -O 06_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73726/world.topo.bathy.200406.3x5400x2700.jpg 
+    wget -O 07_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73751/world.topo.bathy.200407.3x5400x2700.jpg 
+    wget -O 08_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73776/world.topo.bathy.200408.3x5400x2700.jpg 
+    wget -O 09_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73801/world.topo.bathy.200409.3x5400x2700.jpg 
+    wget -O 10_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73826/world.topo.bathy.200410.3x5400x2700.jpg 
+    wget -O 11_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73884/world.topo.bathy.200411.3x5400x2700.jpg 
+    wget -O 12_full.jpg http://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73909/world.topo.bathy.200412.3x5400x2700.jpg 		
+    
+    convert -resize 2048x1024 00_full.jpg 00_2048.jpg
+    convert -resize 2048x1024 01_full.jpg 01_2048.jpg
+    convert -resize 2048x1024 02_full.jpg 02_2048.jpg
+    convert -resize 2048x1024 03_full.jpg 03_2048.jpg
+    convert -resize 2048x1024 04_full.jpg 04_2048.jpg
+    convert -resize 2048x1024 05_full.jpg 05_2048.jpg
+    convert -resize 2048x1024 06_full.jpg 06_2048.jpg
+    convert -resize 2048x1024 07_full.jpg 07_2048.jpg
+    convert -resize 2048x1024 08_full.jpg 08_2048.jpg
+    convert -resize 2048x1024 09_full.jpg 09_2048.jpg
+    convert -resize 2048x1024 10_full.jpg 10_2048.jpg
+    convert -resize 2048x1024 11_full.jpg 11_2048.jpg
+    convert -resize 2048x1024 12_full.jpg 12_2048.jpg
+    popd
+fi
+
+cp -v static/$(date +%m)_2048.jpg ground.jpg
+cp -v static/00_full.jpg night.jpg

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+pushd /home/julien/.xplanet/images
+while true; do
+    /home/julien/.xplanet/scripts/dlclouds    
+    xplanet -output desk.jpg \
+	    -geometry 1920x1080 \
+	    -longitude 11 -latitude 28 \
+	    -radius 35 -range 6 \
+	    -num_times 1 \
+	    -fontsize 15 \
+	    -labelpos -15+45\
+	    -label \
+	    -label_string "clouds $(stat clouds.jpg | grep "Change" | cut -b9-24)"
+    cp desk.jpg desk.$(date +%Y.%m.%d-%H-%M-%S).jpg
+    echo "sleep..."
+    sleep 300;
+done
+popd
