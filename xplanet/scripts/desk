@@ -12,7 +12,8 @@ while true; do
 	    -labelpos -15+45\
 	    -label \
 	    -label_string "clouds $(stat clouds.jpg | grep "Change" | cut -b9-24)"
-    cp desk.jpg desk.$(date +%Y.%m.%d-%H-%M-%S).jpg
+    mkdir -p archive
+    cp -v desk.jpg archive/desk.$(date +%Y.%m.%d-%H-%M-%S).jpg
     echo "sleep..."
     sleep 300;
 done
