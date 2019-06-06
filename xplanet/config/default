@@ -2,6 +2,7 @@
 "Earth"
 image=/home/julien/.xplanet/images/ground.jpg
 night_map=/home/julien/.xplanet/images/night.jpg
+grid=true
 
 # true if the cloud map is from the University of Wisconsin Space Science and Engineering Center 
 cloud_ssec=false

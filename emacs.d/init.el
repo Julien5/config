@@ -7,6 +7,7 @@
 (package-initialize)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (load "arduino-mode") ;; best not to include the ending “.el” or “.elc”
+(load "qmake") ;; best not to include the ending “.el” or “.elc”
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
 (define-key c++-mode-map [f5] #'compile)
