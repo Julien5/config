@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+pushd ~/config/config/xinit/
+
+if [ -s xmodmap ]; then
+    xmodmap xmodmap
+fi
+
+popd
