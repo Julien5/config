@@ -6,12 +6,15 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
+(add-to-list 'load-path "~/.emacs.d/lisp/keyfreq")
 (add-to-list 'load-path "/usr/share/emacs25/site-lisp/global")
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(load "arduino-mode") ;; best not to include the ending “.el” or “.elc”
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
+
+(require 'cc-mode)
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (define-key c++-mode-map [f5] #'compile)
 
-(add-to-list 'load-path "~/.emacs.d/lisp/keyfreq")
 (require 'keyfreq)
 (keyfreq-mode 1)
 (keyfreq-autosave-mode 1)
@@ -52,3 +55,21 @@
 ;; reload files if changed on disk
 (global-auto-revert-mode t)
 
+(require 'guess-style)
+(autoload 'guess-style-set-variable "guess-style" nil t)
+(autoload 'guess-style-guess-variable "guess-style")
+(autoload 'guess-style-guess-all "guess-style" nil t)
+
+(add-hook 'python-mode-hook 'guess-style-guess-tabs-mode)
+(add-hook 'python-mode-hook (lambda ()
+                                    (guess-style-guess-tab-width)))
+
+
+(setq ggtags-executable-directory "/usr/bin")
+(require 'gtags)
+(global-set-key "\M-t" 'gtags-find-tag)
+(global-set-key "\M-r" 'gtags-find-rtag)
+(global-set-key "\M-s" 'gtags-find-symbol)
+(global-set-key "\C-t" 'gtags-pop-stack)
+
+(message "hi")
