@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+mkdir -p ~/tags
+rm -vf ~/tags/TAGS
+for D in "$@"
+do
+	touch $D/.projectile
+    ctags.exe -a -f ~/tags/TAGS -Re $(realpath $D); 
+	ls -lh ~/tags/TAGS
+done
+
+pushd $1
+emacs
+popd
+
+for D in "$@"
+do
+	rm -vf $D/.projectile
+done

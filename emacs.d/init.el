@@ -54,7 +54,7 @@ There are two things you can do about this warning:
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(custom-enabled-themes (quote (wombat)))
- '(package-selected-packages (quote (projectile company)))
+ '(package-selected-packages (quote (ag projectile company)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -97,12 +97,16 @@ There are two things you can do about this warning:
 (company-tng-configure-default)
 (define-key company-mode-map [remap indent-for-tab-command] 'company-indent-for-tab-command)
 
+;; (setq tags-file-name nil)
+(setq tags-table-list '("~/tags/TAGS"))
+;; (setq tags-file-name "c:/home/jbourgeois/tags/TAGS")
+
+
 ;; projectile
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-;; fix
-;; (require 'subr-x)
+
 
 ;; tags
 (defun create-tags (dir-name)
