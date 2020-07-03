@@ -36,13 +36,14 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(custom-enabled-themes (quote (wombat))))
+ '(custom-enabled-themes (quote (wombat)))
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Courier 10 Pitch" :foundry "bitstream" :slant normal :weight normal :height 113 :width normal)))))
+ '(default ((t (:family "Courier New" :foundry "outline" :slant normal :weight normal :height 120 :width normal :antialias true)))))
 
 ;; swith header/cpp
 (add-hook 'c-mode-common-hook
@@ -68,9 +69,4 @@
 
 
 (message "hi")
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Courier New" :foundry "outline" :slant normal :weight normal :height 98 :width normal :antialias true)))))
+
