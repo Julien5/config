@@ -1,5 +1,25 @@
 ;; Tell emacs where is your personal elisp lib dir
 
+;;{{{ Set up package and use-package
+
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+
+;; Bootstrap 'use-package'
+(eval-after-load 'gnutls
+  '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile
+  (require 'use-package))
+(require 'bind-key)
+(setq use-package-always-ensure t)
+
+;;}}}
+
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -54,7 +74,7 @@ There are two things you can do about this warning:
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(custom-enabled-themes (quote (wombat)))
- '(package-selected-packages (quote (ag projectile company)))
+ '(package-selected-packages (quote (company-fuzzy ag projectile company)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -78,7 +98,6 @@ There are two things you can do about this warning:
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 (put 'scroll-left 'disabled nil)
 
-;; 
 (setq compilation-scroll-output t)
 
 (setq-default tab-width 4)
@@ -86,16 +105,71 @@ There are two things you can do about this warning:
 (global-auto-revert-mode t)
 
 ;; company
-(add-hook 'after-init-hook 'global-company-mode)
-; No delay in showing suggestions.
-(setq company-idle-delay 0)
-; Show suggestions after entering one character.
-(setq company-minimum-prefix-length 1)
-(setq company-selection-wrap-around t)
-; Use tab key to cycle through suggestions.
-; ('tng' means 'tab and go')
-(company-tng-configure-default)
-(define-key company-mode-map [remap indent-for-tab-command] 'company-indent-for-tab-command)
+(use-package company
+  :defer t
+  :init
+  (setq company-frontends '(company-pseudo-tooltip-frontend
+                            company-echo-metadata-frontend))
+  (setq company-require-match nil)
+  (setq company-tooltip-align-annotations t)
+  (setq company-dabbrev-downcase nil)
+  (setq company-eclim-auto-save nil)
+  :config
+  ;; TOPIC: How add company-dabbrev to the Company completion popup?
+  ;; URL: https://emacs.stackexchange.com/questions/15246/how-add-company-dabbrev-to-the-company-completion-popup
+  (add-to-list 'company-backends 'company-dabbrev-code)
+  (add-to-list 'company-backends 'company-gtags)
+  (add-to-list 'company-backends 'company-etags)
+  (add-to-list 'company-backends 'company-keywords)
+
+  ;; TOPIC: Switching from AC
+  ;; URL: https://github.com/company-mode/company-mode/wiki/Switching-from-AC
+  (defun jcs-company-ac-setup ()
+    "Sets up `company-mode' to behave similarly to `auto-complete-mode'."
+    (setq company-minimum-prefix-length 2)
+    (setq company-idle-delay 0.1)
+
+    (setq company-selection-wrap-around 'on)
+
+    (custom-set-faces
+     ;;--------------------------------------------------------------------
+     ;; Preview
+     '(company-preview
+       ((t (:foreground "dark gray" :underline t))))
+     '(company-preview-common
+       ((t (:inherit company-preview))))
+     ;;--------------------------------------------------------------------
+     ;; Base Selection
+     '(company-tooltip
+       ((t (:background "light gray" :foreground "black"))))
+     '(company-tooltip-selection
+       ((t (:background "steel blue" :foreground "white"))))
+     ;;--------------------------------------------------------------------
+     ;; Keyword Selection
+     '(company-tooltip-common
+       ((((type x)) (:inherit company-tooltip :weight bold))
+        (t (:background "light gray" :foreground "#C00000"))))
+     '(company-tooltip-common-selection
+       ((((type x)) (:inherit company-tooltip-selection :weight bold))
+        (t (:background "steel blue" :foreground "#C00000"))))
+     ;;--------------------------------------------------------------------
+     ;; Scroll Bar
+     '(company-scrollbar-fg
+       ((t (:background "black"))))
+     '(company-scrollbar-bg
+       ((t (:background "dark gray"))))))
+
+  (jcs-company-ac-setup)
+
+  (defun jcs--company-complete-selection--advice-around (fn)
+    "Advice execute around `company-complete-selection' command."
+    (let ((company-dabbrev-downcase t))
+      (call-interactively fn)))
+  (advice-add 'company-complete-selection :around #'jcs--company-complete-selection--advice-around)
+  (global-company-mode t))
+
+(global-company-fuzzy-mode 1)
+
 
 ;; (setq tags-file-name nil)
 (setq tags-table-list '("~/.op/TAGS"))
@@ -112,7 +186,8 @@ There are two things you can do about this warning:
   (let ((current-prefix-arg '(1)))
     (call-interactively 'projectile-ag)))
 (global-set-key (kbd "M-#") 'my-ag-regexp) 
-
+(global-set-key (kbd "C-k") 'projectile-find-file-in-known-projects)
+(global-set-key (kbd "C-j") 'projectile-find-other-file)
 
 (message "hi")
 

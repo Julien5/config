@@ -41,6 +41,8 @@ do
 	touch $N/.projectile
 	echo -n "$N" " " >> $OP/projectiles
     ctags.exe -a -f $OP/TAGS -Re $N 
+	# TODO instruct ag to ignore these bak files.
+	find $N -name "*~"  -o -name "*~*TMP*" -o -name "#*" -delete
 	ls -lh $OP/TAGS
 done
 
