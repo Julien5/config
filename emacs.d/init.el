@@ -9,15 +9,22 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/keyfreq")
 (add-to-list 'load-path "/usr/share/emacs25/site-lisp/global")
 (load "arduino-mode") ;; best not to include the ending “.el” or “.elc”
+(load "csharp-mode") 
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
 
 (require 'cc-mode)
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (define-key c++-mode-map [f5] #'compile)
 
+(add-to-list 'load-path "~/.emacs.d/lisp/keyfreq")
 (require 'keyfreq)
 (keyfreq-mode 1)
 (keyfreq-autosave-mode 1)
+
+(add-to-list 'load-path "~/.emacs.d/lisp/expand-region")
+(require 'expand-region)
+(global-set-key (kbd "C-+") 'er/expand-region)
 
 ;; replace meta-/ with C-a
 (global-set-key (kbd "C-a") 'dabbrev-expand) 
@@ -52,24 +59,18 @@
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 (put 'scroll-left 'disabled nil)
 
+;; 
+(setq compilation-scroll-output t)
+
+(setq-default tab-width 4)
 ;; reload files if changed on disk
 (global-auto-revert-mode t)
 
-(require 'guess-style)
-(autoload 'guess-style-set-variable "guess-style" nil t)
-(autoload 'guess-style-guess-variable "guess-style")
-(autoload 'guess-style-guess-all "guess-style" nil t)
-
-(add-hook 'python-mode-hook 'guess-style-guess-tabs-mode)
-(add-hook 'python-mode-hook (lambda ()
-                                    (guess-style-guess-tab-width)))
-
-
-(setq ggtags-executable-directory "/usr/bin")
-(require 'gtags)
-(global-set-key "\M-t" 'gtags-find-tag)
-(global-set-key "\M-r" 'gtags-find-rtag)
-(global-set-key "\M-s" 'gtags-find-symbol)
-(global-set-key "\C-t" 'gtags-pop-stack)
 
 (message "hi")
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Courier New" :foundry "outline" :slant normal :weight normal :height 98 :width normal :antialias true)))))
