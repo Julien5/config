@@ -180,27 +180,3 @@ There are two things you can do about this warning:
 
 (message "hi")
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(custom-enabled-themes (quote (wombat)))
- '(package-selected-packages (quote (company-fuzzy ag projectile company)))
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Courier New" :slant normal :weight normal :height 120 :width normal :antialias true :foundry "outline"))))
- '(company-preview ((t (:foreground "dark gray" :underline t))))
- '(company-preview-common ((t (:inherit company-preview))))
- '(company-scrollbar-bg ((t (:background "dark gray"))))
- '(company-scrollbar-fg ((t (:background "black"))))
- '(company-tooltip ((t (:background "light gray" :foreground "black"))))
- '(company-tooltip-common ((((type x)) (:inherit company-tooltip :weight bold)) (t (:background "light gray" :foreground "#C00000"))))
- '(company-tooltip-common-selection ((((type x)) (:inherit company-tooltip-selection :weight bold)) (t (:background "steel blue" :foreground "#C00000"))))
- '(company-tooltip-selection ((t (:background "steel blue" :foreground "white")))))
