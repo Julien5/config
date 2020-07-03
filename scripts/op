@@ -59,6 +59,7 @@ do
 done
 
 pushd $1
+export OSTYPE
 emacs
 popd
 
