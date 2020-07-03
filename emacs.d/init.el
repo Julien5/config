@@ -101,6 +101,18 @@ There are two things you can do about this warning:
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;; fix
+;; (require 'subr-x)
+
+;; tags
+(defun create-tags (dir-name)
+    "Create tags file."
+    (interactive "DDirectory: ")
+    (shell-command
+     (format "ctags -f TAGS -e -R %s" (directory-file-name dir-name)))
+  )
+ 
+;; (shell-command (format "%s -f TAGS -e -R %s" path-to-ctags (directory-file-name dir-name)))
 
 (message "hi")
 
