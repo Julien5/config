@@ -4,6 +4,23 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
+
+(require 'package)
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (proto (if no-ssl "http" "https")))
+  (when no-ssl (warn "\
+Your version of Emacs does not support SSL connections,
+which is unsafe because it allows man-in-the-middle attacks.
+There are two things you can do about this warning:
+1. Install an Emacs version that does support SSL and be safe.
+2. Remove this warning from your init file so you won't see it again."))
+  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+  ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+  ;; and `package-pinned-packages`. Most users will not need or want to do this.
+  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+  )
+
 (package-initialize)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/lisp/keyfreq")
@@ -37,6 +54,7 @@
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(custom-enabled-themes (quote (wombat)))
+ '(package-selected-packages (quote (company)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -66,6 +84,18 @@
 (setq-default tab-width 4)
 ;; reload files if changed on disk
 (global-auto-revert-mode t)
+
+;; company
+(add-hook 'after-init-hook 'global-company-mode)
+; No delay in showing suggestions.
+(setq company-idle-delay 0)
+; Show suggestions after entering one character.
+(setq company-minimum-prefix-length 1)
+(setq company-selection-wrap-around t)
+; Use tab key to cycle through suggestions.
+; ('tng' means 'tab and go')
+(company-tng-configure-default)
+(define-key company-mode-map [remap indent-for-tab-command] 'company-indent-for-tab-command)
 
 
 (message "hi")
