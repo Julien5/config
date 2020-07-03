@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
-mkdir -p ~/tags
-rm -vf ~/tags/TAGS
+OP="$HOME/.op"
+echo $OP
+
+rm -Rvf "$OP"
+rm -vf $HOME/.emacs.d/projectile*
+
+mkdir -p "$OP"
 for D in "$@"
 do
 	touch $D/.projectile
-    ctags.exe -a -f ~/tags/TAGS -Re $(realpath $D); 
-	ls -lh ~/tags/TAGS
+	echo -n "$D" " " >> $OP/projectiles
+    ctags.exe -a -f $OP/TAGS -Re $(realpath $D); 
+	ls -lh $OP/TAGS
 done
 
 pushd $1

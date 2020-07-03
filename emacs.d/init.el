@@ -98,15 +98,16 @@ There are two things you can do about this warning:
 (define-key company-mode-map [remap indent-for-tab-command] 'company-indent-for-tab-command)
 
 ;; (setq tags-file-name nil)
-(setq tags-table-list '("~/tags/TAGS"))
-;; (setq tags-file-name "c:/home/jbourgeois/tags/TAGS")
+(setq tags-table-list '("~/.op/TAGS"))
 
 
 ;; projectile
+(setq projectile-project-search-path (split-string (shell-command-to-string "cat ~/.op/projectiles")))
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-
+;; (setq projectile-project-search-path '("~/work/projects/embedded/feedbacksensor/" "~/svn/trunk/TS_main/mdal"))
+;; (setq projectile-known-projects-file (split-string (shell-command-to-string "cat ~/.op/projectiles")))
 
 ;; tags
 (defun create-tags (dir-name)
@@ -119,4 +120,10 @@ There are two things you can do about this warning:
 ;; (shell-command (format "%s -f TAGS -e -R %s" path-to-ctags (directory-file-name dir-name)))
 
 (message "hi")
+(setq my-foo (shell-command-to-string "/bin/echo hello hi"))
+(setq my-foos (split-string (shell-command-to-string "cat ~/.op/projectiles")))
+;;(setq my-foos (split-string "a b"))
+;; (setq my-foos '("a" "b"))
+(message "%s" my-foos)
+
 
