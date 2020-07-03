@@ -100,30 +100,19 @@ There are two things you can do about this warning:
 ;; (setq tags-file-name nil)
 (setq tags-table-list '("~/.op/TAGS"))
 
-
 ;; projectile
 (setq projectile-project-search-path (split-string (shell-command-to-string "cat ~/.op/projectiles")))
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-;; (setq projectile-project-search-path '("~/work/projects/embedded/feedbacksensor/" "~/svn/trunk/TS_main/mdal"))
-;; (setq projectile-known-projects-file (split-string (shell-command-to-string "cat ~/.op/projectiles")))
+(global-set-key (kbd "M-?") 'projectile-ag) 
+(defun my-ag-regexp ()
+  "ag-regexp."
+  (interactive)
+  (let ((current-prefix-arg '(1)))
+    (call-interactively 'projectile-ag)))
+(global-set-key (kbd "M-#") 'my-ag-regexp) 
 
-;; tags
-(defun create-tags (dir-name)
-    "Create tags file."
-    (interactive "DDirectory: ")
-    (shell-command
-     (format "ctags -f TAGS -e -R %s" (directory-file-name dir-name)))
-  )
- 
-;; (shell-command (format "%s -f TAGS -e -R %s" path-to-ctags (directory-file-name dir-name)))
 
 (message "hi")
-(setq my-foo (shell-command-to-string "/bin/echo hello hi"))
-(setq my-foos (split-string (shell-command-to-string "cat ~/.op/projectiles")))
-;;(setq my-foos (split-string "a b"))
-;; (setq my-foos '("a" "b"))
-(message "%s" my-foos)
-
 

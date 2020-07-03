@@ -1,5 +1,33 @@
 #!/usr/bin/env bash
 
+set -e
+set -x
+
+function system()
+{
+    if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        echo "linux";
+    else
+        if [[ "$OSTYPE" == "msys" ]]; then
+            echo "msys";
+        else
+            echo "unknown";
+        fi;
+    fi
+}
+
+function winify() {
+	if [[ "$(system)" = "msys"  ]]; then
+		echo $1 | sed 's|^/\([a-z,A-Z]\)/|\1:/|';
+	else
+		echo $1;
+	fi
+}
+
+function normalize() {
+	echo $(winify $(realpath $1))
+}
+  
 OP="$HOME/.op"
 echo $OP
 
@@ -9,9 +37,10 @@ rm -vf $HOME/.emacs.d/projectile*
 mkdir -p "$OP"
 for D in "$@"
 do
-	touch $D/.projectile
-	echo -n "$D" " " >> $OP/projectiles
-    ctags.exe -a -f $OP/TAGS -Re $(realpath $D); 
+	N=$(normalize $D)
+	touch $N/.projectile
+	echo -n "$N" " " >> $OP/projectiles
+    ctags.exe -a -f $OP/TAGS -Re $N 
 	ls -lh $OP/TAGS
 done
 
