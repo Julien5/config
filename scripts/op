@@ -36,10 +36,11 @@ rm -vf $HOME/.emacs.d/projectile*
 
 mkdir -p "$OP"
 
-for stddir in $(find $(dirname $(which gcc))/.. -name "include" -type d)
-do
-	ctags.exe -a -f $OP/TAGS -Re $(normalize $stddir)
-done
+# not good:
+# for stddir in $(find $(dirname $(which gcc))/.. -name "include" -type d)
+# do
+# 	echo ctags.exe -a -f $OP/TAGS -Re $(normalize $stddir)
+# done
 
 for D in "$@"
 do
