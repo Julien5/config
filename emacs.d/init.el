@@ -121,15 +121,16 @@ There are two things you can do about this warning:
   (add-to-list 'company-backends 'company-gtags)
   (add-to-list 'company-backends 'company-etags)
   (add-to-list 'company-backends 'company-keywords)
+ 
+  (setq company-minimum-prefix-length 2)
+  (setq company-idle-delay 0.0)
+  (setq company-selection-wrap-around 'on)
+  (company-tng-configure-default)
 
   ;; TOPIC: Switching from AC
   ;; URL: https://github.com/company-mode/company-mode/wiki/Switching-from-AC
   (defun jcs-company-ac-setup ()
     "Sets up `company-mode' to behave similarly to `auto-complete-mode'."
-    (setq company-minimum-prefix-length 2)
-    (setq company-idle-delay 0.1)
-
-    (setq company-selection-wrap-around 'on)
 
     (custom-set-faces
      ;;--------------------------------------------------------------------
@@ -173,6 +174,7 @@ There are two things you can do about this warning:
 
 ;; (setq tags-file-name nil)
 (setq tags-table-list '("~/.op/TAGS"))
+(setq large-file-warning-threshold 100000000)
 
 ;; projectile
 (setq projectile-project-search-path (split-string (shell-command-to-string "cat ~/.op/projectiles")))

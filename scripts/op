@@ -35,11 +35,18 @@ rm -Rvf "$OP"
 rm -vf $HOME/.emacs.d/projectile*
 
 mkdir -p "$OP"
+
+for stddir in $(find $(dirname $(which gcc))/.. -name "include" -type d)
+do
+	ctags.exe -a -f $OP/TAGS -Re $(normalize $stddir)
+done
+
 for D in "$@"
 do
 	N=$(normalize $D)
 	touch $N/.projectile
 	echo -n "$N" " " >> $OP/projectiles
+	# append
     ctags.exe -a -f $OP/TAGS -Re $N 
 	# TODO instruct ag to ignore these bak files.
 	find $N -name "*~"  -o -name "*~*TMP*" -o -name "#*" -delete
