@@ -48,7 +48,11 @@ do
 	touch $N/.projectile
 	echo -n "$N" " " >> $OP/projectiles
 	# append
-    ctags.exe -a -f $OP/TAGS -Re $N 
+	if [[ "$(system)" = "msys"  ]]; then
+		ctags -a -f $OP/TAGS -Re $N 
+	else
+		ctags-exuberant -a -f $OP/TAGS -Re $N 
+	fi
 	# TODO instruct ag to ignore these bak files.
 	find $N -name "*~"  -o -name "*~*TMP*" -o -name "#*" -delete
 	ls -lh $OP/TAGS
