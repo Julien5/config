@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-pushd ~/config/config/xinit/
-
-if [ -s xmodmap ]; then
+pwd
+echo $BASH_SOURCE
+cd $(dirname $(realpath ~/.xinitrc))
+if [[ -f xmodmap ]]; then
     xmodmap xmodmap
 fi
-
-popd

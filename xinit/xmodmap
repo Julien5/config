@@ -1,1 +1,33 @@
-keycode  21 = dead_acute dead_grave dead_acute dead_grave slash dead_ogonek dead_cedilla
+keycode 133 = Mode_switch
+keycode 135 = Mode_switch
+
+keycode  24 = q Q exclam 
+keycode  25 = w W quotedbl
+keycode  26 = e E less
+keycode  27 = r R greater
+keycode  28 = t T percent
+keycode  29 = z Z ampersand 
+keycode  30 = u U equal 
+keycode  31 = i I bar 
+keycode  32 = o O period 
+keycode  33 = p P parenleft 
+keycode  34 = udiaeresis Udiaeresis parenright 
+
+keycode  38 = a A plus 
+keycode  39 = s S dollar 
+keycode  40 = d D bracketleft
+keycode  41 = f F bracketright 
+keycode  42 = g G minus 
+keycode  43 = h H numbersign 
+keycode  44 = j J backslash 
+keycode  45 = k K slash backslash backslash ampersand kra ampersand k K
+keycode  46 = l L underscore 
+keycode  47 = odiaeresis Odiaeresis braceleft 
+keycode  48 = adiaeresis Adiaeresis braceright 
+keycode  52 = y Y 0
+keycode  53 = x X 1
+keycode  54 = c C 6
+keycode  55 = v V 3
+keycode  56 = b B 2
+keycode  57 = n N 8
+keycode  58 = m M 4
