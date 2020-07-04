@@ -91,6 +91,9 @@ There are two things you can do about this warning:
 ;; reload files if changed on disk
 (global-auto-revert-mode t)
 
+;; insert matching paren -> ()
+(electric-pair-mode 1)
+
 ;; company
 (use-package company
   :defer t
