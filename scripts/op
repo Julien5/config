@@ -42,11 +42,15 @@ mkdir -p "$OP"
 # 	echo ctags.exe -a -f $OP/TAGS -Re $(normalize $stddir)
 # done
 
+# bug on linux if a directory has no subdir containing the source files.
+# => setting projectile-bookmarks.eld fixes it.
+echo -n "(" > $HOME/.emacs.d/projectile-bookmarks.eld
 for D in "$@"
 do
 	N=$(normalize $D)
-	touch $N/.projectile
-	echo -n "$N" " " >> $OP/projectiles
+ 	touch $N/.projectile
+ 	echo -n " \"$N\"" >> $HOME/.emacs.d/projectile-bookmarks.eld
+	echo -n $N " " >> $OP/projectiles
 	# append
 	if [[ "$(system)" = "msys"  ]]; then
 		ctags -a -f $OP/TAGS -Re $N 
@@ -57,13 +61,10 @@ do
 	find $N -name "*~"  -o -name "*~*TMP*" -o -name "#*" -delete
 	ls -lh $OP/TAGS
 done
+echo -n ")" >> $HOME/.emacs.d/projectile-bookmarks.eld
 
 pushd $1
 export OSTYPE
-emacs
+emacs &
 popd
 
-for D in "$@"
-do
-	rm -vf $D/.projectile
-done

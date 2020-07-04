@@ -169,6 +169,7 @@ There are two things you can do about this warning:
 ;; projectile
 (setq projectile-project-search-path (split-string (shell-command-to-string "cat ~/.op/projectiles")))
 (projectile-mode +1)
+(setq projectile-enable-caching nil)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (global-set-key (kbd "M-?") 'projectile-ag) 
