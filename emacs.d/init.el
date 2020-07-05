@@ -46,13 +46,15 @@ There are two things you can do about this warning:
 (add-to-list 'load-path "~/.emacs.d/lisp/keyfreq")
 (add-to-list 'load-path "/usr/share/emacs25/site-lisp/global")
 (load "arduino-mode") ;; best not to include the ending “.el” or “.elc”
-(load "csharp-mode") 
+(load "csharp-mode")
+(load "jump-to-file-at-point")
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
 
 (require 'cc-mode)
 (define-key c++-mode-map [f5] #'compile)
+(define-key c++-mode-map [f2] #'jump-to-file-at-point)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/keyfreq")
 (require 'keyfreq)
@@ -115,7 +117,8 @@ There are two things you can do about this warning:
   (setq company-minimum-prefix-length 2)
   (setq company-idle-delay 0.0)
   (setq company-selection-wrap-around 'on)
-  (company-tng-configure-default)
+  ;; (company-tng-configure-default)
+  (define-key company-active-map (kbd "SPC") #'company-complete-selection)
 
   ;; TOPIC: Switching from AC
   ;; URL: https://github.com/company-mode/company-mode/wiki/Switching-from-AC
@@ -182,5 +185,9 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-k") 'projectile-find-file-in-known-projects)
 (global-set-key (kbd "C-j") 'projectile-find-other-file)
 
+;; smartscan
+(smartscan-mode 1)
+
 (message "hi")
+
 
