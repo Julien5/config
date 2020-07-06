@@ -49,7 +49,7 @@ for D in "$@"
 do
 	N=$(normalize $D)
  	touch $N/.projectile
- 	echo -n " \"$N\"" >> $HOME/.emacs.d/projectile-bookmarks.eld
+ 	echo -n " \"$N/\"" >> $HOME/.emacs.d/projectile-bookmarks.eld
 	echo -n $N " " >> $OP/projectiles
 	# append
 	if [[ "$(system)" = "msys"  ]]; then
