@@ -188,6 +188,13 @@ There are two things you can do about this warning:
 ;; smartscan
 (smartscan-mode 1)
 
+;; clang-format
+(require 'clang-format)
+(global-set-key (kbd "C-c i") 'clang-format-region)
+(global-set-key (kbd "C-c u") 'clang-format-buffer)
+(setq clang-format-style-option nil)
+(setq clang-format-executable "clang-format-4.0")
+
 (message "hi")
 
 
