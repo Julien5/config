@@ -1,9 +1,9 @@
 keycode 133 = Mode_switch
 keycode 135 = Mode_switch
 
-keycode  24 = q Q exclam 
+keycode  24 = q Q exclam at at
 keycode  25 = w W quotedbl
-keycode  26 = e E less
+keycode  26 = e E less EuroSign EuroSign
 keycode  27 = r R greater
 keycode  28 = t T percent
 keycode  29 = z Z ampersand 

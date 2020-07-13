@@ -1,10 +1,11 @@
 (defun find-references ()
   (interactive)
   (save-excursion
-    (let* ((word (thing-at-point 'word' 'no-properties)))
-      (message "find-references %s" word)
-      (setq result (xref-find-references word))
-      (message "%s" result)
+    (let* ((word (symbol-at-point)))
+	  ;;(message "find-references %s" word)
+	  (let ((w (format "%s" word)))
+		(xref-find-references w)
+		)
       )))
 
 ;;(switch-to-buffer "foo")
