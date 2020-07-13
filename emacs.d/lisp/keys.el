@@ -1,18 +1,16 @@
 (global-set-key (kbd "<f8>") 'modal-mode)
 
-(global-set-key (kbd "<f2>") 'xref-find-definitions)
+(global-set-key (kbd "<f4>") 'xref-find-definitions)
 (global-set-key (kbd "<f3>") 'find-references)
 
-(global-set-key (kbd "<left>") 'backward-word)
-(global-set-key (kbd "<right>") 'forward-word)
+(define-key c++-mode-map [f5] #'compile)
+(define-key c++-mode-map [f2] #'jump-to-file-at-point)
 
-(global-set-key (kbd "<up>") 'backward-paragraph)
-(global-set-key (kbd "<down>") 'forward-paragraph)
+(global-set-key (kbd "<C-left>") 'backward-word)
+(global-set-key (kbd "<C-right>") 'forward-word)
 
-(global-set-key (kbd "<C-left>") 'backward-char)
-(global-set-key (kbd "<C-right>") 'forward-char)
-(global-set-key (kbd "<C-up>") 'previous-line)
-(global-set-key (kbd "<C-down>") 'next-line)
+(global-set-key (kbd "<C-up>") 'backward-paragraph)
+(global-set-key (kbd "<C-down>") 'forward-paragraph)
 
 ;; c-c c-v for copy paste
 (cua-mode t)
