@@ -1,4 +1,21 @@
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 (load "modal")
+(load "search")
+(load "keys")
 
-(global-set-key (kbd "C-<SPC>") 'modal-mode)
+(setq inhibit-startup-screen t)
 
+(add-hook 'emacs-startup-hook (lambda ()
+				(delete-other-windows)
+				(message "hi")
+				(split-window-right)
+				(other-window 1)
+				(find-file "~/.emacs.d/lisp/modal.el")
+				))
