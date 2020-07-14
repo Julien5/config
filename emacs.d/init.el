@@ -128,10 +128,8 @@ There are two things you can do about this warning:
 
 ;; clang-format
 (require 'clang-format)
-(global-set-key (kbd "C-c i") 'clang-format-region)
-(global-set-key (kbd "C-c u") 'clang-format-buffer)
 (setq clang-format-style-option nil)
-(setq clang-format-executable "clang-format-4.0")
+(setq clang-format-executable "clang-format")
 
 (setq inhibit-startup-screen t)
 (add-hook 'after-save-hook 'update-tags-for-file)

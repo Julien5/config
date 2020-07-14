@@ -6,6 +6,7 @@
 
 (define-key c++-mode-map [f5] #'compile)
 (define-key c++-mode-map [f2] #'jump-to-file-at-point)
+(define-key c++-mode-map [tab] 'clang-format-buffer)
 
 (global-set-key (kbd "<C-left>") 'backward-word)
 (global-set-key (kbd "<C-right>") 'forward-word)
@@ -25,3 +26,5 @@
 
 (global-set-key (kbd "<M-home>") 'smartscan-symbol-go-backward)
 (global-set-key (kbd "<M-end>") 'smartscan-symbol-go-forward)
+
+
