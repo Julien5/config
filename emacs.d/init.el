@@ -105,7 +105,7 @@ There are two things you can do about this warning:
 ; Use tab key to cycle through suggestions.
 ; ('tng' means 'tab and go')
 (company-tng-configure-default)
-(define-key company-mode-map [remap indent-for-tab-command] 'company-indent-for-tab-command)
+;; (define-key company-mode-map [remap indent-for-tab-command] 'company-indent-for-tab-command)
 
 ;; (setq tags-file-name nil)
 (setq tags-table-list '("~/.op/TAGS"))
