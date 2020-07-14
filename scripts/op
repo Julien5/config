@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
-set -x
+# set -x
 
 function system()
 {
@@ -18,55 +18,100 @@ function system()
 
 function winify() {
 	if [[ "$(system)" = "msys"  ]]; then
-		echo $1 | sed 's|^/\([a-z,A-Z]\)/|\1:/|';
+		echo "$@" | sed 's|^/\([a-z,A-Z]\)/|\1:/|';
 	else
-		echo $1;
+		echo "$@";
 	fi
 }
 
 function normalize() {
-	echo $(winify $(realpath $1))
+	echo $(winify $(realpath "$@"))
 }
-  
+
 OP="$HOME/.op"
-echo $OP
 
-rm -Rvf "$OP"
-rm -vf $HOME/.emacs.d/projectile*
+function cleanup() {
+	rm -Rvf "$OP"
+	rm -vf $HOME/.emacs.d/projectile*
+	mkdir -p "$OP"
+}
 
-mkdir -p "$OP"
-
-# not good:
-# for stddir in $(find $(dirname $(which gcc))/.. -name "include" -type d)
-# do
-# 	echo ctags.exe -a -f $OP/TAGS -Re $(normalize $stddir)
-# done
-
-# bug on linux if a directory has no subdir containing the source files.
-# => setting projectile-bookmarks.eld fixes it.
-echo -n "(" > $HOME/.emacs.d/projectile-bookmarks.eld
-for D in "$@"
-do
-	N=$(normalize $D)
- 	touch $N/.projectile
- 	echo -n " \"$N/\"" >> $HOME/.emacs.d/projectile-bookmarks.eld
-	echo -n $N " " >> $OP/projectiles
-	# append
+function tags.cmd() {
 	ctags="ctags"
 	if [[ "$(system)" = "msys"  ]]; then
 		ctags -a -f $OP/TAGS -Re $N 
 	else
 		ctags="ctags-exuberant"
-	fi	
-	$ctags --c++-kinds=+p --fields=+iaS  -a -f $OP/TAGS -Re $N 	
-	# TODO instruct ag to ignore these bak files.
-	find $N -name "*~"  -o -name "*~*TMP*" -o -name "#*" -delete
-	ls -lh $OP/TAGS
-done
-echo -n ")" >> $HOME/.emacs.d/projectile-bookmarks.eld
+	fi
+	echo "$ctags --c++-kinds=+p --fields=+iaS  -a -f $OP/TAGS -e "
+}
 
-pushd $1
-export OSTYPE
-emacs &
-popd
+function tags.file() {
+	$(tags.cmd) "$1"
+}
+
+function tags.dir() {
+	$(tags.cmd)-R "$1"
+}
+
+function start.tags() {
+	# not good:
+	# for stddir in $(find $(dirname $(which gcc))/.. -name "include" -type d)
+	# do
+	# 	echo ctags.exe -a -f $OP/TAGS -Re $(normalize $stddir)
+	# done
+	# for D in "${DIRS[@]}"
+	for D in "${DIRS[@]}"
+	do
+		tags.dir $D	
+		ls -lh $OP/TAGS
+	done
+}
+
+
+function fix.projectile() {
+	# bug on linux if a directory has no subdir containing the source files.
+	# => setting projectile-bookmarks.eld fixes it.
+	printf "(" > $HOME/.emacs.d/projectile-bookmarks.eld
+	for a in "${DIRS[@]}"; do
+		printf "\"%s\" " "$a" >> $HOME/.emacs.d/projectile-bookmarks.eld
+	done
+	printf ")" >> $HOME/.emacs.d/projectile-bookmarks.eld
+}
+
+if [[ "$1" == "--start" ]]; then
+	cleanup;
+	shift
+	RAWDIRS=("$@")
+	DIRS=()
+	for a in "${RAWDIRS[@]}"; do
+		b="$(normalize "$a")"
+		touch $b/.projectile
+		DIRS+=("$b")
+		# TODO instruct ag to ignore these bak files.
+		find "$b" -name "*~"  -o -name "*~*TMP*" -o -name "#*" -print -delete
+		printf "%s\n" "$b" >> "$OP"/projectiles
+	done
+	fix.projectile
+	start.tags
+	pushd $1
+	export OSTYPE
+	emacs &
+	popd
+	exit 0
+else
+	if [[ ! -f "$OP"/projectiles ]]; then
+		printf "op not started.\n";
+		exit 1;
+	fi
+	readarray -t DIRS < "$OP"/projectiles;
+	#for a in "${DIRS[@]}"; do
+	#	echo "directory:" "$a" 
+	#done
+fi
+
+if [[ "$1" == "--update-tags" ]]; then
+	filename="$(normalize "$2")"
+	tags.file "$filename"
+fi
 

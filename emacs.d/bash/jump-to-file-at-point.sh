@@ -10,8 +10,13 @@ function other() {
 	fi
 }
 
-line=$1 # #include <foo/bar.h> -> bar
-fname=$2 # filename.cpp -> filename.h
+line="$1" # #include <foo/bar.h> -> bar
+fname="$2" # filename.cpp -> filename.h
+
+if [[ -z "$line" || -z "$fname" ]]; then
+	echo missing parameters line and fname;
+	exit 1;
+fi
 
 dir=$(realpath $(dirname $fname))
 
@@ -23,13 +28,13 @@ else
 	fname=$(other $fname);
 	bname="$fname"*
 fi
-	
 
+function getdirs() {
+	printf "%s " "$dir"
+	if [[ -f ~/.op/projectiles ]]; then
+		cat ~/.op/projectiles | while read a; do printf "%s " "$a"; done;
+	fi
+}
 
-dirs=$dir
-if [[ -f ~/.op/projectiles ]]; then
-	dirs="$dir $(cat ~/.op/projectiles)"
-fi
-
-ret=$(find $dirs -type f -name "$bname" | head -1)
-echo $ret
+ret=$(find $(getdirs) -type f -name "$bname" | head -1)
+echo -n $ret

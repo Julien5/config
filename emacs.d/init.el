@@ -43,23 +43,19 @@ There are two things you can do about this warning:
 
 (package-initialize)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-(add-to-list 'load-path "~/.emacs.d/lisp/keyfreq")
 (add-to-list 'load-path "/usr/share/emacs25/site-lisp/global")
 (load "arduino-mode") ;; best not to include the ending “.el” or “.elc”
 (load "csharp-mode")
 (load "jump-to-file-at-point")
 (load "search")
 (load "keys")
+(load "utils")
+
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
 
 (require 'cc-mode)
-
-(add-to-list 'load-path "~/.emacs.d/lisp/keyfreq")
-(require 'keyfreq)
-(keyfreq-mode 1)
-(keyfreq-autosave-mode 1)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/expand-region")
 (require 'expand-region)
@@ -94,7 +90,10 @@ There are two things you can do about this warning:
 (global-auto-revert-mode t)
 
 ;; insert matching paren -> ()
-(electric-pair-mode 1)
+(setq skeleton-pair t)
+(global-set-key "(" 'skeleton-pair-insert-maybe)
+(global-set-key "[" 'skeleton-pair-insert-maybe)
+(global-set-key "{" 'skeleton-pair-insert-maybe)
 
 ;; company
 ;; (add-hook 'after-init-hook 'global-company-mode)
@@ -135,6 +134,7 @@ There are two things you can do about this warning:
 (setq clang-format-executable "clang-format-4.0")
 
 (setq inhibit-startup-screen t)
+(add-hook 'after-save-hook 'update-tags-for-file)
 (message "hi")
 
 

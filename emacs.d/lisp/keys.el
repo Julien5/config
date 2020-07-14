@@ -2,6 +2,7 @@
 
 (global-set-key (kbd "<f4>") 'xref-find-definitions)
 (global-set-key (kbd "<f3>") 'find-references)
+(global-set-key (kbd "C-l") 'goto-line)
 
 (define-key c++-mode-map [f5] #'compile)
 (define-key c++-mode-map [f2] #'jump-to-file-at-point)
