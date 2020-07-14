@@ -96,11 +96,11 @@ There are two things you can do about this warning:
 (global-set-key "{" 'skeleton-pair-insert-maybe)
 
 ;; company
-;; (add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'after-init-hook 'global-company-mode)
 ; No delay in showing suggestions.
 (setq company-idle-delay 0)
 ; Show suggestions after entering one character.
-(setq company-minimum-prefix-length 1)
+(setq company-minimum-prefix-length 3)
 (setq company-selection-wrap-around t)
 ; Use tab key to cycle through suggestions.
 ; ('tng' means 'tab and go')
@@ -124,7 +124,6 @@ There are two things you can do about this warning:
     (call-interactively 'projectile-ag)))
 (global-set-key (kbd "M-#") 'my-ag-regexp) 
 (global-set-key (kbd "C-k") 'projectile-find-file-in-known-projects)
-(global-set-key (kbd "C-j") 'projectile-find-other-file)
 
 ;; clang-format
 (require 'clang-format)
