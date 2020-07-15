@@ -7,7 +7,6 @@
 		      (shell-quote-argument filename))))
     (require 'subr-x)
     (message "searching other file")
-    (sit-for 0.15)
     (setq result (string-trim (shell-command-to-string cmd)))
     (if (not (equal "" result))
 	(progn (message "found %s" result)

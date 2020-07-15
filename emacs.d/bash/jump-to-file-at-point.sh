@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source $JULIEN5CONFIGPATH/scripts/normalize.sh
+
 function other() {
 	local f=$1;
 	local bb=$(basename $f | cut -f1 -d".") # TODO: support aa.bbb.ccc.h
@@ -36,5 +38,9 @@ function getdirs() {
 	fi
 }
 
+
 ret=$(find $(getdirs) -type f -name "$bname" | head -1)
-echo -n $ret
+if [[ -f "$ret" ]]; then
+	echo -n $(normalize $ret)
+fi
+

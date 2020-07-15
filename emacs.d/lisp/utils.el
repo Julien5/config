@@ -20,5 +20,26 @@
 	(update-tags-for-file-execute file)
 	)
   )
-
 ;; (update-tags-for-file)
+
+(defun jbo-setup-windows ()
+  (delete-other-windows)
+  (if (get-buffer "*compilation*")
+	  (kill-buffer "*compilation*")
+	(message "no")
+	)
+  (save-selected-window
+	(let ((w (split-window-below 50)))
+	  (select-window w))
+	(switch-to-buffer "*compilation*")
+	)
+
+  (save-selected-window
+	
+	(let ((w (split-window-right 100)))
+	  (select-window w))
+	(switch-to-buffer "*other*")
+	)
+  )
+
+;; (jbo-setup-windows)

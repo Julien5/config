@@ -3,30 +3,7 @@
 set -e
 # set -x
 
-function system()
-{
-    if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        echo "linux";
-    else
-        if [[ "$OSTYPE" == "msys" ]]; then
-            echo "msys";
-        else
-            echo "unknown";
-        fi;
-    fi
-}
-
-function winify() {
-	if [[ "$(system)" = "msys"  ]]; then
-		echo "$@" | sed 's|^/\([a-z,A-Z]\)/|\1:/|';
-	else
-		echo "$@";
-	fi
-}
-
-function normalize() {
-	echo $(winify $(realpath "$@"))
-}
+source $JULIEN5CONFIGPATH/scripts/normalize.sh
 
 OP="$HOME/.op"
 
@@ -38,9 +15,7 @@ function cleanup() {
 
 function tags.cmd() {
 	ctags="ctags"
-	if [[ "$(system)" = "msys"  ]]; then
-		ctags -a -f $OP/TAGS -Re $N 
-	else
+	if [[ ! "$(system)" = "msys"  ]]; then
 		ctags="ctags-exuberant"
 	fi
 	echo "$ctags --c++-kinds=+p --fields=+iaS  -a -f $OP/TAGS -e "
@@ -51,7 +26,7 @@ function tags.file() {
 }
 
 function tags.dir() {
-	$(tags.cmd)-R "$1"
+	$(tags.cmd) -R "$1"
 }
 
 function start.tags() {
@@ -68,7 +43,6 @@ function start.tags() {
 	done
 }
 
-
 function fix.projectile() {
 	# bug on linux if a directory has no subdir containing the source files.
 	# => setting projectile-bookmarks.eld fixes it.
@@ -78,6 +52,11 @@ function fix.projectile() {
 	done
 	printf ")" >> $HOME/.emacs.d/projectile-bookmarks.eld
 }
+
+if [[ ! "$1" == "--"* ]]; then
+	printf "missing --start or --update-tags\n"
+	exit 1
+fi
 
 if [[ "$1" == "--start" ]]; then
 	cleanup;
@@ -92,10 +71,13 @@ if [[ "$1" == "--start" ]]; then
 		find "$b" -name "*~"  -o -name "*~*TMP*" -o -name "#*" -print -delete
 		printf "%s\n" "$b" >> "$OP"/projectiles
 	done
-	fix.projectile
+	if [[ "$(system)" = "linux"  ]]; then
+		fix.projectile
+	fi
 	start.tags
 	pushd $1
 	export OSTYPE
+	#export HOME=$(normalize $HOME)
 	emacs &
 	popd
 	exit 0
