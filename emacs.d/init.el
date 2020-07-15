@@ -128,7 +128,11 @@ There are two things you can do about this warning:
 ;; clang-format
 (require 'clang-format)
 (setq clang-format-style-option nil)
-(setq clang-format-executable "clang-format")
+(if (executable-find "clang-format-9.0")
+	(setq clang-format-executable "clang-format-9.0")
+  (setq clang-format-executable "clang-format")
+  )
+(setq compilation-scroll-output t)
 
 (setq inhibit-startup-screen t)
 (add-hook 'after-save-hook 'update-tags-for-file)

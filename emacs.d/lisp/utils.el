@@ -24,22 +24,29 @@
 
 (defun jbo-setup-windows ()
   (delete-other-windows)
+
   (if (get-buffer "*compilation*")
 	  (kill-buffer "*compilation*")
 	(message "no")
 	)
+  
   (save-selected-window
 	(let ((w (split-window-below 50)))
-	  (select-window w))
-	(switch-to-buffer "*compilation*")
+	  (compile "echo")
+	  (select-window w)
+	  (set-window-buffer w "*compilation*")
+	  (shrink-window-if-larger-than-buffer)
+	  (enlarge-window 10)
+	  (set-window-dedicated-p t)
+	  (setq compile-command "qmake && make")
+	  )
+	;;(switch-to-buffer "*compilation*")
 	)
-
   (save-selected-window
-	
 	(let ((w (split-window-right 100)))
 	  (select-window w))
 	(switch-to-buffer "*other*")
 	)
   )
 
-;; (jbo-setup-windows)
+(jbo-setup-windows)
