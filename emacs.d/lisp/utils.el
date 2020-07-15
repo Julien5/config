@@ -43,6 +43,7 @@
   (setq compilation-mode-hook nil)
   (add-hook 'compilation-mode-hook 'my-compilation-hook)
   (compile "echo")
+  (setq compile-command "$SETUPROOT/make/mk")
   (message "ok")
   (other-window 1)
   (shrink-window-if-larger-than-buffer)
