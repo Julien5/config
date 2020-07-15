@@ -22,6 +22,15 @@
   )
 ;; (update-tags-for-file)
 
+(defun my-compilation-hook ()
+  "Make sure that the compile window is splitting vertically."
+  (progn
+    (if (not (get-buffer-window "*compilation*"))
+        (progn
+          (split-window-vertically)))))
+
+(add-hook 'compilation-mode-hook 'my-compilation-hook)
+
 (defun jbo-setup-windows ()
   (delete-other-windows)
 
@@ -29,19 +38,15 @@
 	  (kill-buffer "*compilation*")
 	(message "no")
 	)
-  
-  (save-selected-window
-	(let ((w (split-window-below 50)))
-	  (compile "echo")
-	  (select-window w)
-	  (set-window-buffer w "*compilation*")
-	  (shrink-window-if-larger-than-buffer)
-	  (enlarge-window 10)
-	  (set-window-dedicated-p t)
-	  (setq compile-command "qmake && make")
-	  )
-	;;(switch-to-buffer "*compilation*")
-	)
+
+
+  (setq compilation-mode-hook nil)
+  (add-hook 'compilation-mode-hook 'my-compilation-hook)
+  (compile "echo")
+  (message "ok")
+  (other-window 1)
+  (shrink-window-if-larger-than-buffer)
+  (other-window 1)
   (save-selected-window
 	(let ((w (split-window-right 100)))
 	  (select-window w))
