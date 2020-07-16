@@ -3,6 +3,8 @@
 set -e
 # set -x
 
+SCRIPTPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/"
+
 source $JULIEN5CONFIGPATH/scripts/normalize.sh
 
 OP="$HOME/.op"
@@ -65,7 +67,7 @@ if [[ "$1" == "--start" ]]; then
 	DIRS=()
 	for a in "${RAWDIRS[@]}"; do
 		b="$(normalize "$a")"
-		touch $b/.projectile
+		cp -v $SCRIPTPATH/dotprojectile $b/.projectile
 		DIRS+=("$b")
 		# TODO instruct ag to ignore these bak files.
 		find "$b" -name "*~"  -o -name "*~*TMP*" -o -name "#*" -print -delete

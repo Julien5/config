@@ -1,5 +1,4 @@
 (setq inhibit-startup-screen t)
-
 ;; Tell emacs where is your personal elisp lib dir
 ;;{{{ Set up package and use-package
 
@@ -114,6 +113,7 @@ There are two things you can do about this warning:
 
 ;; projectile
 (setq projectile-project-search-path (split-string (shell-command-to-string "cat ~/.op/projectiles")))
+(require 'subr-x) ;; workaround
 (projectile-mode +1)
 (setq projectile-enable-caching nil)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
