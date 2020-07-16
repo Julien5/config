@@ -39,11 +39,12 @@
           (shrink-window (- h compilation-window-height))
 
           ;; Prevent other buffers from displaying inside
-          (set-window-dedicated-p w t) 
+          (set-window-dedicated-p w +1) 
 		  )))))
 
 
 (defun jbo-setup-windows ()
+  (setq jbo/main-window (get-buffer-window "*compilation*"))
   (delete-other-windows)
   (setq jbo/current-buffer (current-buffer))
   (if (get-buffer "*compilation*")
@@ -61,14 +62,21 @@
   (compile "echo")
   (setq compile-command "$SETUPROOT/make/mk")
   (message "ok")
-  ;;(select-window (get-buffer-window "*compilation*"))
-  ;;(shrink-window-if-larger-than-buffer)
+  (save-selected-window
+	(setq jbo/bottom-window (get-buffer-window "*compilation*"))
+	(select-window jbo/bottom-window)
+	(set-window-dedicated-p jbo/bottom-window +1)
+	(setq jbo/compilation-state (window-state-get jbo/bottom-window))
+	(switch-to-buffer "*xref*")
+	(set-window-buffer jbo/bottom-window "*xref*")
+	(setq jbo/xref-state (window-state-get jbo/bottom-window))
+	)
   (select-window (get-buffer-window jbo/current-buffer))
   (save-selected-window
   	(let ((w (split-window-right 100)))
-  	  (select-window w))
-  	(switch-to-buffer "*shell*")
-  	)
+	  (select-window w))
+	(switch-to-buffer "*other*")
+	)
   )
 
 ;;(jbo-setup-windows)
@@ -83,3 +91,10 @@
          (not ( equal bread-crumb (buffer-name) )) )
       (next-buffer)))
   )
+
+(defun jbo/compile ()
+  (interactive)
+  (save-selected-window
+	(window-state-put jbo/compilation-state jbo/bottom-window)
+	(compile compile-command)
+	))

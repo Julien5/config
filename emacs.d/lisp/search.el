@@ -10,6 +10,20 @@
 		(message "no symbol at cursor")
 		))))
 
+(defun jbo/find-definitions ()
+  (interactive)
+  (save-selected-window
+	(save-excursion
+	  (window-state-put jbo/xref-state jbo/bottom-window)
+	  (let* ((word (symbol-at-point)))
+		(message "find-definitions %s" word)
+		(if word
+			(let ((w (format "%s" word)))
+			  (xref-find-definitions w)
+			  )
+		  (message "no symbol at cursor")
+		  )))))
+
 (defun refactor-references ()
   (interactive)
   (save-excursion
