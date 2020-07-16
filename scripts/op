@@ -78,7 +78,7 @@ if [[ "$1" == "--start" ]]; then
 	pushd $1
 	export OSTYPE
 	#export HOME=$(normalize $HOME)
-	emacs &
+	emacs --debug-init --maximized &
 	popd
 	exit 0
 else

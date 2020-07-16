@@ -22,37 +22,51 @@
   )
 ;; (update-tags-for-file)
 
-(defun my-compilation-hook ()
-  "Make sure that the compile window is splitting vertically."
-  (progn
-    (if (not (get-buffer-window "*compilation*"))
-        (progn
-          (split-window-vertically)))))
+(defun jbo/create-proper-compilation-window ()
+  "Setup the *compilation* window with custom settings."
+  (when (not (get-buffer-window "*compilation*"))
+    (save-selected-window
+      (save-excursion
+        (let* ((w (split-window-vertically))
+               (h (window-height w)))
+          (select-window w)
+          (switch-to-buffer "*compilation*")
+
+          ;; Reduce window height
+          (shrink-window (- h compilation-window-height))
+
+          ;; Prevent other buffers from displaying inside
+          (set-window-dedicated-p w t) 
+  )))))
 
 (add-hook 'compilation-mode-hook 'my-compilation-hook)
 
 (defun jbo-setup-windows ()
   (delete-other-windows)
-
+  (setq jbo/current-buffer (current-buffer))
   (if (get-buffer "*compilation*")
-	  (kill-buffer "*compilation*")
+	  (progn (message "killing compilation")
+			 (kill-compilation)
+			 (kill-buffer "*compilation*")
+			 (message "killed compilation")
+			 )
 	(message "no")
 	)
-
-
+  
+  (setq compilation-window-height 15);
   (setq compilation-mode-hook nil)
-  (add-hook 'compilation-mode-hook 'my-compilation-hook)
+  (add-hook 'compilation-mode-hook 'jbo/create-proper-compilation-window)
   (compile "echo")
   (setq compile-command "$SETUPROOT/make/mk")
   (message "ok")
-  (other-window 1)
-  (shrink-window-if-larger-than-buffer)
-  (other-window 1)
+  ;;(select-window (get-buffer-window "*compilation*"))
+  ;;(shrink-window-if-larger-than-buffer)
+  (select-window (get-buffer-window jbo/current-buffer))
   (save-selected-window
-	(let ((w (split-window-right 100)))
-	  (select-window w))
-	(switch-to-buffer "*other*")
-	)
+  	(let ((w (split-window-right 100)))
+  	  (select-window w))
+  	(switch-to-buffer "*other*")
+  	)
   )
 
-(jbo-setup-windows)
+;;(jbo-setup-windows)

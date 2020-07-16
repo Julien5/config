@@ -1,5 +1,6 @@
-;; Tell emacs where is your personal elisp lib dir
+(setq inhibit-startup-screen t)
 
+;; Tell emacs where is your personal elisp lib dir
 ;;{{{ Set up package and use-package
 
 (require 'package)
@@ -134,8 +135,9 @@ There are two things you can do about this warning:
   )
 (setq compilation-scroll-output 'first-error)
 
-(setq inhibit-startup-screen t)
 (add-hook 'after-save-hook 'update-tags-for-file)
+
+(jbo-setup-windows)
 (message "hi")
 
 
