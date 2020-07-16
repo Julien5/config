@@ -4,6 +4,11 @@ function initpath() {
 	export PATH="$HOME/.local/bin:$PATH"
 }
 
+if [[ -z "$JULIEN5CONFIGPATH" ]]; then
+	SCRIPTPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/"
+	export JULIEN5CONFIGPATH="$SCRIPTPATH/.."
+fi
+
 initpath;
 
 case "$-" in
