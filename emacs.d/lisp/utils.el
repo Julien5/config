@@ -4,7 +4,6 @@
 					(shell-quote-argument filename)))
   (require 'subr-x)
   (message "updating tags for file %s" filename)
-  (sit-for 0.15)
   (setq error (string-trim (shell-command-to-string cmd)))
   (if (equal "" error)
 	  (progn (visit-tags-table (expand-file-name "~/.op/TAGS"))
@@ -70,6 +69,9 @@
 	(switch-to-buffer "*xref*")
 	(set-window-buffer jbo/bottom-window "*xref*")
 	(setq jbo/xref-state (window-state-get jbo/bottom-window))
+	(switch-to-buffer "*refs*")
+	(set-window-buffer jbo/bottom-window "*refs*")
+	(setq jbo/refs-state (window-state-get jbo/bottom-window))
 	)
   (select-window (get-buffer-window jbo/current-buffer))
   (save-selected-window
@@ -82,15 +84,26 @@
 
 ;;(jbo-setup-windows)
 
-(defun jbo/next-code-buffer ()
+(defun jbo/prev-code-buffer ()
   (interactive)
   (let (( bread-crumb (buffer-name) ))
     (switch-to-prev-buffer)
     (while
         (and
          (string-match-p "^\*" (buffer-name))
-         (not ( equal bread-crumb (buffer-name) )) )
+         (not (equal bread-crumb (buffer-name) )) )
       (switch-to-prev-buffer)))
+  )
+
+(defun jbo/next-code-buffer ()
+  (interactive)
+  (let (( bread-crumb (buffer-name) ))
+    (switch-to-next-buffer)
+    (while
+        (and
+         (string-match-p "^\*" (buffer-name))
+         (not ( equal bread-crumb (buffer-name) )) )
+      (switch-to-next-buffer)))
   )
 
 (defun jbo/compile ()
@@ -123,7 +136,7 @@
 
 
 ;; https://emacs.stackexchange.com/questions/32140/python-mode-indentation
-(defun how-many-region (begin end regexp &optional interactive)
+(defun jbo-how-many-region (begin end regexp &optional interactive)
   "Print number of non-trivial matches for REGEXP in region.                    
    Non-interactive arguments are Begin End Regexp"
   (interactive "r\nsHow many matches for (regexp): \np")
@@ -139,11 +152,11 @@
       (if interactive (message "%d occurrences" count))
       count)))
 
-(defun infer-indentation-style ()
+(defun jbo-infer-indentation-style ()
   ;; if our source file uses tabs, we use tabs, if spaces spaces, and if        
   ;; neither, we use the current indent-tabs-mode                               
-  (let ((space-count (how-many-region (point-min) (point-max) "^  "))
-        (tab-count (how-many-region (point-min) (point-max) "^\t")))
+  (let ((space-count (jbo-how-many-region (point-min) (point-max) "^  "))
+        (tab-count (jbo-how-many-region (point-min) (point-max) "^\t")))
     (if (> space-count tab-count)
 		(progn
 		  (message "indent with spaces")
@@ -161,6 +174,11 @@
   (add-hook 'python-mode-hook
 			(lambda ()
 			  (setq indent-tabs-mode nil)
-			  (infer-indentation-style)))
+			  (jbo-infer-indentation-style)))
+  )
+
+(defun jbo/reload-configuration()
+  (interactive)
+  (load-file "~/.emacs.d/init.el")
   )
 

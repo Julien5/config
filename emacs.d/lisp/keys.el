@@ -1,7 +1,8 @@
 (global-set-key (kbd "<f8>") 'modal-mode)
 
 (global-set-key (kbd "<f4>") 'jbo/find-definitions)
-(global-set-key (kbd "<f3>") 'find-references)
+(global-set-key (kbd "<f3>") 'jbo/find-references)
+(global-set-key (kbd "<S-f3>") 'jbo/refactor-references)
 (global-set-key (kbd "C-l") 'goto-line)
 
 (define-key c++-mode-map [f5] #'jbo/compile)
@@ -23,7 +24,8 @@
 ;; c-c c-v for copy paste
 (cua-mode t)
 
-(global-set-key (kbd "<C-tab>") 'jbo/next-code-buffer)
+(global-set-key (kbd "<C-tab>") 'jbo/prev-code-buffer)
+(global-set-key (kbd "<S-C-iso-lefttab>") 'jbo/next-code-buffer)
 
 (global-set-key (kbd "<C-next>") 'other-window)
 (defun prev-window ()  (interactive)  (other-window -1))

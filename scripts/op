@@ -99,3 +99,9 @@ if [[ "$1" == "--update-tags" ]]; then
 	tags.file "$filename"
 fi
 
+if [[ "$1" == "--find-references" ]]; then
+	word="$2"
+	# --noheading
+	ag --literal --group --line-number --column --smart-case -- "$word" $(cat ~/.op/projectiles)
+fi
+
