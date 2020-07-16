@@ -50,10 +50,14 @@ There are two things you can do about this warning:
 (load "search")
 (load "keys")
 (load "utils")
+(load "qt-pro-mode")
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
+
+(require 'qt-pro-mode)
+(add-to-list 'auto-mode-alist '("\\.pr[io]$" . qt-pro-mode))
 
 (require 'cc-mode)
 
