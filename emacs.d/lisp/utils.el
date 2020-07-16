@@ -44,7 +44,7 @@
 
 
 (defun jbo-setup-windows ()
-  (setq jbo/main-window (get-buffer-window "*compilation*"))
+  (setq jbo/main-window (get-buffer-window))
   (delete-other-windows)
   (setq jbo/current-buffer (current-buffer))
   (if (get-buffer "*compilation*")
@@ -76,6 +76,7 @@
   	(let ((w (split-window-right 100)))
 	  (select-window w))
 	(switch-to-buffer "*other*")
+	(setq jbo/right-window (get-buffer-window))
 	)
   )
 
@@ -98,3 +99,24 @@
 	(window-state-put jbo/compilation-state jbo/bottom-window)
 	(compile compile-command)
 	))
+
+(defun jbo/clear-window (w)
+  (if (not (or (equal w jbo/main-window)
+			   (equal w jbo/bottom-window)
+			   (equal w jbo/right-window)))
+	  (progn (select-window w)
+			 (delete-window))
+	)
+  )
+
+(defun jbo/take-buffer ()
+  (interactive)
+  (let* ((f (buffer-file-name))
+		 (w (get-buffer-window)))
+	(if f
+		(progn (select-window jbo/main-window)
+			   (find-file f)
+			   ))
+	(jbo/clear-window w))
+  )
+;; (jbo/take-buffer)

@@ -12,6 +12,8 @@
 (define-key c++-mode-map [C-f6] 'first-error)
 (define-key c++-mode-map [S-f6] 'previous-error)
 
+(global-set-key (kbd "<f9>") 'jbo/take-buffer)
+
 (global-set-key (kbd "<C-left>") 'backward-word)
 (global-set-key (kbd "<C-right>") 'forward-word)
 
