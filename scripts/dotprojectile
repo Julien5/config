@@ -2,3 +2,5 @@
 -*.exe
 -moc_*
 -*.o
+-*.obj
+-TAGS

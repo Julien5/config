@@ -52,6 +52,7 @@ There are two things you can do about this warning:
 (load "utils")
 (load "qt-pro-mode")
 
+(jbo/fix-python-indentation)
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
