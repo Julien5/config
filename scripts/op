@@ -28,7 +28,7 @@ function tags.file() {
 }
 
 function tags.dir() {
-	$(tags.cmd) -R "$1"
+	$(tags.cmd) -R --exclude=moc "$1"
 }
 
 function start.tags() {

@@ -21,8 +21,7 @@
 ;; c-c c-v for copy paste
 (cua-mode t)
 
-(global-set-key (kbd "<M-prior>") 'previous-buffer)
-(global-set-key (kbd "<M-next>") 'next-buffer)
+(global-set-key (kbd "<C-tab>") 'jbo/next-code-buffer)
 
 (global-set-key (kbd "<C-next>") 'other-window)
 (defun prev-window ()  (interactive)  (other-window -1))

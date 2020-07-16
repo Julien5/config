@@ -16,8 +16,11 @@
   ) 
 
 (defun update-tags-for-file ()
-  (let* ((file (buffer-file-name (current-buffer))))
-	(update-tags-for-file-execute file)
+  (let* ((file (buffer-file-name (current-buffer)))
+		 (extension (file-name-extension file)))
+	(if (or (equal extension "c") (equal extension "cpp") (equal extension "h"))
+		(update-tags-for-file-execute file)
+	  )
 	)
   )
 ;; (update-tags-for-file)
@@ -37,9 +40,8 @@
 
           ;; Prevent other buffers from displaying inside
           (set-window-dedicated-p w t) 
-  )))))
+		  )))))
 
-(add-hook 'compilation-mode-hook 'my-compilation-hook)
 
 (defun jbo-setup-windows ()
   (delete-other-windows)
@@ -65,8 +67,19 @@
   (save-selected-window
   	(let ((w (split-window-right 100)))
   	  (select-window w))
-  	(switch-to-buffer "*other*")
+  	(switch-to-buffer "*shell*")
   	)
   )
 
 ;;(jbo-setup-windows)
+
+(defun jbo/next-code-buffer ()
+  (interactive)
+  (let (( bread-crumb (buffer-name) ))
+    (next-buffer)
+    (while
+        (and
+         (string-match-p "^\*" (buffer-name))
+         (not ( equal bread-crumb (buffer-name) )) )
+      (next-buffer)))
+  )
