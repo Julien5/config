@@ -14,9 +14,10 @@
   (interactive)
   (save-selected-window
 	(save-excursion
+	  (message "find-definitions...")
 	  (window-state-put jbo/xref-state jbo/bottom-window)
 	  (let* ((word (symbol-at-point)))
-		(message "find-definitions %s" word)
+		(message "find-definitions for %s" word)
 		(if word
 			(let ((w (format "%s" word)))
 			  (xref-find-definitions w)

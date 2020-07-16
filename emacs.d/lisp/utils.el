@@ -49,7 +49,7 @@
   (setq jbo/current-buffer (current-buffer))
   (if (get-buffer "*compilation*")
 	  (progn (message "killing compilation")
-			 (kill-compilation)
+			 ;;(kill-compilation)
 			 (kill-buffer "*compilation*")
 			 (message "killed compilation")
 			 )
@@ -84,12 +84,12 @@
 (defun jbo/next-code-buffer ()
   (interactive)
   (let (( bread-crumb (buffer-name) ))
-    (next-buffer)
+    (switch-to-prev-buffer)
     (while
         (and
          (string-match-p "^\*" (buffer-name))
          (not ( equal bread-crumb (buffer-name) )) )
-      (next-buffer)))
+      (switch-to-prev-buffer)))
   )
 
 (defun jbo/compile ()
