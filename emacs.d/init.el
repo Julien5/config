@@ -116,6 +116,9 @@ There are two things you can do about this warning:
 (setq tags-table-list '("~/.op/TAGS"))
 (setq large-file-warning-threshold 100000000)
 
+
+(jbo-fix-project-roots)
+
 ;; projectile
 (setq projectile-project-search-path (split-string (shell-command-to-string "cat ~/.op/projectiles")))
 (require 'subr-x) ;; workaround
