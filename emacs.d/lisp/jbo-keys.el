@@ -26,6 +26,8 @@
 (cua-mode t)
 
 (global-set-key (kbd "<C-tab>") 'jbo/next-code-buffer)
+(global-set-key (kbd "<C-iso-lefttab>") 'jbo/prev-code-buffer)
+
 
 (global-set-key (kbd "<C-next>") 'other-window)
 (defun prev-window ()  (interactive)  (other-window -1))

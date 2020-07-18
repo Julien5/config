@@ -1,6 +1,7 @@
 (defun jbo-package-initialize ()
   (setq package-archives nil)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+  ;;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   (package-initialize)
   
   ;; Bootstrap 'use-package'
@@ -35,6 +36,7 @@ There are two things you can do about this warning:
     )
 
   (require 'package)
+  (package-refresh-contents)
   (package-install 'expand-region)
   (package-install 'magit)
   (package-install 'smartscan)

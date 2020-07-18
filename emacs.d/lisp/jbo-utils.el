@@ -13,7 +13,7 @@
   (project-find-file)
   )
 
-(defun update-tags-for-file-execute (filename)
+(defun jbo-update-tags-for-file-execute (filename)
   (setq executable (format "%s/bash/%s" user-emacs-directory "update-tags.sh"))
   (setq cmd (format "%s %s" executable
 					(shell-quote-argument filename)))
@@ -30,11 +30,11 @@
 	(kill-buffer (get-buffer "TAGS")))
   ) 
 
-(defun update-tags-for-file ()
+(defun jbo/update-tags-for-file ()
   (let* ((file (buffer-file-name (current-buffer)))
 		 (extension (file-name-extension file)))
 	(if (or (equal extension "c") (equal extension "cpp") (equal extension "h"))
-		(update-tags-for-file-execute file)
+		(jbo-update-tags-for-file-execute file)
 	  )
 	)
   )
@@ -100,6 +100,17 @@
 (defun jbo/next-code-buffer ()
   (interactive)
   (let (( bread-crumb (buffer-name) ))
+    (switch-to-next-buffer)
+    (while
+        (and
+         (string-match-p "^\*" (buffer-name))
+         (not ( equal bread-crumb (buffer-name) )) )
+      (switch-to-next-buffer)))
+  )
+
+(defun jbo/prev-code-buffer ()
+  (interactive)
+  (let (( bread-crumb (buffer-name) ))
     (switch-to-prev-buffer)
     (while
         (and
@@ -115,7 +126,7 @@
 	(compile compile-command)
 	))
 
-(defun jbo/clear-window (w)
+(defun jbo-clear-window (w)
   (if (not (or (equal w jbo/main-window)
 			   (equal w jbo/bottom-window)
 			   (equal w jbo/right-window)))
@@ -132,9 +143,12 @@
 		(progn (select-window jbo/main-window)
 			   (find-file f)
 			   ))
-	(jbo/clear-window w))
+	(jbo-clear-window w))
   )
 
+(defun jbo/reload-init ()
+  (load-file (expand-file-name "~/.emacs.d/init.el"))
+  )
 
 ;; https://emacs.stackexchange.com/questions/32140/python-mode-indentation
 (defun how-many-region (begin end regexp &optional interactive)
@@ -184,7 +198,7 @@
   )
 
 (cl-defmethod project-roots ((project (head jbo)))
-  ;;(setq R (list "a/" "b/"))
+  ;; jbo-projectiles + current dir
   (setq R (jbo-projectiles))
   (setq D (cdr project))
   (setq R (append R (list D)))
