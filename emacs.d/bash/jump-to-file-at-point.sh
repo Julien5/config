@@ -12,8 +12,9 @@ function other() {
 	fi
 }
 
-line="$1" # #include <foo/bar.h> -> bar
-fname="$2" # filename.cpp -> filename.h
+pid="$1"
+line="$2" # #include <foo/bar.h> -> bar
+fname="$3" # filename.cpp -> filename.h
 
 if [[ -z "$line" || -z "$fname" ]]; then
 	echo missing parameters line and fname;
@@ -34,7 +35,7 @@ fi
 function getdirs() {
 	printf "%s " "$dir"
 	if [[ -f ~/.op/projectiles ]]; then
-		cat ~/.op/projectiles | while read a; do printf "%s " "$a"; done;
+		cat ~/.op/$pid/projectiles | while read a; do printf "%s " "$a"; done;
 	fi
 }
 

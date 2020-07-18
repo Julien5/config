@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-filename="$1"
-op --update-tags "$filename"
+PID=$1
+op $PID --update-tags "${@:2:$#}"

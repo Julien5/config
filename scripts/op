@@ -7,12 +7,8 @@ SCRIPTPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/"
 
 source $JULIEN5CONFIGPATH/scripts/normalize.sh
 
-OP="$HOME/.op"
-
-function cleanup() {
-	rm -Rvf "$OP"
-	rm -vf $HOME/.emacs.d/projectile*
-	mkdir -p "$OP"
+function op.dir() {
+	echo "$(normalize ~/.op/$PID/)"
 }
 
 function tags.cmd() {
@@ -20,7 +16,7 @@ function tags.cmd() {
 	if [[ ! "$(system)" = "msys"  ]]; then
 		ctags="ctags-exuberant"
 	fi
-	echo "$ctags --c++-kinds=+p --fields=+iaS  -a -f $OP/TAGS -e "
+	echo "$ctags --c++-kinds=+p --fields=+iaS  -a -f $(op.dir)/TAGS -e "
 }
 
 function tags.file() {
@@ -29,6 +25,14 @@ function tags.file() {
 
 function tags.dir() {
 	$(tags.cmd) -R --exclude=moc "$1"
+}
+
+function isnumber() {
+	re='^[0-9]+$'
+	if [[ ! $1 =~ $re ]] ; then
+		return 1
+	fi
+	return 0;
 }
 
 function start.tags() {
@@ -41,61 +45,47 @@ function start.tags() {
 	for D in "${DIRS[@]}"
 	do
 		tags.dir $D	
-		ls -lh $OP/TAGS
+		ls -lh $(op.dir)/TAGS
 	done
 }
 
-function fix.projectile() {
-	# bug on linux if a directory has no subdir containing the source files.
-	# => setting projectile-bookmarks.eld fixes it.
-	printf "(" > $HOME/.emacs.d/projectile-bookmarks.eld
-	for a in "${DIRS[@]}"; do
-		printf "\"%s\" " "$a" >> $HOME/.emacs.d/projectile-bookmarks.eld
-	done
-	printf ")" >> $HOME/.emacs.d/projectile-bookmarks.eld
-}
-
-if [[ ! "$1" == "--"* ]]; then
-	printf "missing --start or --update-tags\n"
-	exit 1
-fi
 
 if [[ "$1" == "--start" ]]; then
-	cleanup;
 	shift
+	pushd $1
+	export OSTYPE
+	emacs --debug-init --maximized "$@" &
+	PID="$!"
+	rm -Rf $(op.dir)
+	mkdir -p ~/.op/$PID/
+	if [[ ! -d $(op.dir) ]]; then
+		echo "could not create op directory for new processr pid=$PID"
+		exit 1;
+	fi
+	popd
 	RAWDIRS=("$@")
 	DIRS=()
 	for a in "${RAWDIRS[@]}"; do
 		b="$(normalize "$a")"
-		cp -v $SCRIPTPATH/dotprojectile $b/.projectile
 		DIRS+=("$b")
-		# TODO instruct ag to ignore these bak files.
 		find "$b" -name "*~"  -o -name "*~*TMP*" -o -name "#*" -print -delete
-		printf "%s\n" "$b" >> "$OP"/projectiles
-	done
-	if [[ "$(system)" = "linux"  ]]; then
-		fix.projectile
-	fi
+		printf "%s\n" "$b" >> "$(op.dir)"/projectiles
+	done	
 	start.tags
-	pushd $1
-	export OSTYPE
-	#export HOME=$(normalize $HOME)
-	emacs --debug-init --maximized &
-	popd
 	exit 0
-else
-	if [[ ! -f "$OP"/projectiles ]]; then
-		printf "op not started.\n";
-		exit 1;
-	fi
-	readarray -t DIRS < "$OP"/projectiles;
+elif isnumber "$1"; then
+	PID=$1
+	projectiles="$(op.dir)/projectiles"
+	readarray -t DIRS < $projectiles
 	#for a in "${DIRS[@]}"; do
 	#	echo "directory:" "$a" 
 	#done
+else
+	echo "WTF?!";
+	exit 1
 fi
 
-if [[ "$1" == "--update-tags" ]]; then
-	filename="$(normalize "$2")"
+if [[ "$2" == "--update-tags" ]]; then
+	filename="$(normalize "$3")"
 	tags.file "$filename"
 fi
-

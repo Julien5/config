@@ -1,11 +1,19 @@
 (defun jbo-projectiles ()
-  (setq cmd (format "cat %s" (shell-quote-argument (expand-file-name "~/.op/projectiles"))))
-  (setq R (split-string (shell-command-to-string cmd)))
+  (setq R (cdr command-line-args))
   (setq D (list))
   (dolist (r R)
 	(setq D (cons (file-name-as-directory r) D))
 	)
   (delete-dups D)
+  )
+
+(defun jbo-tags-path ()
+  (expand-file-name (format "~/.op/%s/TAGS" (emacs-pid)))
+  )
+
+(defun jbo/reload-tags ()
+  (interactive)
+  (visit-tags-table (jbo-tags-path))
   )
 
 (defun jbo/find-file ()
@@ -15,20 +23,19 @@
 
 (defun jbo-update-tags-for-file-execute (filename)
   (setq executable (format "%s/bash/%s" user-emacs-directory "update-tags.sh"))
-  (setq cmd (format "%s %s" executable
-					(shell-quote-argument filename)))
+  (setq cmd (format "%s %s %s" executable (emacs-pid) (shell-quote-argument filename)))
   (require 'subr-x)
   (message "updating tags for file %s" filename)
-  (sit-for 0.15)
   (setq error (string-trim (shell-command-to-string cmd)))
   (if (equal "" error)
-	  (progn (visit-tags-table (expand-file-name "~/.op/TAGS"))
+	  (progn (jbo/reload-tags) ;; necessary ? (the tags filename has not changed)
 			 (message "updated %s" filename))
 	(message "error %s" error)
 	)
   (when (get-buffer "TAGS")
 	(kill-buffer (get-buffer "TAGS")))
-  ) 
+  )
+
 
 (defun jbo/update-tags-for-file ()
   (let* ((file (buffer-file-name (current-buffer)))
@@ -206,9 +213,10 @@
   (setq R (jbo-projectiles))
   (set-difference R P :test #'equal)
   )
-  
+
 (defun jbo-fix-project-roots ()
   (setq project-find-functions nil)
+  (setq project-list-file (expand-file-name (format "~/.op/%s/projects" (emacs-pid))))
   (add-hook 'project-find-functions 'jbo/project-try)
   )
 

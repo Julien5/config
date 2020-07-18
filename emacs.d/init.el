@@ -65,7 +65,7 @@
 (global-set-key "{" 'skeleton-pair-insert-maybe)
 
 ;; (setq tags-file-name nil)
-(setq tags-table-list '("~/.op/TAGS"))
+(setq tags-table-list (list (jbo-tags-path)))
 (setq large-file-warning-threshold 100000000)
 
 (jbo-fix-project-roots)

@@ -2,7 +2,7 @@
   (let* ((executable (format "%s/bash/%s"
 			     user-emacs-directory
 			     "jump-to-file-at-point.sh"))
-	 (cmd (format "%s %s %s" executable
+	 (cmd (format "%s %s %s %s" executable (emacs-pid)
 		      (shell-quote-argument line)
 		      (shell-quote-argument filename))))
     (require 'subr-x)
