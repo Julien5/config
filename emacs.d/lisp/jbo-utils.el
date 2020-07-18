@@ -2,8 +2,13 @@
   (setq R (cdr command-line-args))
   (setq D (list))
   (dolist (r R)
-	(setq D (cons (file-name-as-directory r) D))
+	(setq dirname (file-name-as-directory r))
+	(if (file-directory-p dirname)
+		(setq D (cons dirname D))
+	  (message "skip %s: not a directory" dirname))
 	)
+  (if (not D) ;; no dir, then used the default
+	  (setq D (list default-directory)))
   (delete-dups D)
   )
 
@@ -220,4 +225,4 @@
   (add-hook 'project-find-functions 'jbo/project-try)
   )
 
-(jbo-fix-project-roots)
+;; (jbo-fix-project-roots)
