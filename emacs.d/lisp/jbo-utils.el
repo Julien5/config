@@ -5,7 +5,7 @@
   (dolist (r R)
 	(setq D (cons (file-name-as-directory r) D))
 	)
-  D
+  (delete-dups D)
   )
 
 (defun jbo/find-file ()
@@ -197,17 +197,28 @@
   (cons 'jbo dir)
   )
 
-(cl-defmethod project-roots ((project (head jbo)))
-  ;; jbo-projectiles + current dir
-  (setq R (jbo-projectiles))
-  (setq D (cdr project))
-  (setq R (append R (list D)))
-  (delete-dups R)
+(cl-defmethod project-root ((project (head jbo)))
+  (cdr project)
   )
 
+(cl-defmethod project-external-roots ((project (head jbo)))
+  ;; jbo-projectiles + current dir
+  (setq P (project-root project))
+  (setq R (jbo-projectiles))
+  (setq ret (list))
+  (message "1:%s" ret)
+  (dolist (r R)
+	(if (member r P)
+		nil
+	  (setq ret (cons r ret)))
+	)
+  (message "2:%s" ret)
+  ret
+  )
+  
 (defun jbo-fix-project-roots ()
   (setq project-find-functions nil)
   (add-hook 'project-find-functions 'jbo/project-try)
   )
 
-;;(jbo-fix-project-roots)
+(jbo-fix-project-roots)
