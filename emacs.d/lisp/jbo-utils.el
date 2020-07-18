@@ -10,7 +10,7 @@
 
 (defun jbo/find-file ()
   (interactive)
-  (project-find-file)
+  (project-or-external-find-file)
   )
 
 (defun jbo-update-tags-for-file-execute (filename)
