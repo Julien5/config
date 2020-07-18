@@ -203,17 +203,9 @@
 
 (cl-defmethod project-external-roots ((project (head jbo)))
   ;; jbo-projectiles + current dir
-  (setq P (project-root project))
+  (setq P (list (project-root project)))
   (setq R (jbo-projectiles))
-  (setq ret (list))
-  (message "1:%s" ret)
-  (dolist (r R)
-	(if (member r P)
-		nil
-	  (setq ret (cons r ret)))
-	)
-  (message "2:%s" ret)
-  ret
+  (set-difference R P :test #'equal)
   )
   
 (defun jbo-fix-project-roots ()
