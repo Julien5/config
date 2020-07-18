@@ -28,7 +28,6 @@
 (defun refactor-references ()
   (interactive)
   (save-excursion
-	(message "test")
 	(if (not (equal (buffer-name) "*xref*"))
 		(find-references)
 	  nil)

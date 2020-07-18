@@ -8,7 +8,6 @@
   D
   )
 
-
 (defun update-tags-for-file-execute (filename)
   (setq executable (format "%s/bash/%s" user-emacs-directory "update-tags.sh"))
   (setq cmd (format "%s %s" executable
@@ -183,15 +182,8 @@
 (cl-defmethod project-roots ((project (head jbo)))
   ;;(setq R (list "a/" "b/"))
   (setq R (jbo-projectiles))
-  (message "R:%s" R)
   (setq D (cdr project))
-  (message "D:%s" D)
   (setq R (append R (list D)))
-  ;;(setq R (list "a/" "b/" (cdr project)))
-  (message "project:%s" project)
-  (message "R:%s" R)
-  ;; (delete-dups )
-
   (delete-dups R)
   )
 
@@ -200,4 +192,4 @@
   (add-hook 'project-find-functions 'jbo/project-try)
   )
 
-(jbo-fix-project-roots)
+;;(jbo-fix-project-roots)

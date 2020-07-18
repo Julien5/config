@@ -116,7 +116,6 @@ There are two things you can do about this warning:
 (setq tags-table-list '("~/.op/TAGS"))
 (setq large-file-warning-threshold 100000000)
 
-
 (jbo-fix-project-roots)
 
 ;; projectile
