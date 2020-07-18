@@ -193,7 +193,6 @@
   )
 
 (defun jbo/project-try (dir)
-  (message "directory:%s" dir)
   (cons 'jbo dir)
   )
 
