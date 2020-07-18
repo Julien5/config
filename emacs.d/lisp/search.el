@@ -25,7 +25,7 @@
 		  (message "no symbol at cursor")
 		  )))))
 
-(defun refactor-references ()
+(defun jbo/refactor-references ()
   (interactive)
   (save-excursion
 	(if (not (equal (buffer-name) "*xref*"))
