@@ -36,11 +36,10 @@ There are two things you can do about this warning:
     )
 
   (require 'package)
-  (package-refresh-contents)
+  ;; (package-refresh-contents)
   (package-install 'expand-region)
   (package-install 'magit)
   (package-install 'smartscan)
   )
 
-
-(jbo-package-initialize)
+;; (jbo-package-initialize)

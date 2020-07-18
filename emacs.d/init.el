@@ -2,7 +2,7 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
-(package-initialize)
+;; (package-initialize)
 
 (setq inhibit-startup-screen t)
 ;; Tell emacs where is your personal elisp lib dir
@@ -38,15 +38,16 @@
 ;; replace meta-/ with C-a
 (global-set-key (kbd "C-a") 'dabbrev-expand) 
 
-(setq colors-file (format "~/.emacs.d/%s/colors.el" (getenv "OSTYPE")))
-(load colors-file)
+;; prevent custom from messing up my init.el
+(setq custom-file (format "~/.emacs.d/%s/custom.el" (getenv "OSTYPE")))
+(load (format "~/.emacs.d/%s/colors.el" (getenv "OSTYPE")))
 
 ;; hide toolbar
 (tool-bar-mode -1)
 
 ;; scroll one line at a time (less "jumpy" than defaults)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
-;; (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 (put 'scroll-left 'disabled nil)
@@ -81,4 +82,5 @@
 (add-hook 'after-save-hook 'jbo/update-tags-for-file)
 
 (jbo-setup-windows)
+
 (message "hi")
