@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# echo $@ > ~/args
+
 source $JULIEN5CONFIGPATH/scripts/normalize.sh
 
 function other() {
@@ -37,7 +39,7 @@ function getdirs() {
 	fi
 }
 
-ret=$(find $(getdirs) -type f -name "$bname" | head -1)
+ret=$(find $(getdirs) -type f -name "$bname*" | head -1)
 if [[ -f "$ret" ]]; then
 	echo -n $(normalize.path $ret)
 fi
