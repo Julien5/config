@@ -63,8 +63,12 @@ if [[ "$1" == "--start" ]]; then
 	pushd $1
 	export OSTYPE
 	emacs --debug-init --maximized "$@" &
-	PID="$!"
+	RPID="$!"
+	normalize.pid $RPID
+	PID=$(normalize.pid "$RPID")
+	echo mingw: $RPID public: $PID
 	rm -Rf $(op.dir)
+	echo create ~/.op/$PID/
 	mkdir -p ~/.op/$PID/
 	if [[ ! -d $(op.dir) ]]; then
 		echo "could not create op directory for new processr pid=$PID"
