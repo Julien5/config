@@ -1,21 +1,22 @@
 (defun jbo/find-references ()
   (interactive)
-  (save-excursion
-    (let* ((word (symbol-at-point)))
-	  (message "find-references %s" word)
-	  (if word
-		  (let ((w (format "%s" word)))
-			(xref-find-references w)
-			)
-		(message "no symbol at cursor")
-		))))
+  (save-selected-window
+	(save-excursion
+      (let* ((word (symbol-at-point)))
+		(message "find-references %s" word)
+		(if word
+			(let ((w (format "%s" word)))
+			  (xref-find-references w)
+			  )
+		  (message "no symbol at cursor")
+		  )))))
 
 (defun jbo/find-definitions ()
   (interactive)
   (save-selected-window
 	(save-excursion
 	  (message "find-definitions...")
-	  (window-state-put jbo/xref-state jbo/bottom-window)
+	  ;;(window-state-put jbo/xref-state jbo/bottom-window)
 	  (let* ((word (symbol-at-point)))
 		(message "find-definitions for %s" word)
 		(if word

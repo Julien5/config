@@ -62,6 +62,7 @@ if [[ "$1" == "--start" ]]; then
 		echo "could not create op directory for new processr pid=$PID"
 		exit 1;
 	fi
+	touch $(op.dir)/projects
 	popd
 	RAWDIRS=("$@")
 	DIRS=()

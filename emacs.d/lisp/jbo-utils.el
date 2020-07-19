@@ -134,7 +134,7 @@
 (defun jbo/compile ()
   (interactive)
   (save-selected-window
-	(window-state-put jbo/compilation-state jbo/bottom-window)
+	;;(window-state-put jbo/compilation-state jbo/bottom-window)
 	(compile compile-command)
 	))
 
@@ -221,7 +221,10 @@
 
 (defun jbo-fix-project-roots ()
   (setq project-find-functions nil)
-  (setq project-list-file (expand-file-name (format "~/.op/%s/projects" (emacs-pid))))
+  (setq dirname (expand-file-name (format "~/.op/%s/" (emacs-pid))))
+  (if (not (file-directory-p dirname))
+	  (setq dirname (expand-file-name "~/.op/")))
+  (setq project-list-file (expand-file-name (format "%s/projects-delme" dirname)))
   (add-hook 'project-find-functions 'jbo/project-try)
   )
 

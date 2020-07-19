@@ -15,12 +15,10 @@
 (define-key c++-mode-map [S-f6] 'previous-error)
 
 (global-set-key (kbd "<f9>") 'jbo/take-buffer)
+(global-set-key (kbd "<f10>") 'magit-status)
 
-(global-set-key (kbd "<C-left>") 'backward-word)
-(global-set-key (kbd "<C-right>") 'forward-word)
-
-(global-set-key (kbd "<C-up>") 'backward-paragraph)
-(global-set-key (kbd "<C-down>") 'forward-paragraph)
+(global-set-key (kbd "<M-left>") 'xref-pop-marker-stack)
+;;(global-set-key (kbd "<M-right>") 'forward-word)
 
 ;; c-c c-v for copy paste
 (cua-mode t)

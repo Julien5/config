@@ -81,6 +81,4 @@
 
 (add-hook 'after-save-hook 'jbo/update-tags-for-file)
 
-(jbo-setup-windows)
-
 (message "hi")
