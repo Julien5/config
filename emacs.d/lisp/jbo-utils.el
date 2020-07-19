@@ -228,4 +228,48 @@
   (add-hook 'project-find-functions 'jbo/project-try)
   )
 
-;; (jbo-fix-project-roots)
+(defun jbo-set-white-background ()
+  (set-background-color "gray"))
+
+(defun jbo-set-blue-background ()
+  (set-background-color "dark blue"))
+
+(defun jbo-set-dark-background ()
+  (set-background-color "#242424"))
+
+(defun jbo-set-background-for-mode ()
+  (message "mm:%s" major-mode)
+  (let ((mm (format "%s" major-mode)))
+	(cond
+	 ((string-prefix-p "ebrowse" mm) (jbo-set-white-background))
+	 (t (jbo-set-dark-background))
+	 )))
+
+;; {{
+(defun jbo-ebrowse-file()
+  (setq filename (expand-file-name (format "~/.op/%s/BROWSE" (emacs-pid))))
+  (if (file-exists-p filename)
+	  filename
+	nil))
+(setq jbo-ebrowse-visited nil)
+(defun jbo-visit-ebrowse()
+  (if (not jbo-ebrowse-visited)
+	  (save-selected-window
+		(if (jbo-ebrowse-file)
+			(progn (find-file-other-window (jbo-ebrowse-file))
+				   (delete-window)
+				   (setq jbo-ebrowse-visited +1)
+			   )
+		  nil))
+	)
+  )
+(defun jbo/open-ebrowse()
+  (interactive)
+  (setq filename (expand-file-name (format "~/.op/%s/BROWSE" (emacs-pid))))
+  (if (jbo-ebrowse-file)
+	  (progn (find-file (jbo-ebrowse-file))
+			 (delete-other-windows)
+			 )
+	nil)
+  )
+;; }}} ebrowse stuff.

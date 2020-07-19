@@ -42,6 +42,11 @@
 (setq custom-file (format "~/.emacs.d/%s/custom.el" (getenv "OSTYPE")))
 (load (format "~/.emacs.d/%s/colors.el" (getenv "OSTYPE")))
 
+;; https://stackoverflow.com/questions/23142699/in-gnu-emacs-how-to-set-background-color-by-mode
+;;(add-hook 'post-command-hook 'jbo-set-background-for-mode)
+;;(add-hook 'change-major-mode-hook 'jbo-set-background-for-mode)
+;;(add-hook 'window-configuration-change-hook 'jbo-set-background-for-mode)
+
 ;; hide toolbar
 (tool-bar-mode -1)
 
