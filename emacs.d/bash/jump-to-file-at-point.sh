@@ -39,6 +39,6 @@ function getdirs() {
 
 ret=$(find $(getdirs) -type f -name "$bname" | head -1)
 if [[ -f "$ret" ]]; then
-	echo -n $(normalize $ret)
+	echo -n $(normalize.path $ret)
 fi
 

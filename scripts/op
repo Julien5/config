@@ -8,7 +8,7 @@ SCRIPTPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/"
 source $JULIEN5CONFIGPATH/scripts/normalize.sh
 
 function op.dir() {
-	echo "$(normalize ~/.op/$PID/)"
+	echo "$(normalize.path ~/.op/$PID/)"
 }
 
 function tags.cmd() {
@@ -45,7 +45,7 @@ function start.tags() {
 	# not good:
 	# for stddir in $(find $(dirname $(which gcc))/.. -name "include" -type d)
 	# do
-	# 	echo ctags.exe -a -f $OP/TAGS -Re $(normalize $stddir)
+	# 	echo ctags.exe -a -f $OP/TAGS -Re $(normalize.path $stddir)
 	# done
 	# for D in "${DIRS[@]}"
 	for D in "${DIRS[@]}"
@@ -75,7 +75,7 @@ if [[ "$1" == "--start" ]]; then
 	RAWDIRS=("$@")
 	DIRS=()
 	for a in "${RAWDIRS[@]}"; do
-		b="$(normalize "$a")"
+		b="$(normalize.path "$a")"
 		DIRS+=("$b")
 		find "$b" -name "*~"  -o -name "*~*TMP*" -o -name "#*" -print -delete
 		printf "%s\n" "$b" >> "$(op.dir)"/projectiles
@@ -83,7 +83,7 @@ if [[ "$1" == "--start" ]]; then
 	start.tags
 	exit 0
 elif isnumber "$1"; then
-	PID=$1
+	PID=$(normalize.pid $1)
 	projectiles="$(op.dir)/projectiles"
 	readarray -t DIRS < $projectiles
 	#for a in "${DIRS[@]}"; do
@@ -95,6 +95,6 @@ else
 fi
 
 if [[ "$2" == "--update-tags" ]]; then
-	filename="$(normalize "$3")"
+	filename="$(normalize.path "$3")"
 	tags.file "$filename"
 fi

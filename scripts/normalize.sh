@@ -21,6 +21,15 @@ function winify() {
 	fi
 }
 
-function normalize() {
+function normalize.path() {
 	echo $(winify $(realpath "$@"))
+}
+
+
+function normalize.pid {
+	if [[ "$(system)" = "msys"  ]]; then
+		ps -p $1 | awk -e '/^[[:space:]]+[[:digit:]+]/{print $4}'
+	else
+		echo $1
+	fi
 }
