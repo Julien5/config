@@ -265,7 +265,6 @@
   )
 (defun jbo/open-ebrowse()
   (interactive)
-  (setq filename (expand-file-name (format "~/.op/%s/BROWSE" (emacs-pid))))
   (if (jbo-ebrowse-file)
 	  (progn (find-file (jbo-ebrowse-file))
 			 (delete-other-windows)

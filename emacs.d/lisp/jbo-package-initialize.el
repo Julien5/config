@@ -34,9 +34,11 @@ There are two things you can do about this warning:
     ;; and `package-pinned-packages`. Most users will not need or want to do this.
     ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
     )
-
+  
   (require 'package)
-  ;; (package-refresh-contents)
+  (setq dirname (expand-file-name "~/.emacs.d/elpa/"))
+  (if (not (file-directory-p dirname))
+	  (progn (package-refresh-contents)))
   (package-install 'expand-region)
   (package-install 'magit)
   (package-install 'smartscan)
