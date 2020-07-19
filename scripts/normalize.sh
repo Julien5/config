@@ -28,7 +28,12 @@ function normalize.path() {
 
 function normalize.pid {
 	if [[ "$(system)" = "msys"  ]]; then
-		ps -W  | grep $1 | grep emacs | tail -1 | awk -e '/^[[:space:]]+[[:digit:]+]/{print $4}'
+		# a hack. works only if WPIDs and PIDs have no common element 
+		if ps -p $1 &> /dev/null; then
+			ps -W | grep $1 | grep emacs | tail -1 | awk -e '/^[[:space:]]+[[:digit:]+]/{print $4}'
+		else
+			echo $1
+		fi
 	else
 		echo $1
 	fi
