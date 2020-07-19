@@ -25,20 +25,17 @@ dir=$(realpath $(dirname $fname))
 
 if [[ "$line" =~ "include" ]]; then
 	included=$(echo "$line" | tr "\t " " " | tr -s " " | cut -f2 -d" " | tr -d "\"<>");
-	fname="$included"
-	bname=$(basename $fname)
+	bname=$(basename "$included")
 else
-	fname=$(other $fname);
-	bname="$fname"*
+	bname=$(other $fname);
 fi
 
 function getdirs() {
 	printf "%s " "$dir"
-	if [[ -f ~/.op/projectiles ]]; then
+	if [[ -f ~/.op/$pid/projectiles ]]; then
 		cat ~/.op/$pid/projectiles | while read a; do printf "%s " "$a"; done;
 	fi
 }
-
 
 ret=$(find $(getdirs) -type f -name "$bname" | head -1)
 if [[ -f "$ret" ]]; then
