@@ -50,7 +50,16 @@
 	  )
 	)
   )
-;; (update-tags-for-file)
+
+(defun jbo/git-diff ()
+  (interactive)
+  (let* ((file (expand-file-name (buffer-file-name (current-buffer)))))
+	(if (file-exists-p file)
+		(progn (setq cmd (format "git difftool %s" file))
+			   (message "exe:%s" cmd)
+			   (shell-command-to-string cmd))
+	  (message "file not found:%s" file))
+	))
 
 (defun jbo/create-proper-compilation-window ()
   "Setup the *compilation* window with custom settings."

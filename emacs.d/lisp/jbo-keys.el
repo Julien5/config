@@ -14,7 +14,7 @@
 (define-key c++-mode-map [C-f6] 'first-error)
 (define-key c++-mode-map [S-f6] 'previous-error)
 
-(global-set-key (kbd "<f9>") 'jbo/take-buffer)
+(global-set-key (kbd "<f9>") 'jbo/git-diff)
 (global-set-key (kbd "<f10>") 'magit-status)
 
 (global-set-key (kbd "<M-left>") 'xref-pop-marker-stack)
