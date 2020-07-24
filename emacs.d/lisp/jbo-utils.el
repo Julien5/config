@@ -122,6 +122,7 @@
 
 (defun jbo/next-code-buffer ()
   (interactive)
+  (message "next-code-buffer")
   (let (( bread-crumb (buffer-name) ))
     (switch-to-next-buffer)
     (while
@@ -133,6 +134,7 @@
 
 (defun jbo/prev-code-buffer ()
   (interactive)
+  (message "prev-code-buffer")
   (let (( bread-crumb (buffer-name) ))
     (switch-to-prev-buffer)
     (while
@@ -225,6 +227,28 @@
 			  (setq indent-tabs-mode nil)
 			  (infer-indentation-style)))
   )
+
+
+(defun jbo/mark-line ()
+  "mark one line"
+  (message "hi for line")
+  (let ((inhibit-field-text-motion t))
+    (end-of-line)
+    (push-mark nil t t)
+    (beginning-of-line))
+  )
+ 
+(defun jbo-fix-expand-region-for-line-p ()
+  (make-variable-buffer-local 'er/try-expand-list)
+  (setq er/try-expand-list (append er/try-expand-list '(jbo/mark-line)))
+  )
+
+(defun jbo-fix-expand-region-for-line ()
+  (add-hook 'prog-mode-hook 'jbo-fix-expand-region-for-line-p)
+  (add-hook 'text-mode-hook 'jbo-fix-expand-region-for-line-p)
+  (add-hook 'special-mode-hook 'jbo-fix-expand-region-for-line-p)
+  )
+
 
 (defun jbo/project-try (dir)
   (cons 'jbo dir)

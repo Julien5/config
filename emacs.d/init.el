@@ -33,6 +33,7 @@
 (add-to-list 'auto-mode-alist '("\\.pr[io]$" . qt-pro-mode))
 
 (require 'expand-region)
+(jbo-fix-expand-region-for-line)
 (global-set-key (kbd "C-+") 'er/expand-region)
 
 ;; replace meta-/ with C-a
