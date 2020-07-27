@@ -1,4 +1,5 @@
 (defun jump-to-file-at-point-execute (line filename)
+  ;; todo: cache results.  
   (let* ((executable (format "%s/bash/%s"
 							 user-emacs-directory
 							 "jump-to-file-at-point.sh"))
@@ -6,12 +7,16 @@
 					  (shell-quote-argument (string-trim line))
 					  (shell-quote-argument filename))))
     (require 'subr-x)
-	(message "exe:%s" cmd)
-    (setq result (string-trim (shell-command-to-string cmd)))
+	(message "executing:%s %s %s %s"
+			 executable
+			 (emacs-pid)
+			 (shell-quote-argument "line")
+			 (shell-quote-argument filename))
+	(setq result (string-trim (shell-command-to-string cmd)))
     (if (not (equal "" result))
 		(progn (message "found %s" result)
 			   (find-file result))
-      ;;(message "could not find file for %s" filename)
+      (message "could not find other file")
       )
     )
   )
