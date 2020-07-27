@@ -1,16 +1,16 @@
 (defun jump-to-file-at-point-execute (line filename)
   (let* ((executable (format "%s/bash/%s"
-			     user-emacs-directory
-			     "jump-to-file-at-point.sh"))
-	 (cmd (format "%s %s %s %s" executable (emacs-pid)
-		      (shell-quote-argument line)
-		      (shell-quote-argument filename))))
+							 user-emacs-directory
+							 "jump-to-file-at-point.sh"))
+		 (cmd (format "%s %s %s %s" executable (emacs-pid)
+					  (shell-quote-argument (string-trim line))
+					  (shell-quote-argument filename))))
     (require 'subr-x)
 	(message "exe:%s" cmd)
     (setq result (string-trim (shell-command-to-string cmd)))
     (if (not (equal "" result))
-	(progn (message "found %s" result)
-	       (find-file result))
+		(progn (message "found %s" result)
+			   (find-file result))
       ;;(message "could not find file for %s" filename)
       )
     )
@@ -20,7 +20,7 @@
   (interactive)
   (save-excursion
     (let ((basename (file-name-nondirectory buffer-file-name))
-	  (line (thing-at-point 'line' 'no-properties)))
+		  (line (thing-at-point 'line' 'no-properties)))
       (jump-to-file-at-point-execute line basename)
       )))
 
