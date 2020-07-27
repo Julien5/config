@@ -56,7 +56,8 @@
 (global-set-key (kbd "C-a") 'dabbrev-expand) 
 
 ;; prevent custom from messing up my init.el
-(load (format "~/.emacs.d/%s/custom.el" (getenv "OSTYPE")))
+(setq custom-file (format "~/.emacs.d/%s/custom.el" (getenv "OSTYPE")))
+(load custom-file)
 
 ;; https://stackoverflow.com/questions/23142699/in-gnu-emacs-how-to-set-background-color-by-mode
 ;;(add-hook 'post-command-hook 'jbo-set-background-for-mode)
