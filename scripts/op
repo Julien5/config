@@ -8,7 +8,7 @@ SCRIPTPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/"
 source $JULIEN5CONFIGPATH/scripts/normalize.sh
 
 function op.dir() {
-	echo "$(normalize.path ~/.op/$PID/)"
+	echo "$(normalize.path ~/.op/$EMACSPID/)"
 }
 
 function tags.cmd() {
@@ -58,20 +58,32 @@ function start.tags() {
 }
 
 
+function normalized.dirs() {
+	RAWDIRS=("$@")
+	for a in "${RAWDIRS[@]}"; do
+		if [[ ! -d $a  ]]; then
+			continue
+		fi	
+		b="$(normalize.path "$a")"
+		find "$b" -name "*~"  -o -name "*~*TMP*" -o -name "#*" -print -delete
+		printf "%s\n" "$b"
+	done
+}
+
 if [[ "$1" == "--start" ]]; then
 	shift
 	pushd $1
 	export OSTYPE
-	emacs --debug-init --maximized "$@" &
-	RPID="$!"
-	normalize.pid $RPID
-	PID=$(normalize.pid "$RPID")
-	echo mingw: $RPID public: $PID
+	eval emacs --debug-init --maximized $(normalized.dirs "$@" | tr "\n" " ") &
+	ps -W | grep emacs
+	sleep 1
+	ps -W | grep emacs
+	EMACSPID=$(last.refindable.emacs.pid)
 	rm -Rf $(op.dir)
-	echo create ~/.op/$PID/
-	mkdir -p ~/.op/$PID/
+	echo create ~/.op/$EMACSPID/
+	mkdir -p ~/.op/$EMACSPID/
 	if [[ ! -d $(op.dir) ]]; then
-		echo "could not create op directory for new processr pid=$PID"
+		echo "could not create op directory for new processr pid=$EMACSPID"
 		exit 1;
 	fi
 	touch $(op.dir)/projects
@@ -87,7 +99,8 @@ if [[ "$1" == "--start" ]]; then
 	start.tags
 	exit 0
 elif isnumber "$1"; then
-	PID=$(normalize.pid $1) # Warning: PID passed by emacs is already a WPID => normalize.pid hack.
+	EMACSPID=$1
+	[[ -d "$(op.dir)"  ]] || exit 1
 	projectiles="$(op.dir)/projectiles"
 	readarray -t DIRS < $projectiles
 	#for a in "${DIRS[@]}"; do

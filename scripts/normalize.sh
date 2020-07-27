@@ -26,15 +26,10 @@ function normalize.path() {
 }
 
 
-function normalize.pid {
+function last.refindable.emacs.pid {
 	if [[ "$(system)" = "msys"  ]]; then
-		# a hack. works only if WPIDs and PIDs have no common element 
-		if ps -p $1 &> /dev/null; then
-			ps -W | grep $1 | grep emacs | tail -1 | awk -e '/^[[:space:]]+[[:digit:]+]/{print $4}'
-		else
-			echo $1
-		fi
+		ps -W | grep emacs | tail -1 | awk -e '/^[[:space:]]+[[:digit:]+]/{print $4}'
 	else
-		echo $1
+		ps -ef | grep emacs | tail -1 | awk -e '/[[:space:]]+[[:digit:]+]/{print $3}'
 	fi
 }

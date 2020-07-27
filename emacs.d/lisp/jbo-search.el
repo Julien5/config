@@ -1,30 +1,37 @@
 (defun jbo/find-references ()
   (interactive)
-  (save-selected-window
-	(save-excursion
-      (let* ((word (symbol-at-point)))
-		(message "find-references %s" word)
-		(if word
-			(let ((w (format "%s" word)))
-			  (xref-find-references w)
-			  )
-		  (message "no symbol at cursor")
-		  )))))
+  (delete-other-windows)
+  (save-excursion
+    (let* ((word (symbol-at-point))
+		   (jbo-dir (file-name-directory (car (jbo-projectiles)))))
+	  (message "find-references %s in %s" word jbo-dir)
+	  (if word
+		  (let ((w (format "%s" word)))
+			;; (xref-find-references w)
+			(require 'ag)
+			(ag/search w jbo-dir :file-regex ".cpp$")
+			)
+		(message "no symbol at cursor")
+		)
+	  ))
+ )
+
 
 (defun jbo/find-definitions ()
   (interactive)
-  (save-selected-window
-	(save-excursion
-	  (message "find-definitions...")
-	  ;;(window-state-put jbo/xref-state jbo/bottom-window)
-	  (let* ((word (symbol-at-point)))
-		(message "find-definitions for %s" word)
-		(if word
-			(let ((w (format "%s" word)))
-			  (xref-find-definitions w)
-			  )
-		  (message "no symbol at cursor")
-		  )))))
+  (delete-other-windows)
+  (save-excursion
+	(message "find-definitions...")
+	;;(window-state-put jbo/xref-state jbo/bottom-window)
+	(let* ((word (symbol-at-point)))
+	  (message "find-definitions for %s" word)
+	  (if word
+		  (let ((w (format "%s" word)))
+			(xref-find-definitions w)
+			)
+		(message "no symbol at cursor")
+		))))
+
 
 (defun jbo/refactor-references ()
   (interactive)

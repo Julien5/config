@@ -1,16 +1,20 @@
 (defun jbo-package-initialize ()
   (setq package-archives nil)
   ;;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-  (package-initialize)
+  (setq package-archives '(("GNU ELPA" . "https://elpa.gnu.org/packages/")
+						   ;;("MELPA Stable" . "https://stable.melpa.org/packages/")
+						   ("MELPA" . "https://melpa.org/packages/"))
+		package-archive-priorities '(;;("MELPA Stable" . 10)
+									 ("MELPA" . 5)
+									 ("GNU ELPA" . 0)))
+  (unless package--initialized (package-initialize t))
   
   ;; Bootstrap 'use-package'
   (eval-after-load 'gnutls '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
-  (eval-when-compile
-    (require 'use-package))
+  (eval-when-compile (require 'use-package))
   (require 'bind-key)
   (setq use-package-always-ensure t)
 
@@ -40,8 +44,11 @@ There are two things you can do about this warning:
   (if (not (file-directory-p dirname))
 	  (progn (package-refresh-contents)))
   (package-install 'expand-region)
-  (package-install 'magit)
+  ;;(package-install 'magit)
   (package-install 'smartscan)
+  (package-install 'flycheck)
+  (package-install 'company)
+  (package-install 'lsp-mode)
   )
 
-;; (jbo-package-initialize)
+(jbo-package-initialize)

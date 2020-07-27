@@ -11,9 +11,9 @@
 (define-key c++-mode-map [f2] 'jbo/jump-to-file-at-point)
 (define-key c++-mode-map [tab] 'jbo/clang-format-buffer)
 
-(define-key c++-mode-map [f6] 'next-error)
-(define-key c++-mode-map [C-f6] 'first-error)
-(define-key c++-mode-map [S-f6] 'previous-error)
+(global-set-key (kbd "<f6>") 'next-error)
+(global-set-key (kbd "<C-f6>") 'first-error)
+(global-set-key (kbd "<S-f6>") 'previous-error)
 
 (global-set-key (kbd "<f9>") 'jbo/git-diff)
 (global-set-key (kbd "<f10>") 'magit-status)
