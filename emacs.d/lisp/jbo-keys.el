@@ -9,7 +9,7 @@
 (define-key c++-mode-map [f5] 'jbo/compile)
 (define-key c++-mode-map [S-f5] 'jbo/set-compile)
 (define-key c++-mode-map [f2] 'jbo/jump-to-file-at-point)
-(define-key c++-mode-map [tab] 'clang-format-buffer)
+(define-key c++-mode-map [tab] 'jbo/clang-format-buffer)
 
 (define-key c++-mode-map [f6] 'next-error)
 (define-key c++-mode-map [C-f6] 'first-error)

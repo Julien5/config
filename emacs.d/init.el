@@ -5,6 +5,9 @@
 ;; (package-initialize)
 
 (setq inhibit-startup-screen t)
+;; stop creating backup files and autosave.
+(setq auto-save-default nil)
+(setq make-backup-files nil)
 ;; Tell emacs where is your personal elisp lib dir
 ;;{{{ Set up package and use-package
 
@@ -24,10 +27,23 @@
 
 (jbo/fix-python-indentation)
 
+(require 'lsp-mode)
+;;(setq lsp-clients-clangd-args "-cross-file-rename")
+;;(defvar lsp-clients-clangd-args '("-cross-file-rename"))
+(use-package lsp-mode
+  :config
+  ;; `-background-index' requires clangd v8+!
+  (setq lsp-clients-clangd-args '("-cross-file-rename" "-j=4" "-background-index" "-log=error"))
+  
+  ;; ..
+  )
+
 (require 'cc-mode)
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
+
+(setq exec-path (append exec-path '("c:/tools/llvm/llvm-10/bin/")))
 
 (require 'qt-pro-mode)
 (add-to-list 'auto-mode-alist '("\\.pr[io]$" . qt-pro-mode))
@@ -40,8 +56,7 @@
 (global-set-key (kbd "C-a") 'dabbrev-expand) 
 
 ;; prevent custom from messing up my init.el
-(setq custom-file (format "~/.emacs.d/%s/custom.el" (getenv "OSTYPE")))
-(load (format "~/.emacs.d/%s/colors.el" (getenv "OSTYPE")))
+(load (format "~/.emacs.d/%s/custom.el" (getenv "OSTYPE")))
 
 ;; https://stackoverflow.com/questions/23142699/in-gnu-emacs-how-to-set-background-color-by-mode
 ;;(add-hook 'post-command-hook 'jbo-set-background-for-mode)
@@ -76,13 +91,6 @@
 
 (jbo-fix-project-roots)
 
-;; clang-format
-(require 'clang-format)
-(setq clang-format-style-option nil)
-(if (executable-find "clang-format-9.0")
-	(setq clang-format-executable "clang-format-9.0")
-  (setq clang-format-executable "clang-format")
-  )
 (setq compilation-scroll-output 'first-error)
 
 (add-hook 'after-save-hook 'jbo/update-tags-for-file)
