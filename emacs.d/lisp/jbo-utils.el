@@ -51,11 +51,16 @@
 	)
   )
 
-(defun jbo/git-diff ()
+(defun jbo/diff ()
   (interactive)
+  (setq jbo-diff "git-or-svn-unfixed")
+  (if (locate-dominating-file buffer-file-name ".git")
+	  (setq jbo-diff "git difftool")
+	(if (locate-dominating-file buffer-file-name ".svn")
+		(setq jbo-diff "psvn diff")))
   (let* ((file (expand-file-name (buffer-file-name (current-buffer)))))
 	(if (file-exists-p file)
-		(progn (setq cmd (format "git difftool %s" file))
+		(progn (setq cmd (format "%s %s" jbo-diff file))
 			   (message "exe:%s" cmd)
 			   (shell-command-to-string cmd))
 	  (message "file not found:%s" file))
@@ -310,3 +315,26 @@
 	)
   (message "formatting with %s" clang-format-executable)
   (clang-format-buffer))
+
+
+(defun jbo/delete-line ()
+  "Delete (not kill) the current line."
+  (interactive)
+  (save-excursion
+    (delete-region
+     (progn (forward-visible-line 0) (point))
+     (progn (forward-visible-line 1) (point)))))
+
+(defun jbo/delete-word (arg)
+  "Delete characters forward until encountering the end of a word.
+With argument, do this that many times."
+  (interactive "p")
+  (if (use-region-p)
+      (delete-region (region-beginning) (region-end))
+    (delete-region (point) (progn (forward-word arg) (point)))))
+
+(defun jbo/backward-delete-word (arg)
+  "Delete characters backward until encountering the end of a word.
+With argument, do this that many times."
+  (interactive "p")
+  (jbo/delete-word (- arg)))

@@ -15,7 +15,7 @@
 (global-set-key (kbd "<C-f6>") 'first-error)
 (global-set-key (kbd "<S-f6>") 'previous-error)
 
-(global-set-key (kbd "<f9>") 'jbo/git-diff)
+(global-set-key (kbd "<f9>") 'jbo/diff)
 (global-set-key (kbd "<f10>") 'magit-status)
 
 (global-set-key (kbd "<M-left>") 'xref-pop-marker-stack)
@@ -23,6 +23,8 @@
 
 ;; c-c c-v for copy paste
 (cua-mode t)
+(global-set-key (kbd "<C-backspace>") 'jbo/backward-delete-word)
+(global-set-key (kbd "<C-delete>") 'jbo/delete-line)
 
 (global-set-key (kbd "<C-tab>") 'jbo/next-code-buffer)
 (global-set-key (kbd "<C-S-tab>") 'jbo/prev-code-buffer)
