@@ -9,7 +9,7 @@
 		  (let ((w (format "%s" word)))
 			;; (xref-find-references w)
 			(require 'ag)
-			(ag/search w jbo-dir :file-regex ".cpp$")
+			(ag/search w jbo-dir :file-regex ".cpp$|.c$|.h$|.sh$|.py$|.pro$")
 			)
 		(message "no symbol at cursor")
 		)
