@@ -84,6 +84,15 @@
 		  )))))
 
 
+(defun jbo-compile-command ()
+  (if (and (boundp 'jbo-compilation-command) jbo-compilation-command)
+	  jbo-compilation-command
+	(if (file-directory-p (expand-file-name (format "%s/make" (getenv "SETUPROOT"))))
+		(expand-file-name (format "%s/make/mk -r" (getenv "SETUPROOT")))
+	  "make"
+	  )
+	))
+
 (defun jbo-setup-windows ()
   (setq jbo/main-window (get-buffer-window))
   (delete-other-windows)
@@ -101,10 +110,8 @@
   (setq compilation-mode-hook nil)
   (add-hook 'compilation-mode-hook 'jbo/create-proper-compilation-window)
   (compile "echo")
-  (setq compile-command "make")
-  (if (file-directory-p (expand-file-name (format "%s/make" (getenv "SETUPROOT"))))
-	  (setq compile-command "$SETUPROOT/make/mk"))
-  (message "ok")
+  (setq compile-command (jbo-compile-command))
+  (message "compile-command:%s" compile-command)
   (save-selected-window
 	(setq jbo/bottom-window (get-buffer-window "*compilation*"))
 	(select-window jbo/bottom-window)
@@ -152,11 +159,14 @@
 (defun jbo/compile ()
   (interactive)
   (save-selected-window
+	(delete-other-windows)
 	(setq orig-dd nil)
 	(if (boundp 'jbo-compilation-directory)
 		(progn (setq orig-dd default-directory)
 			   (cd jbo-compilation-directory))
 	  )
+	(setq compile-command (jbo-compile-command))
+	(message "compile-command:%s" compile-command)
 	(compile compile-command)
 	(if orig-dd (cd orig-dd))
 	))
