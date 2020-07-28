@@ -1,6 +1,8 @@
 (require 'project)
 (global-set-key (kbd "<f8>") 'modal-mode)
 
+(global-set-key (kbd "<C-f1>") 'jbo/google-search)
+(global-set-key (kbd "<S-C-f1>") 'jbo/so-search)
 (global-set-key (kbd "<f4>") 'jbo/find-definitions)
 (global-set-key (kbd "<f3>") 'jbo/find-references)
 (global-set-key (kbd "C-l") 'goto-line)

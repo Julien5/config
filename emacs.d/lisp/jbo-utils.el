@@ -252,7 +252,7 @@
     (push-mark nil t t)
     (beginning-of-line))
   )
- 
+
 (defun jbo-fix-expand-region-for-line-p ()
   (make-variable-buffer-local 'er/try-expand-list)
   (setq er/try-expand-list (append er/try-expand-list '(jbo/mark-line)))
@@ -355,10 +355,54 @@ With argument, do this that many times."
   (let ((completion-regexp-list '("\\`[^*]"
                                   "\\`\\([^T]\\|T\\($\\|[^A]\\|A\\($\\|[^G]\\|G\\($\\|[^S]\\|S.\\)\\)\\)\\).*")))
 	(call-interactively 'switch-to-buffer)
-  ))
+	))
 
 (defun jbo/magit-status ()
   (interactive)
   (magit-status)
   (delete-other-windows)
   )
+
+
+(defun jbo/so-search ()
+  (interactive)
+  (setq jboword nil)
+  (if (use-region-p)
+      (setq jboword (buffer-substring (region-beginning) (region-end))))
+  (setq jboword (read-string "so: " jboword))
+  (sx-search "stackoverflow" jboword))
+
+;;; The custom search URLs
+(defvar *internet-search-urls*
+  (quote ("http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
+		  "http://en.wikipedia.org/wiki/Special:Search?search=")))
+
+;;; Search a query on the Internet using the selected URL.
+(defun jbo/google-search (arg)
+  "Searches the internet using the ARGth custom URL for the marked text.
+If a region is not selected, prompts for the string to search on.
+The prefix number ARG indicates the Search URL to use. By default the search URL at position 1 will be used."
+  (interactive "p")
+
+  ;; Some sanity check.
+  (if (> arg (length *internet-search-urls*))
+	  (error "There is no search URL defined at position %s" arg))
+
+  (setq jboword nil)
+  (if (use-region-p)
+      (setq jboword (buffer-substring (region-beginning) (region-end))))
+  (setq jboword (read-string "gg: " jboword))
+  ;; Now get the Base URL to use for the search
+  (setq baseurl (nth (1- arg) *internet-search-urls*))
+	
+  ;; Add the query parameter
+  (let ((url
+		 (if (string-match "%s" baseurl)
+			 ;; If the base URL has a %s embedded, then replace it
+			 (replace-match jboword t t baseurl)
+		   ;; Else just append the query string at end of the URL
+		   (concat baseurl jboword))))
+	
+	(message "Searching for %s at %s" jboword url)
+	;; Now browse the URL
+	(browse-url url)))
