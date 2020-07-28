@@ -8,6 +8,10 @@
 ;; stop creating backup files and autosave.
 (setq auto-save-default nil)
 (setq make-backup-files nil)
+(setq completion-ignore-case  t)
+(setq read-file-name-completion-ignore-case t)
+(setq read-buffer-completion-ignore-case t)
+
 ;; Tell emacs where is your personal elisp lib dir
 ;;{{{ Set up package and use-package
 

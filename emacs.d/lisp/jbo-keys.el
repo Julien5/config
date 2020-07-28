@@ -16,7 +16,8 @@
 (global-set-key (kbd "<S-f6>") 'previous-error)
 
 (global-set-key (kbd "<f9>") 'jbo/diff)
-(global-set-key (kbd "<f10>") 'magit-status)
+(global-set-key (kbd "<f10>") 'jbo/magit-status)
+(global-set-key (kbd "M-a") 'jbo/buffer-list)
 
 (global-set-key (kbd "<M-left>") 'xref-pop-marker-stack)
 ;;(global-set-key (kbd "<M-right>") 'forward-word)

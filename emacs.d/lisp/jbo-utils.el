@@ -348,3 +348,17 @@ With argument, do this that many times."
 With argument, do this that many times."
   (interactive "p")
   (jbo/delete-word (- arg)))
+
+(defun jbo/buffer-list ()
+  (interactive)
+  ;; (read-buffer "> ")
+  (let ((completion-regexp-list '("\\`[^*]"
+                                  "\\`\\([^T]\\|T\\($\\|[^A]\\|A\\($\\|[^G]\\|G\\($\\|[^S]\\|S.\\)\\)\\)\\).*")))
+	(call-interactively 'switch-to-buffer)
+  ))
+
+(defun jbo/magit-status ()
+  (interactive)
+  (magit-status)
+  (delete-other-windows)
+  )
