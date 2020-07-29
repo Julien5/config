@@ -1,4 +1,4 @@
-(defun jbo-projectiles ()
+(defun jbo-projectiles-p ()
   (setq R (cdr command-line-args))
   (setq D (list))
   (dolist (r R)
@@ -12,8 +12,15 @@
   (delete-dups D)
   )
 
+(defun jbo-projectiles ()
+  (if (not (boundp 'jbo-projectiles-cache))
+	  (setq jbo-projectiles-cache (jbo-projectiles-p))
+	)
+  jbo-projectiles-cache
+  )
+
 (defun jbo-tags-path ()
-  (expand-file-name (format "~/.op/%s/TAGS" (emacs-pid)))
+  (expand-file-name (format "~/.op/TAGS" (emacs-pid)))
   )
 
 (defun jbo/reload-tags ()
@@ -292,12 +299,11 @@
   (set-difference R P :test #'equal)
   )
 
+;; must be called in init.el
 (defun jbo-fix-project-roots ()
   (setq project-find-functions nil)
-  (setq dirname (expand-file-name (format "~/.op/%s/" (emacs-pid))))
-  (if (not (file-directory-p dirname))
-	  (setq dirname (expand-file-name "~/.op/")))
-  (setq project-list-file (expand-file-name (format "%s/projects-delme" dirname)))
+  ;;(setq dirname (expand-file-name "~/.op/"))
+  ;;(setq project-list-file (expand-file-name (format "%s/projects-delme" dirname)))
   (add-hook 'project-find-functions 'jbo/project-try)
   )
 
@@ -374,7 +380,6 @@ With argument, do this that many times."
   (magit-status)
   (delete-other-windows)
   )
-
 
 (defun jbo/so-search ()
   (interactive)
