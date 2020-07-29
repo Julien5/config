@@ -40,6 +40,7 @@
 (global-set-key (kbd "<C-tab>") 'jbo/next-code-buffer)
 (global-set-key  (jbo-c-s-tab) 'jbo/prev-code-buffer)
 (global-set-key (kbd "M-k") 'jbo/kill-invisible-buffers)
+(global-set-key (kbd "M-K") 'jbo/kill-internal-buffers)
 
 (global-set-key (kbd "<C-next>") 'other-window)
 (defun prev-window ()  (interactive)  (other-window -1))

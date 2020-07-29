@@ -168,6 +168,32 @@
 	  ))
   )
 
+(defun buffer-mode (&optional buffer-or-name)
+  "Returns the major mode associated with a buffer.
+If buffer-or-name is nil return current buffer's mode."
+  (buffer-local-value 'mode-name
+					  (if buffer-or-name
+						  (get-buffer buffer-or-name)
+						(current-buffer)))
+  )
+
+(defun jbo/kill-internal-buffers ()
+  "Kill all buffers not currently shown in a window somewhere."
+  (interactive)
+  (dolist (buf  (buffer-list))
+	(setq islisp (string-match-p "^\*" (buffer-name buf)))
+	;;(message "mode:%s" (buffer-mode buf))
+	;;(message "match:%s" (string-match-p "^\*" (buffer-name buf)))
+	;;(message "prief:%s" (string-prefix-p "magit" (buffer-mode buf)))
+    (if (or (string-match-p "^\*" (buffer-name buf)) (string-prefix-p "Magit" (buffer-mode buf)))
+		(kill-buffer buf)
+		;; (message "kill %s" buf)
+	  )
+	)
+  )
+
+(jbo/kill-internal-buffers)
+
 (defun jbo/kill-invisible-buffers ()
   "Kill all buffers not currently shown in a window somewhere."
   (interactive)
