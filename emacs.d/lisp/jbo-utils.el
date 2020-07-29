@@ -130,29 +130,35 @@
 	)
   )
 
-;; TODO: fix me
+;; do not switch to a buffer shown on the frame
+;; note: switch-to-next-buffer cycle according to the specified window’s history list,
+;;       rather than the global buffer list
+(setq switch-to-prev-buffer-skip 'this)
+
 (defun jbo/next-code-buffer ()
   (interactive)
   (message "next-code-buffer")
   (let (( bread-crumb (buffer-name) ))
-	(switch-to-buffer (caar (window-next-buffers)))
+	(switch-to-next-buffer)
     (while
         (and
          (string-match-p "^\*" (buffer-name))
          (not ( equal bread-crumb (buffer-name) )) )
-	  (switch-to-buffer (caar (window-next-buffers)))))
+	  (switch-to-next-buffer)
+	  ))
   )
 
 (defun jbo/prev-code-buffer ()
   (interactive)
   (message "prev-code-buffer")
   (let ((bread-crumb (buffer-name)))
-	(switch-to-buffer (caar (window-prev-buffers)))
+	(switch-to-prev-buffer)
     (while
         (and
          (string-match-p "^\*" (buffer-name))
          (not ( equal bread-crumb (buffer-name) )) )
-	  (switch-to-buffer (caar (window-prev-buffers)))))
+	  (switch-to-prev-buffer)
+	  ))
   )
 
 (defun jbo/kill-invisible-buffers ()
