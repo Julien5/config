@@ -25,7 +25,7 @@ function tags.file() {
 }
 
 function tags.dir() {
-	$(tags.cmd) -R --exclude=moc "$1"
+ 	$(tags.cmd) -R --exclude=moc "$1"
 }
 
 function isnumber() {
@@ -53,8 +53,6 @@ function start.tags() {
 		tags.dir $D	
 		ls -lh $(op.dir)/TAGS
 	done
-	# allfiles | ebrowse -o $(op.dir)/BROWSE
-	# ls -lh $(op.dir)/BROWSE
 }
 
 
@@ -72,12 +70,9 @@ function normalized.dirs() {
 
 if [[ "$1" == "--start" ]]; then
 	shift
-	pushd $1
+	pushd $1 
 	export OSTYPE
 	eval emacs --debug-init --maximized $(normalized.dirs "$@" | tr "\n" " ") &
-	ps -W | grep emacs
-	sleep 1
-	ps -W | grep emacs
 	rm -Rf $(op.dir)
 	echo create ~/.op/
 	mkdir -p ~/.op/
@@ -93,7 +88,6 @@ if [[ "$1" == "--start" ]]; then
 		b="$(normalize.path "$a")"
 		DIRS+=("$b")
 		find "$b" -name "*~"  -o -name "*~*TMP*" -o -name "#*" -print -delete
-		printf "%s\n" "$b" >> "$(op.dir)"/projectiles
 	done	
 	start.tags
 	exit 0
