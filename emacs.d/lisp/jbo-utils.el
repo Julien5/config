@@ -130,8 +130,7 @@
 	)
   )
 
-;;(jbo-setup-windows)
-
+;; TODO: fix me
 (defun jbo/next-code-buffer ()
   (interactive)
   (message "next-code-buffer")
@@ -147,13 +146,20 @@
 (defun jbo/prev-code-buffer ()
   (interactive)
   (message "prev-code-buffer")
-  (let (( bread-crumb (buffer-name) ))
+  (let ((bread-crumb (buffer-name)))
 	(switch-to-buffer (caar (window-prev-buffers)))
     (while
         (and
          (string-match-p "^\*" (buffer-name))
          (not ( equal bread-crumb (buffer-name) )) )
 	  (switch-to-buffer (caar (window-prev-buffers)))))
+  )
+
+(defun jbo/kill-invisible-buffers ()
+  "Kill all buffers not currently shown in a window somewhere."
+  (interactive)
+  (dolist (buf  (buffer-list))
+    (unless (get-buffer-window buf 'visible) (kill-buffer buf)))
   )
 
 (defun jbo/compile ()
@@ -396,7 +402,7 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
   (setq jboword (read-string "gg: " jboword))
   ;; Now get the Base URL to use for the search
   (setq baseurl (nth (1- arg) *internet-search-urls*))
-	
+  
   ;; Add the query parameter
   (let ((url
 		 (if (string-match "%s" baseurl)
@@ -408,3 +414,4 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 	(message "Searching for %s at %s" jboword url)
 	;; Now browse the URL
 	(browse-url url)))
+
