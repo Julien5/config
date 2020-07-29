@@ -93,6 +93,10 @@ if [[ "$1" == "--start" ]]; then
 	exit 0
 elif [[ "$1" == "--update-tags" ]]; then
 	filename="$(normalize.path "$2")"
-	tags.file "$filename"
+	if [[ -f "$filename" ]]; then
+		tags.file "$filename";
+	elif [[ -d "$filename" ]]; then
+		tags.dir "$filename";
+	fi
 	exit 0
 fi
