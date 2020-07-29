@@ -1,8 +1,8 @@
 (require 'project)
 (global-set-key (kbd "<f8>") 'modal-mode)
 
-(global-set-key (kbd "<C-f1>") 'jbo/google-search)
-(global-set-key (kbd "<S-C-f1>") 'jbo/so-search)
+(global-set-key (kbd "M-g") 'jbo/google-search)
+(global-set-key (kbd "M-s") 'jbo/so-search)
 (global-set-key (kbd "<f4>") 'jbo/find-definitions)
 (global-set-key (kbd "<f3>") 'jbo/find-references)
 (global-set-key (kbd "C-l") 'goto-line)
@@ -29,8 +29,16 @@
 (global-set-key (kbd "<C-backspace>") 'jbo/backward-delete-word)
 (global-set-key (kbd "<C-delete>") 'jbo/delete-line)
 
+
+(defun jbo-c-s-tab ()
+  (if (eq system-type 'windows-nt)
+	  (kbd "<C-S-tab>")
+	(kbd "<C-iso-lefttab>")
+	)
+  )
+
 (global-set-key (kbd "<C-tab>") 'jbo/next-code-buffer)
-(global-set-key (kbd "<C-S-tab>") 'jbo/prev-code-buffer)
+(global-set-key  (jbo-c-s-tab) 'jbo/prev-code-buffer)
 
 (global-set-key (kbd "<C-next>") 'other-window)
 (defun prev-window ()  (interactive)  (other-window -1))

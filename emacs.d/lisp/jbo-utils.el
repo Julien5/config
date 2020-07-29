@@ -136,24 +136,24 @@
   (interactive)
   (message "next-code-buffer")
   (let (( bread-crumb (buffer-name) ))
-    (switch-to-next-buffer)
+	(switch-to-buffer (caar (window-next-buffers)))
     (while
         (and
          (string-match-p "^\*" (buffer-name))
          (not ( equal bread-crumb (buffer-name) )) )
-      (switch-to-next-buffer)))
+	  (switch-to-buffer (caar (window-next-buffers)))))
   )
 
 (defun jbo/prev-code-buffer ()
   (interactive)
   (message "prev-code-buffer")
   (let (( bread-crumb (buffer-name) ))
-    (switch-to-prev-buffer)
+	(switch-to-buffer (caar (window-prev-buffers)))
     (while
         (and
          (string-match-p "^\*" (buffer-name))
          (not ( equal bread-crumb (buffer-name) )) )
-      (switch-to-prev-buffer)))
+	  (switch-to-buffer (caar (window-prev-buffers)))))
   )
 
 (defun jbo/compile ()
@@ -366,6 +366,8 @@ With argument, do this that many times."
 
 (defun jbo/so-search ()
   (interactive)
+  ;;(setq sx-tab-default-order "Most Voted")
+  (setq sx-tab-default-order "Score")
   (setq jboword nil)
   (if (use-region-p)
       (setq jboword (buffer-substring (region-beginning) (region-end))))
