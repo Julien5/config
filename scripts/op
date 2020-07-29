@@ -8,7 +8,7 @@ SCRIPTPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/"
 source $JULIEN5CONFIGPATH/scripts/normalize.sh
 
 function op.dir() {
-	echo "$(normalize.path ~/.op/$EMACSPID/)"
+	echo "$(normalize.path ~/.op/)"
 }
 
 function tags.cmd() {
@@ -78,12 +78,11 @@ if [[ "$1" == "--start" ]]; then
 	ps -W | grep emacs
 	sleep 1
 	ps -W | grep emacs
-	EMACSPID=$(last.refindable.emacs.pid)
 	rm -Rf $(op.dir)
-	echo create ~/.op/$EMACSPID/
-	mkdir -p ~/.op/$EMACSPID/
+	echo create ~/.op/
+	mkdir -p ~/.op/
 	if [[ ! -d $(op.dir) ]]; then
-		echo "could not create op directory for new processr pid=$EMACSPID"
+		echo "could not create op directory"
 		exit 1;
 	fi
 	touch $(op.dir)/projects
@@ -98,20 +97,8 @@ if [[ "$1" == "--start" ]]; then
 	done	
 	start.tags
 	exit 0
-elif isnumber "$1"; then
-	EMACSPID=$1
-	[[ -d "$(op.dir)"  ]] || exit 1
-	projectiles="$(op.dir)/projectiles"
-	readarray -t DIRS < $projectiles
-	#for a in "${DIRS[@]}"; do
-	#	echo "directory:" "$a" 
-	#done
-else
-	echo "WTF?!";
-	exit 1
-fi
-
-if [[ "$2" == "--update-tags" ]]; then
-	filename="$(normalize.path "$3")"
+elif [[ "$1" == "--update-tags" ]]; then
+	filename="$(normalize.path "$2")"
 	tags.file "$filename"
+	exit 0
 fi

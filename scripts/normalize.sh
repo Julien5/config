@@ -26,10 +26,3 @@ function normalize.path() {
 }
 
 
-function last.refindable.emacs.pid {
-	if [[ "$(system)" = "msys"  ]]; then
-		ps -W | grep emacs | tail -1 | awk -e '/^[[:space:]]+[[:digit:]+]/{print $4}'
-	else
-		ps -ef | grep emacs | tail -1 | awk -e '/[[:space:]]+[[:digit:]+]/{print $3}'
-	fi
-}

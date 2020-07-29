@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-PID=$1
-op $PID --update-tags "${@:2:$#}"
+# PID=$1
+# "${@:2:$#}"
+op --update-tags "$@"

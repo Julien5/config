@@ -35,9 +35,9 @@
 
 (defun jbo-update-tags-for-file-execute (filename)
   (setq executable (format "%s/bash/%s" user-emacs-directory "update-tags.sh"))
-  (setq cmd (format "%s %s %s" executable (emacs-pid) (shell-quote-argument filename)))
+  (setq cmd (format "%s %s" executable (shell-quote-argument filename)))
   (require 'subr-x)
-  (message "updating tags for file %s" filename)
+  (message "exe %s" cmd)
   (setq error (string-trim (shell-command-to-string cmd)))
   (if (equal "" error)
 	  (progn (jbo/reload-tags) ;; necessary ? (the tags filename has not changed)
