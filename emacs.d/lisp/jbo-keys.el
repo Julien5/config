@@ -9,6 +9,7 @@
 (global-set-key (kbd "C-k") 'jbo/find-file)
 
 (define-key c++-mode-map [f5] 'jbo/compile)
+(define-key qt-pro-mode-map [f5] 'jbo/compile)
 (define-key c++-mode-map [S-f5] 'jbo/set-compile)
 (define-key c++-mode-map [f2] 'jbo/jump-to-file-at-point)
 (define-key c++-mode-map [tab] 'jbo/clang-format-buffer)
@@ -46,8 +47,8 @@
 (defun prev-window ()  (interactive)  (other-window -1))
 (global-set-key (kbd "<C-prior>") 'prev-window)
 
-(global-set-key (kbd "<f12>") 'jbo/save-window-configuration)
-(global-set-key (kbd "<C-f12>") 'jbo/restore-window-configuration)
+(global-set-key (kbd "<S-f12>") 'jbo/save-window-configuration)
+(global-set-key (kbd "<f12>") 'jbo/restore-window-configuration)
 (global-set-key (kbd "<C-M-f12>") 'jbo/restore-private-window-configuration)
 
 (global-set-key (kbd "<M-home>") 'smartscan-symbol-go-backward)

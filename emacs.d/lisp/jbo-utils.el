@@ -486,4 +486,6 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 		   (getenv "PATH")
 		   )
 		  )
+  (setenv "PROJECTSDIR" "c:/home/jbourgeois/work/projects")
+  (setenv "THIRDPARTYDIR" "c:/home/jbourgeois/work/3rdparty")
   )
