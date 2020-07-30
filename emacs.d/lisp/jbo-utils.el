@@ -210,12 +210,10 @@ If buffer-or-name is nil return current buffer's mode."
 	;;(message "prief:%s" (string-prefix-p "magit" (buffer-mode buf)))
     (if (or (string-match-p "^\*" (buffer-name buf)) (string-prefix-p "Magit" (buffer-mode buf)))
 		(kill-buffer buf)
-		;; (message "kill %s" buf)
+	  ;; (message "kill %s" buf)
 	  )
 	)
   )
-
-(jbo/kill-internal-buffers)
 
 (defun jbo/kill-invisible-buffers ()
   "Kill all buffers not currently shown in a window somewhere."
@@ -478,3 +476,14 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 	;; Now browse the URL
 	(browse-url url)))
 
+
+(defun jbo-qt-path-fixup ()
+  (setenv "PATH"
+		  (concat
+		   "c:/tools/Qt/5.12.4/mingw73_32/bin" ";"
+		   "c:/tools/Qt/Tools/mingw730_32/bin" ";"
+		   "c:/home/jbourgeois/setup/make/win32" ";"
+		   (getenv "PATH")
+		   )
+		  )
+  )
