@@ -137,6 +137,29 @@
 	)
   )
 
+(defun jbo/restore-window-configuration ()
+  (interactive)
+  (jump-to-register 'w)
+  (message "windows restored")
+  )
+
+(defun jbo/save-window-configuration ()
+  (interactive)
+  (window-configuration-to-register 'w)
+  (message "windows saved")
+  )
+
+(defun jbo/save-private-window-configuration ()
+  (window-configuration-to-register 'p)
+  (message "saved")
+  )
+
+(defun jbo/restore-private-window-configuration ()
+  (interactive)
+  (jump-to-register 'p)
+  (message "restored")
+  )
+
 ;; do not switch to a buffer shown on the frame
 ;; note: switch-to-next-buffer cycle according to the specified window’s history list,
 ;;       rather than the global buffer list
@@ -403,12 +426,15 @@ With argument, do this that many times."
 
 (defun jbo/magit-status ()
   (interactive)
+  (jbo/save-private-window-configuration)
   (magit-status)
   (delete-other-windows)
   )
 
 (defun jbo/so-search ()
   (interactive)
+  (jbo/save-private-window-configuration)
+  (delete-other-windows)
   ;;(setq sx-tab-default-order "Most Voted")
   (setq sx-tab-default-order "Score")
   (setq jboword nil)

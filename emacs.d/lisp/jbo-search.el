@@ -1,5 +1,6 @@
 (defun jbo/find-references ()
   (interactive)
+  (jbo/save-private-window-configuration)
   (delete-other-windows)
   (save-excursion
     (let* ((word (symbol-at-point))
@@ -19,6 +20,7 @@
 
 (defun jbo/find-definitions ()
   (interactive)
+  (jbo/save-private-window-configuration)
   (delete-other-windows)
   (save-excursion
 	(message "find-definitions...")
