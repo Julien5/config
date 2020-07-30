@@ -98,6 +98,7 @@
 
 (setq compilation-scroll-output 'first-error)
 
-(add-hook 'after-save-hook 'jbo/update-tags-for-file)
+;; (add-hook 'after-save-hook 'jbo/update-tags-for-file)
+(add-hook 'before-save-hook 'jbo/clang-format-buffer)
 
 (message "hi")

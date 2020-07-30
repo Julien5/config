@@ -20,7 +20,7 @@
   )
 
 (defun jbo-tags-path ()
-  (expand-file-name (format "~/.op/TAGS" (emacs-pid)))
+  (expand-file-name (format "~/.op/TAGS"))
   )
 
 (defun jbo/reload-tags ()

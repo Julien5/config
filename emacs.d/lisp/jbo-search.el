@@ -10,7 +10,7 @@
 		  (let ((w (format "%s" word)))
 			;; (xref-find-references w)
 			(require 'ag)
-			(ag/search w jbo-dir :file-regex ".cpp$|.c$|.h$|.sh$|.py$|.pro$")
+			(ag/search w jbo-dir :file-regex ".cpp$|.c$|.h$|.sh$|.py$|.pro$|.el$")
 			)
 		(message "no symbol at cursor")
 		)
@@ -55,4 +55,3 @@
 ;;(switch-to-buffer "main_devhost.cpp")
 ;;(refactor-references)
 ;;(switch-to-buffer "search.el")
-
