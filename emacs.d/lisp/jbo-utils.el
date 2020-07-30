@@ -371,27 +371,36 @@ If buffer-or-name is nil return current buffer's mode."
 	 (t (jbo-set-dark-background))
 	 )))
 
-
-
-(defun jbo/clang-format-buffer ()
-  (interactive)
+(defun jbo-clang-format-buffer-p ()
   (require 'clang-format)
   (setq clang-format-style-option nil)
   (setq jbo-clang-format-executable nil)
+  
   (if (locate-dominating-file buffer-file-name ".git")
 	  (setq jbo-clang-format-executable "clang-format-9.0")
 	(if (locate-dominating-file buffer-file-name ".svn")
 		(setq jbo-clang-format-executable "clang-format-4.0")
 	  ))
+  
   (setq clang-format-executable "clang-format")
   (if (executable-find jbo-clang-format-executable)
 	  (setq clang-format-executable jbo-clang-format-executable)
 	(message "could not find %s" jbo-clang-format-executable)
 	)
-  (message "formatting with %s" clang-format-executable)
-  (clang-format-buffer))
+  
+  (clang-format-buffer)
+  (message "formatted with %s" clang-format-executable)
+  )
 
-
+(defun jbo/clang-format-buffer ()
+  (interactive)
+  (setq extension (file-name-extension buffer-file-name))
+  (if (or (equal extension "c") (equal extension "cpp") (equal extension "h"))
+	  (jbo-clang-format-buffer-p)
+	(message "no need to clang-format:%s" buffer-file-name)
+	)
+  )
+ 
 (defun jbo/delete-line ()
   "Delete (not kill) the current line."
   (interactive)
