@@ -47,9 +47,9 @@
 (defun prev-window ()  (interactive)  (other-window -1))
 (global-set-key (kbd "<C-prior>") 'prev-window)
 
-(global-set-key (kbd "<S-f12>") 'jbo/save-window-configuration)
+(global-set-key (kbd "<C-M-f12>") 'jbo/save-window-configuration)
 (global-set-key (kbd "<f12>") 'jbo/restore-window-configuration)
-(global-set-key (kbd "<C-M-f12>") 'jbo/restore-private-window-configuration)
+(global-set-key (kbd "<S-f10>") 'jbo/restore-private-window-configuration)
 
 (global-set-key (kbd "<M-home>") 'smartscan-symbol-go-backward)
 (global-set-key (kbd "<M-end>") 'smartscan-symbol-go-forward)
