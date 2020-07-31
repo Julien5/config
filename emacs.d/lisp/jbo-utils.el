@@ -200,6 +200,12 @@ If buffer-or-name is nil return current buffer's mode."
 						(current-buffer)))
   )
 
+(defun jbo-kill-buffer-verbose (buf)
+  (message "killing buffer %s" (buffer-name buf))
+  (kill-buffer buf)
+  (sit-for 0.1)
+  )
+
 (defun jbo/kill-internal-buffers ()
   "Kill all buffers not currently shown in a window somewhere."
   (interactive)
@@ -209,17 +215,21 @@ If buffer-or-name is nil return current buffer's mode."
 	;;(message "match:%s" (string-match-p "^\*" (buffer-name buf)))
 	;;(message "prief:%s" (string-prefix-p "magit" (buffer-mode buf)))
     (if (or (string-match-p "^\*" (buffer-name buf)) (string-prefix-p "Magit" (buffer-mode buf)))
-		(kill-buffer buf)
-	  ;; (message "kill %s" buf)
+		(jbo-kill-buffer-verbose buf)
 	  )
 	)
+  (message "ok")
   )
 
 (defun jbo/kill-invisible-buffers ()
   "Kill all buffers not currently shown in a window somewhere."
   (interactive)
   (dolist (buf  (buffer-list))
-    (unless (get-buffer-window buf 'visible) (kill-buffer buf)))
+    (unless (get-buffer-window buf 'visible)
+	  (jbo-kill-buffer-verbose buf)
+	  )
+	)
+  (message "ok")
   )
 
 (defun jbo/compile ()
