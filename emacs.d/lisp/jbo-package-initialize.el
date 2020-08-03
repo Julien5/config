@@ -7,7 +7,7 @@
 		package-archive-priorities '(;;("MELPA Stable" . 10)
 									 ("MELPA" . 5)
 									 ("GNU ELPA" . 0)))
-  (unless package--initialized (package-initialize t))
+  (package-initialize t)
   
   ;; Bootstrap 'use-package'
   (eval-after-load 'gnutls '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
