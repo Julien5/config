@@ -235,7 +235,8 @@ If buffer-or-name is nil return current buffer's mode."
 (defun jbo/compile ()
   (interactive)
   (save-selected-window
-	(delete-other-windows)
+	;;(delete-other-windows)
+	(jbo/save-private-window-configuration)
 	(setq orig-dd nil)
 	(if (boundp 'jbo-compilation-directory)
 		(progn (setq orig-dd default-directory)
