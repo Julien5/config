@@ -67,9 +67,10 @@
 		(setq jbo-diff "psvn diff")))
   (let* ((file (expand-file-name (buffer-file-name (current-buffer)))))
 	(if (file-exists-p file)
-		(progn (setq cmd (format "%s %s" jbo-diff file))
+		(progn (setq cmd (format "%s %s &" jbo-diff file))
 			   (message "exe:%s" cmd)
-			   (shell-command-to-string cmd))
+			   (call-process-shell-command cmd nil 0)
+			   )
 	  (message "file not found:%s" file))
 	))
 
