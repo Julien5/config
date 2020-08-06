@@ -323,8 +323,6 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 (defun jbo/mark-line ()
-  "mark one line"
-  (message "hi for line")
   (let ((inhibit-field-text-motion t))
     (end-of-line)
     (push-mark nil t t)
@@ -389,7 +387,7 @@ If buffer-or-name is nil return current buffer's mode."
   (setq jbo-clang-format-executable nil)
   
   (if (locate-dominating-file buffer-file-name ".git")
-	  (setq jbo-clang-format-executable "clang-format-9.0")
+	  (setq jbo-clang-format-executable "clang-format-9")
 	(if (locate-dominating-file buffer-file-name ".svn")
 		(setq jbo-clang-format-executable "clang-format-4.0")
 	  ))

@@ -54,10 +54,6 @@
 
 (require 'expand-region)
 (jbo-fix-expand-region-for-line)
-(global-set-key (kbd "C-+") 'er/expand-region)
-
-;; replace meta-/ with C-a
-(global-set-key (kbd "C-a") 'dabbrev-expand) 
 
 ;; prevent custom from messing up my init.el
 (setq custom-file (format "~/.emacs.d/%s/custom.el" (getenv "OSTYPE")))

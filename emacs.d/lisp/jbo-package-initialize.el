@@ -1,24 +1,29 @@
-(defun jbo-package-initialize ()
+(defun jbo-setup-package-0 ()
+  (require 'package)
   (setq package-archives nil)
+  ;;(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
   ;;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
   (setq package-archives '(("GNU ELPA" . "https://elpa.gnu.org/packages/")
-						   ;;("MELPA Stable" . "https://stable.melpa.org/packages/")
-						   ("MELPA" . "https://melpa.org/packages/"))
-		package-archive-priorities '(;;("MELPA Stable" . 10)
-									 ("MELPA" . 5)
-									 ("GNU ELPA" . 0)))
-  (unless package--initialized (package-initialize t))
-  
+			   ("MELPA Stable" . "https://stable.melpa.org/packages/")
+			   ("MELPA" . "https://melpa.org/packages/"))
+	package-archive-priorities '(;;("MELPA Stable" . 10)
+				     ("MELPA" . 5)
+				     ("GNU ELPA" . 0))) (package-initialize)
+
   ;; Bootstrap 'use-package'
   (eval-after-load 'gnutls '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-  (eval-when-compile (require 'use-package))
+  (require 'use-package)
   (require 'bind-key)
   (setq use-package-always-ensure t)
+  )
 
-  
+(defun jbo-package-initialize ()
+  (setq elpa-dirname (expand-file-name "~/.emacs.d/elpa/"))
+  (jbo-setup-package-0);
+ 
+  (package-initialize t)
+  (unless package--initialized (package-initialize t))
+ 
   ;; Added by Package.el.  This must come before configurations of
   ;; installed packages.  Don't delete this line.  If you don't want it,
   ;; just comment it out by adding a semicolon to the start of the line.
@@ -40,15 +45,15 @@ There are two things you can do about this warning:
     )
   
   (require 'package)
-  (setq dirname (expand-file-name "~/.emacs.d/elpa/"))
-  (if (not (file-directory-p dirname))
-	  (progn (package-refresh-contents)))
+  (if (not (file-directory-p elpa-dirname))
+      (progn (package-refresh-contents)))
   (package-install 'expand-region)
-  ;;(package-install 'magit)
+  (package-install 'magit)
   (package-install 'smartscan)
   (package-install 'flycheck)
   (package-install 'company)
   (package-install 'lsp-mode)
+  (package-install 'use-package)
   )
 
 (jbo-package-initialize)

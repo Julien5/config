@@ -8,11 +8,14 @@
 (global-set-key (kbd "C-l") 'goto-line)
 (global-set-key (kbd "C-k") 'jbo/find-file)
 
+(global-set-key (kbd "C-u") 'er/expand-region)
+(global-set-key (kbd "C-a") 'dabbrev-expand) 
+
 (define-key c++-mode-map [f5] 'jbo/compile)
 (define-key qt-pro-mode-map [f5] 'jbo/compile)
 (define-key c++-mode-map [S-f5] 'jbo/set-compile)
 (define-key c++-mode-map [f2] 'jbo/jump-to-file-at-point)
-(define-key c++-mode-map [tab] 'jbo/clang-format-buffer)
+(define-key c++-mode-map (kbd "C-f") 'jbo/clang-format-buffer)
 
 (global-set-key (kbd "<f6>") 'next-error)
 (global-set-key (kbd "<C-f6>") 'first-error)
