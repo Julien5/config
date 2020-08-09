@@ -67,9 +67,10 @@
 		(setq jbo-diff "psvn diff")))
   (let* ((file (expand-file-name (buffer-file-name (current-buffer)))))
 	(if (file-exists-p file)
-		(progn (setq cmd (format "%s %s" jbo-diff file))
+		(progn (setq cmd (format "%s %s &" jbo-diff file))
 			   (message "exe:%s" cmd)
-			   (shell-command-to-string cmd))
+			   (call-process-shell-command cmd nil 0)
+			   )
 	  (message "file not found:%s" file))
 	))
 
@@ -235,7 +236,8 @@ If buffer-or-name is nil return current buffer's mode."
 (defun jbo/compile ()
   (interactive)
   (save-selected-window
-	(delete-other-windows)
+	;;(delete-other-windows)
+	(jbo/save-private-window-configuration)
 	(setq orig-dd nil)
 	(if (boundp 'jbo-compilation-directory)
 		(progn (setq orig-dd default-directory)
@@ -321,8 +323,6 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 (defun jbo/mark-line ()
-  "mark one line"
-  (message "hi for line")
   (let ((inhibit-field-text-motion t))
     (end-of-line)
     (push-mark nil t t)
@@ -387,7 +387,7 @@ If buffer-or-name is nil return current buffer's mode."
   (setq jbo-clang-format-executable nil)
   
   (if (locate-dominating-file buffer-file-name ".git")
-	  (setq jbo-clang-format-executable "clang-format-9.0")
+	  (setq jbo-clang-format-executable "clang-format-9")
 	(if (locate-dominating-file buffer-file-name ".svn")
 		(setq jbo-clang-format-executable "clang-format-4.0")
 	  ))
