@@ -2,10 +2,9 @@
   (setq R (cdr command-line-args))
   (setq D (list))
   (dolist (r R)
-	(setq dirname (file-name-as-directory r))
-	(if (file-directory-p dirname)
-		(setq D (cons dirname D))
-	  (message "skip %s: not a directory" dirname))
+	(if (file-directory-p r)
+		(setq D (cons r D))
+	  (message "skip %s: not a directory" r))
 	)
   (if (not D) ;; no dir, then use the default
 	  (setq D (list (read-directory-name "dir:")))
