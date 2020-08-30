@@ -7,8 +7,9 @@
 		(setq D (cons dirname D))
 	  (message "skip %s: not a directory" dirname))
 	)
-  (if (not D) ;; no dir, then used the default
-	  (setq D (list default-directory)))
+  (if (not D) ;; no dir, then use the default
+	  (setq D (list (read-directory-name "dir:")))
+	)
   (delete-dups D)
   )
 
