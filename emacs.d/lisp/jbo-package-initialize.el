@@ -51,6 +51,7 @@ There are two things you can do about this warning:
   (package-install 'expand-region)
   (package-install 'magit)
   (package-install 'smartscan)
+  (package-install 'ag)
   (package-install 'flycheck)
   (package-install 'company)
   (package-install 'lsp-mode)
