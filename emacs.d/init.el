@@ -48,6 +48,7 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
+(add-hook 'c++-mode-hook 'jbo-lsp-deferred)
 
 (setq exec-path (append exec-path '("c:/tools/llvm/llvm-10/bin/")))
 
@@ -81,12 +82,6 @@
 (setq-default tab-width 4)
 ;; reload files if changed on disk
 (global-auto-revert-mode t)
-
-;; insert matching paren -> ()
-(setq skeleton-pair t)
-(global-set-key "(" 'skeleton-pair-insert-maybe)
-(global-set-key "[" 'skeleton-pair-insert-maybe)
-(global-set-key "{" 'skeleton-pair-insert-maybe)
 
 ;; (setq tags-file-name nil)
 (setq tags-table-list (list (jbo-tags-path)))

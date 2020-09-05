@@ -407,7 +407,7 @@ If buffer-or-name is nil return current buffer's mode."
   (setq extension (file-name-extension buffer-file-name))
   (if (or (equal extension "c") (equal extension "cpp") (equal extension "h"))
 	  (jbo-clang-format-buffer-p)
-	(message "no need to clang-format:%s" buffer-file-name)
+	(message "(no need to clang-format:%s)" buffer-file-name)
 	)
   )
  
@@ -507,4 +507,12 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 		  )
   (setenv "PROJECTSDIR" "c:/home/jbourgeois/work/projects")
   (setenv "THIRDPARTYDIR" "c:/home/jbourgeois/work/3rdparty")
+  )
+
+(defun jbo-lsp-deferred ()
+  (if (string-equal major-mode "c++-mode")
+	  (if (locate-dominating-file default-directory "compile_flags.txt")
+		  (lsp-deferred)
+		(message "no compile_flags.txt"))
+	(message "no lsp for mode %s" major-mode))
   )

@@ -45,7 +45,6 @@ function getdirs() {
 }
 
 function findfile() {
-	echo find $(getdirs) -type f $(othername "$fname") > ~/echo
 	eval find $(getdirs) -type f $(othername "$fname") | head -1
 }
 
