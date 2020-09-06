@@ -1,10 +1,8 @@
 (defun jbo-projectiles-p ()
-  (setq R (cdr command-line-args))
+  (setq lsp-candidate (locate-dominating-file default-directory "compile_flags.txt"))
   (setq D (list))
-  (dolist (r R)
-	(if (file-directory-p r)
-		(setq D (cons r D))
-	  (message "skip %s: not a directory" r))
+  (if lsp-candidate
+	  (setq D (cons lsp-candidate D))
 	)
   (if (not D) ;; no dir, then use the default
 	  (setq D (list (read-directory-name "dir:")))
@@ -13,10 +11,11 @@
   )
 
 (defun jbo-projectiles ()
-  (if (not (boundp 'jbo-projectiles-cache))
-	  (setq jbo-projectiles-cache (jbo-projectiles-p))
-	)
-  jbo-projectiles-cache
+  ;;(if (not (boundp 'jbo-projectiles-cache))
+	;;  (setq jbo-projectiles-cache (jbo-projectiles-p))
+	;;)
+  ;;  jbo-projectiles-cache
+  (jbo-projectiles-p)
   )
 
 (defun jbo-tags-path ()

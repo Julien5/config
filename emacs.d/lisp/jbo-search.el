@@ -1,40 +1,52 @@
+(defun ag-at-point ()
+  (let* ((word (symbol-at-point))
+		 (jbo-dir (file-name-directory (car (jbo-projectiles)))))
+	(message "find-references %s in %s" word jbo-dir)
+	(if word
+		(let ((w (format "%s" word)))
+		  ;; (xref-find-references w)
+		  (require 'ag)
+		  (ag/search w jbo-dir :file-regex ".cpp$|.c$|.h$|.sh$|.py$|.pro$|.el$")
+		  )
+	  (message "no symbol at cursor")
+	  )
+	)
+  )
+
+(defun find-definition-at-point ()
+  (let* ((word (symbol-at-point)))
+	(message "find-definitions for %s" word)
+	(if word
+		(let ((w (format "%s" word)))
+		  (xref-find-definitions w)
+		  )
+	  (message "no symbol at cursor")
+	  ))
+  )
+
 (defun jbo/find-references ()
   (interactive)
   (jbo/save-private-window-configuration)
   (delete-other-windows)
   (save-excursion
-    (let* ((word (symbol-at-point))
-		   (jbo-dir (file-name-directory (car (jbo-projectiles)))))
-	  (message "find-references %s in %s" word jbo-dir)
-	  (if word
-		  (let ((w (format "%s" word)))
-			;; (xref-find-references w)
-			(require 'ag)
-			(ag/search w jbo-dir :file-regex ".cpp$|.c$|.h$|.sh$|.py$|.pro$|.el$")
-			)
-		(message "no symbol at cursor")
-		)
-	  ))
- )
-
+	;;(if (bound-and-true-p lsp-mode)
+	;;	(lsp-find-references)
+	(ag-at-point))
+  ;;)
+  )
 
 (defun jbo/find-definitions ()
-  (interactive)
-  (jbo/save-private-window-configuration)
-  (delete-other-windows)
-  (save-excursion
-	(message "find-definitions...")
-	;;(window-state-put jbo/xref-state jbo/bottom-window)
-	(let* ((word (symbol-at-point)))
-	  (message "find-definitions for %s" word)
-	  (if word
-		  (let ((w (format "%s" word)))
-			(xref-find-definitions w)
-			)
-		(message "no symbol at cursor")
-		))))
-
-
+	(interactive)
+	(jbo/save-private-window-configuration)
+	(delete-other-windows)
+	(save-excursion
+	  (message "find-definitions...")
+	  (if (bound-and-true-p lsp-mode)
+		  (lsp-find-definition)
+		(find-definition-at-point))
+	  )
+	)
+	
 (defun jbo/refactor-references ()
   (interactive)
   (save-excursion
