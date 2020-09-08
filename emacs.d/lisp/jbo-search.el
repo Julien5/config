@@ -36,17 +36,16 @@
   )
 
 (defun jbo/find-definitions ()
-	(interactive)
-	(jbo/save-private-window-configuration)
-	(delete-other-windows)
-	(save-excursion
-	  (message "find-definitions...")
-	  (if (bound-and-true-p lsp-mode)
-		  (lsp-find-definition)
-		(find-definition-at-point))
-	  )
-	)
-	
+  (interactive)
+  (jbo/save-private-window-configuration)
+  (if (bound-and-true-p lsp-mode)
+	  (progn
+		(message "running lsp-find-definition")
+		(lsp-find-definition)
+		)
+	(find-definition-at-point))
+  )
+
 (defun jbo/refactor-references ()
   (interactive)
   (save-excursion

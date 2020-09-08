@@ -396,7 +396,7 @@ If buffer-or-name is nil return current buffer's mode."
 	  (setq clang-format-executable jbo-clang-format-executable)
 	(message "could not find %s" jbo-clang-format-executable)
 	)
-  
+  (message "formatting with %s" clang-format-executable)  
   (clang-format-buffer)
   (message "formatted with %s" clang-format-executable)
   )
@@ -515,3 +515,17 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 		(message "no compile_flags.txt"))
 	(message "no lsp for mode %s" major-mode))
   )
+
+(defun jbo/expand ()
+  (interactive)
+  (message "a")
+  (if (and (string-equal major-mode "c++-mode")
+		   (locate-dominating-file default-directory "compile_flags.txt"))
+	  (call-interactively 'company-capf)
+	(call-interactively 'dabbrev-expand)
+	)
+  )
+
+
+
+
