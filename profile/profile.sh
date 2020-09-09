@@ -124,3 +124,6 @@ function dev.esp8266() {
     export SDK_PATH=$DIR/ESP8266_RTOS_SDK/
 }
 
+function agr() {
+	ag -0 -l "$1" | xargs -0 sed -ri -e "s/$1/$2/g";
+}
