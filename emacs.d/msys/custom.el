@@ -10,7 +10,7 @@
  '(cua-mode t nil (cua-base))
  '(custom-enabled-themes '(deeper-blue))
  '(package-selected-packages
-   '(lsp-mode flycheck smartscan expand-region company-fuzzy ag projectile company))
+   '(use-package magit lsp-mode flycheck smartscan expand-region company-fuzzy ag projectile company))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

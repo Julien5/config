@@ -214,7 +214,8 @@ If buffer-or-name is nil return current buffer's mode."
 	;;(message "mode:%s" (buffer-mode buf))
 	;;(message "match:%s" (string-match-p "^\*" (buffer-name buf)))
 	;;(message "prief:%s" (string-prefix-p "magit" (buffer-mode buf)))
-    (if (or (string-match-p "^\*" (buffer-name buf)) (string-prefix-p "Magit" (buffer-mode buf)))
+    (if (and (or (string-match-p "^\*" (buffer-name buf)) (string-prefix-p "Magit" (buffer-mode buf)))
+			 (not (string-prefix-p "^\*lsp" (buffer-name buf))))
 		(jbo-kill-buffer-verbose buf)
 	  )
 	)
@@ -495,7 +496,18 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 	(browse-url url)))
 
 
-(defun jbo-qt-path-fixup ()
+(defun jbo-mingw49-path-fixup ()
+  (setenv "PATH"
+		  (concat
+		   "c:/tools/old/Qt5.6.3/5.6.3/mingw49_32/bin" ";"
+		   "c:/tools/old/Qt5.6.3/Tools/mingw492_32/bin" ";"
+		   "c:/home/jbourgeois/setup/make/win32" ";"
+		   (getenv "PATH")
+		   )
+		  )
+  )
+
+(defun jbo-mingw73-path-fixup ()
   (setenv "PATH"
 		  (concat
 		   "c:/tools/Qt/5.12.4/mingw73_32/bin" ";"
@@ -504,6 +516,10 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 		   (getenv "PATH")
 		   )
 		  )
+  )
+
+(defun jbo-qt-path-fixup ()
+  (jbo-mingw49-path-fixup)
   (setenv "PROJECTSDIR" "c:/home/jbourgeois/work/projects")
   (setenv "THIRDPARTYDIR" "c:/home/jbourgeois/work/3rdparty")
   )
