@@ -12,8 +12,8 @@
 
 (defun jbo-projectiles ()
   ;;(if (not (boundp 'jbo-projectiles-cache))
-	;;  (setq jbo-projectiles-cache (jbo-projectiles-p))
-	;;)
+  ;;  (setq jbo-projectiles-cache (jbo-projectiles-p))
+  ;;)
   ;;  jbo-projectiles-cache
   (jbo-projectiles-p)
   )
@@ -46,7 +46,6 @@
   (when (get-buffer "TAGS")
 	(kill-buffer (get-buffer "TAGS")))
   )
-
 
 (defun jbo/update-tags-for-file ()
   (let* ((file (buffer-file-name (current-buffer)))
@@ -206,17 +205,35 @@ If buffer-or-name is nil return current buffer's mode."
   (sit-for 0.1)
   )
 
+(defun jbo-is-internal-buffer (buf)
+  (let ((name (buffer-name buf))
+		(mode (buffer-mode buf)))
+	;;(message "name: '%s'" name)
+	;; (message "name: %s" mode)
+	;;(message "not message ? %s" (not (string-equal "*Messages*" name)))
+	;;(message "not clangd  ? %s" (not (string-prefix-p "*clangd" name)))
+	;;(message "not lsp     ? %s" (not (string-prefix-p "*lsp" name)))
+	;;(message "is  match S ? %s" (string-prefix-p " " name))
+	;;(message "is  match * ? %s" (string-prefix-p "*" name))
+	;;(message "is  Magit   ? %s" (string-prefix-p "Magit" mode))
+	(and (or (string-prefix-p "*" name)
+			 (string-prefix-p "Magit" mode))
+		 (and (not (string-prefix-p " " name)) ;; are not shown in list anyway
+			  (not (string-prefix-p "*lsp" name))
+			  (not (string-prefix-p "*clangd" name))
+			  (not (string-equal "*Messages*" name))
+			  )
+		 )
+	)
+  )
+
 (defun jbo/kill-internal-buffers ()
   "Kill all buffers not currently shown in a window somewhere."
   (interactive)
   (dolist (buf  (buffer-list))
-	(setq islisp (string-match-p "^\*" (buffer-name buf)))
-	;;(message "mode:%s" (buffer-mode buf))
-	;;(message "match:%s" (string-match-p "^\*" (buffer-name buf)))
-	;;(message "prief:%s" (string-prefix-p "magit" (buffer-mode buf)))
-    (if (and (or (string-match-p "^\*" (buffer-name buf)) (string-prefix-p "Magit" (buffer-mode buf)))
-			 (not (string-prefix-p "^\*lsp" (buffer-name buf))))
+    (if (jbo-is-internal-buffer buf)
 		(jbo-kill-buffer-verbose buf)
+	  (message "pass %s" (buffer-name buf))
 	  )
 	)
   (message "ok")
@@ -410,7 +427,7 @@ If buffer-or-name is nil return current buffer's mode."
 	(message "(no need to clang-format:%s)" buffer-file-name)
 	)
   )
- 
+
 (defun jbo/delete-line ()
   "Delete (not kill) the current line."
   (interactive)
