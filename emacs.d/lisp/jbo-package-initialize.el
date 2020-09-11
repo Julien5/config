@@ -1,30 +1,28 @@
-(defun jbo-setup-package-0 ()
+(defun bootstrap-use-package ()
   (require 'package)
-  (setq package-archives nil)
-  ;;(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-  ;;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-  (setq package-archives '(("GNU ELPA" . "https://elpa.gnu.org/packages/")
+  (setq package-enable-at-startup nil)
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/"))
 
-						   ;;("MELPA Stable" . "https://stable.melpa.org/packages/")
-						   ("MELPA" . "https://melpa.org/packages/"))
-		package-archive-priorities '(;;("MELPA Stable" . 10)
-									 ("MELPA" . 5)
-									 ("GNU ELPA" . 0)))
-  (package-initialize t)
-  ;; Bootstrap 'use-package'
-  (eval-after-load 'gnutls '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
-  (require 'use-package)
-  (require 'bind-key)
-  (setq use-package-always-ensure t)
+  (package-initialize)
+
+  ;; Bootstrap `use-package'
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (eval-when-compile
+    (require 'use-package))
+  )
+
+(defun jbo-setup-package-0 ()
+  (bootstrap-use-package)
   )
 
 (defun jbo-package-initialize ()
   (setq elpa-dirname (expand-file-name "~/.emacs.d/elpa/"))
   (jbo-setup-package-0);
- 
-  (package-initialize t)
-  (unless package--initialized (package-initialize t))
- 
+  
   ;; Added by Package.el.  This must come before configurations of
   ;; installed packages.  Don't delete this line.  If you don't want it,
   ;; just comment it out by adding a semicolon to the start of the line.
@@ -44,8 +42,7 @@ There are two things you can do about this warning:
     ;; and `package-pinned-packages`. Most users will not need or want to do this.
     ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
     )
-  
-  (require 'package)
+
   (if (not (file-directory-p elpa-dirname))
       (progn (package-refresh-contents)))
   (package-install 'expand-region)
