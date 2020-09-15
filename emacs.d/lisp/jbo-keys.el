@@ -44,8 +44,8 @@
 	)
   )
 
-(global-set-key (kbd "<C-tab>") 'jbo/next-code-buffer)
-(global-set-key  (jbo-c-s-tab) 'jbo/prev-code-buffer)
+(global-set-key (kbd "<C-tab>") 'jbo/prev-code-buffer)
+(global-set-key  (jbo-c-s-tab) 'jbo/next-code-buffer)
 (global-set-key (kbd "C-S-p") 'jbo/kill-invisible-buffers)
 (global-set-key (kbd "C-p") 'jbo/kill-internal-buffers)
 

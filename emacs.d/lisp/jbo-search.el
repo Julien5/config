@@ -27,12 +27,7 @@
 (defun jbo/find-references ()
   (interactive)
   (jbo/save-private-window-configuration)
-  (delete-other-windows)
-  (save-excursion
-	;;(if (bound-and-true-p lsp-mode)
-	;;	(lsp-find-references)
-	(ag-at-point))
-  ;;)
+  (ag-at-point)
   )
 
 (defun jbo/find-definitions ()
