@@ -11,12 +11,14 @@
   )
 
 (defun jbo-projectiles ()
-  ;;(if (not (boundp 'jbo-projectiles-cache))
-  ;;  (setq jbo-projectiles-cache (jbo-projectiles-p))
-  ;;)
-  ;;  jbo-projectiles-cache
-  (jbo-projectiles-p)
-  )
+  (if (not (boundp 'jbo-projectiles-cache))
+	  (setq jbo-projectiles-cache nil)
+	)
+  (if (not jbo-projectiles-cache)
+	  (setq jbo-projectiles-cache (jbo-projectiles-p))
+	)
+  jbo-projectiles-cache
+   )
 
 (defun jbo-tags-path ()
   (expand-file-name (format "~/.op/TAGS"))
