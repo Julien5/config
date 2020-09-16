@@ -44,8 +44,8 @@
 	)
   )
 
-(global-set-key (kbd "<C-tab>") 'jbo/next-code-buffer)
-(global-set-key  (jbo-c-s-tab) 'jbo/prev-code-buffer)
+(global-set-key (kbd "<C-tab>") 'jbo/prev-code-buffer)
+(global-set-key  (jbo-c-s-tab) 'jbo/next-code-buffer)
 (global-set-key (kbd "C-S-p") 'jbo/kill-invisible-buffers)
 (global-set-key (kbd "C-p") 'jbo/kill-internal-buffers)
 
@@ -53,7 +53,7 @@
 (defun prev-window ()  (interactive)  (other-window -1))
 (global-set-key (kbd "<C-prior>") 'prev-window)
 
-(global-set-key (kbd "<C-f12>") 'jbo/save-window-configuration)
+(global-set-key (kbd "<S-f12>") 'jbo/save-window-configuration)
 (global-set-key (kbd "<f12>") 'jbo/restore-window-configuration)
 (global-set-key (kbd "<S-f10>") 'jbo/restore-private-window-configuration)
 
