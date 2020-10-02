@@ -44,7 +44,8 @@
 	)
   (if (not (executable-find lsp-clients-clangd-executable))
 	  (message "could not find clangd executable."))
-  (setq lsp-log-io t)
+  (setq lsp-log-io nil)
+  (setq gc-cons-threshold 100000000)
   (message "lsp")
   ;; ..
   )
@@ -98,5 +99,5 @@
 
 ;; (add-hook 'after-save-hook 'jbo/update-tags-for-file)
 (add-hook 'before-save-hook 'jbo/clang-format-buffer)
-
+(ido-mode)
 (message "hi")

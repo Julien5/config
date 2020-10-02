@@ -481,7 +481,7 @@ With argument, do this that many times."
 
 ;;; The custom search URLs
 (defvar *internet-search-urls*
-  (quote ("http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
+  (quote ("http://www.google.com/search?ie=utf-8&oe=utf-8&btnI=1&q=%s"
 		  "http://en.wikipedia.org/wiki/Special:Search?search=")))
 
 ;;; Search a query on the Internet using the selected URL.
@@ -515,7 +515,7 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 	(browse-url url)))
 
 
-(defun jbo-mingw49-path-fixup ()
+(defun jbo--mingw49-path-fixup ()
   (setenv "PATH"
 		  (concat
 		   "c:/tools/old/Qt5.6.3/5.6.3/mingw49_32/bin" ";"
@@ -526,7 +526,7 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 		  )
   )
 
-(defun jbo-mingw73-path-fixup ()
+(defun jbo--mingw73-path-fixup ()
   (setenv "PATH"
 		  (concat
 		   "c:/tools/Qt/5.12.4/mingw73_32/bin" ";"
@@ -537,8 +537,14 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 		  )
   )
 
-(defun jbo-qt-path-fixup ()
-  (jbo-mingw49-path-fixup)
+(defun jbo-dev-mingw49 ()
+  (jbo--mingw49-path-fixup)
+  (setenv "PROJECTSDIR" "c:/home/jbourgeois/work/projects")
+  (setenv "THIRDPARTYDIR" "c:/home/jbourgeois/work/3rdparty")
+  )
+
+(defun jbo-dev-mingw73 ()
+  (jbo--mingw73-path-fixup)
   (setenv "PROJECTSDIR" "c:/home/jbourgeois/work/projects")
   (setenv "THIRDPARTYDIR" "c:/home/jbourgeois/work/3rdparty")
   )
