@@ -6,6 +6,8 @@
 		(let ((w (format "%s" word)))
 		  ;; (xref-find-references w)
 		  (require 'ag)
+		  ;; note: use .agignore to ignore files.
+		  ;; setup: ~/work/projects/.gitignore ~/.agignore
 		  (ag/search w jbo-dir :file-regex ".cpp$|.c$|.h$|.sh$|.py$|.pro$|.el$")
 		  )
 	  (message "no symbol at cursor")
