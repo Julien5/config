@@ -32,11 +32,11 @@ function othername() {
 	local f=$1;
 	local bb=$(corename $f)
 	if [[ "$fname" == *h ]] && [[ ! "$line" =~ "include" ]]; then
-		# not #include
-		printf "%s" "-name '$bb.cpp' -or -name '$bb.c'"
+		# not #include and we are in header file => we want cpp file.
+		printf "%s" "$bb.c"
 	else
-		# #include
-		printf "%s" "-name '$bb.h'"
+		# we are in cpp file or the line is #include
+		printf "%s" "$bb.h"
 	fi
 }
 
@@ -51,10 +51,16 @@ function getdirs() {
 	_getdirs | sort | uniq | tr "\n" " "
 }
 
-function findfile() {
-	printf "%s" "find $(getdirs) -type f $(othername "$fname")"
+CACHEFILE=/tmp/cache.jtfap.txt
+function getcandidates() {
+	if [[ ! -f $CACHEFILE ]]; then
+		find $(getdirs) -type f -iname "*.cpp" -o -iname "*.c"  -o -iname "*.h" | grep -v "moc_" | sort | uniq > $CACHEFILE
+	fi
+	
 	if [[ "$line" =~ "include" ]]; then
-		printf "%s" " |  grep $fname | sort | uniq"
+		cat $CACHEFILE | grep $fname 
+	else
+		cat $CACHEFILE | grep $(othername "$fname")
 	fi
 }
 
@@ -73,11 +79,11 @@ function selectcandidate() {
 	done 
 }
 
-echo $(findfile) >> ~/args
-list=$(eval $(findfile))
+list=$(getcandidates)
 count=$(echo "$list" | wc -l)
 
 if [[ "$count" -eq "0" ]]; then
+	rm -f $CACHEFILE
 	exit 1;
 fi
 

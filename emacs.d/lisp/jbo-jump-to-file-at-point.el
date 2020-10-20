@@ -1,3 +1,9 @@
+(defun sh/current-time-microseconds ()
+  "Return the current time formatted to include microseconds."
+  (let* ((nowtime (current-time))
+         (now-ms (nth 2 nowtime)))
+    (concat (format-time-string "[%Y-%m-%dT%T" nowtime) (format ".%d]" now-ms))))
+
 (defun jump-to-file-at-point-execute (line filename)
   ;; todo: cache results.  
   (let* ((executable (format "%s/bash/%s"
@@ -15,7 +21,9 @@
 	(require 'subr-x)
 	;;(message "executing:%s" cmd)
 	(message "searching other file in %s" (jbo-projectiles))
+	(message "start:%s" (sh/current-time-microseconds))
 	(setq result (string-trim (shell-command-to-string cmd)))
+	(message "stop:%s" (sh/current-time-microseconds))
 	(if (not (equal "" result))
 		(progn (message "found %s" result)
 			   (find-file result))
