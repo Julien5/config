@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# echo $@ > ~/args
-
+for a in "$@"; do
+	echo $a;
+done > ~/args
 set -e
 # set -x
 
@@ -11,7 +12,6 @@ line="$1" # #include <foo/bar.h> -> foo/bar
 fname="$2" # filename.cpp -> filename.h
 dirs="${@:3:$#}"
 dir=$(dirname $fname)
-
 
 if [[  -z "$fname" ]]; then
 	echo missing fname;
@@ -23,8 +23,6 @@ if [[ "$line" =~ "include" ]]; then
 	fname="$included"
 fi
 
-
-
 function corename() {
 	local f=$1;
 	echo $(basename $f | cut -f1 -d".") # TODO: support aa.bbb.ccc.h
@@ -34,8 +32,10 @@ function othername() {
 	local f=$1;
 	local bb=$(corename $f)
 	if [[ "$fname" == *h ]] && [[ ! "$line" =~ "include" ]]; then
+		# not #include
 		printf "%s" "-name '$bb.cpp' -or -name '$bb.c'"
 	else
+		# #include
 		printf "%s" "-name '$bb.h'"
 	fi
 }
@@ -52,7 +52,10 @@ function getdirs() {
 }
 
 function findfile() {
-	echo find $(getdirs) -type f $(othername "$fname") \|  grep $fname 
+	printf "%s" "find $(getdirs) -type f $(othername "$fname")"
+	if [[ "$line" =~ "include" ]]; then
+		printf "%s" " |  grep $fname | sort | uniq"
+	fi
 }
 
 function commonprefix() {
@@ -69,13 +72,21 @@ function selectcandidate() {
 		echo $length $a
 	done 
 }
+
+echo $(findfile) >> ~/args
 list=$(eval $(findfile))
 count=$(echo "$list" | wc -l)
+
+if [[ "$count" -eq "0" ]]; then
+	exit 1;
+fi
+
 if [[ "$count" -gt "1" ]]; then
 	ret=$(selectcandidate $(realpath $fname) $list | sort -n -r | head -1 | cut -f2 -d" ")
 else
 	ret=$(realpath $list)
 fi
+
 if [[ -f "$ret" ]]; then
  	printf "%s" "$(normalize.path $ret)"
 fi
