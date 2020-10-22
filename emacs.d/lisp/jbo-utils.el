@@ -405,11 +405,12 @@ If buffer-or-name is nil return current buffer's mode."
   (setq clang-format-style-option nil)
   (setq jbo-clang-format-executable nil)
 
-  (setq jbo-clang-format-executable "clang-format-9")
-  ;;(if (locate-dominating-file buffer-file-name ".git")
-  ;;   (if (locate-dominating-file buffer-file-name ".svn")
-  ;;	(setq jbo-clang-format-executable "clang-format-4.0")
-  ;;  ))
+
+  (if (locate-dominating-file buffer-file-name ".git")
+	  (setq jbo-clang-format-executable "clang-format-9")
+    (if (locate-dominating-file buffer-file-name ".svn")
+  		(setq jbo-clang-format-executable "clang-format-4.0")
+	  ))
   
   (setq clang-format-executable "clang-format")
   (if (executable-find jbo-clang-format-executable)
