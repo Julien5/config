@@ -41,9 +41,9 @@ function othername() {
 }
 
 function _getdirs() {
-	printf "%s\n" "$dir"
+	printf "%s\n" "$(realpath $dir)"
 	for d in "$dirs"; do
-		printf "%s\n" $d
+		printf "%s\n" "$(realpath $d)"
 	done
 }
 
@@ -51,7 +51,7 @@ function getdirs() {
 	_getdirs | sort | uniq | tr "\n" " "
 }
 
-CACHEFILE=/tmp/cache.jtfap.txt
+CACHEFILE=/tmp/cache.jtfap.$(basename $3).txt
 function getcandidates() {
 	if [[ ! -f $CACHEFILE ]]; then
 		find $(getdirs) -type f -iname "*.cpp" -o -iname "*.c"  -o -iname "*.h" | grep -v "moc_" | sort | uniq > $CACHEFILE
@@ -81,7 +81,6 @@ function selectcandidate() {
 
 list=$(getcandidates)
 count=$(echo "$list" | wc -l)
-
 if [[ "$count" -eq "0" ]]; then
 	rm -f $CACHEFILE
 	exit 1;
