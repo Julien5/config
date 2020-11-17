@@ -84,7 +84,7 @@
 	  (setq jbo-newname (read-string "new name:" jbo-oldname))
 	)
   (message "[%s] -> [%s]" jbo-oldname jbo-newname)
-  (replace-string jbo-oldname jbo-newname nil (line-beginning-position) (line-end-position) nil nil)
+  (query-replace jbo-oldname jbo-newname nil (line-beginning-position) (line-end-position) nil nil)
   )
 
 
