@@ -1,9 +1,16 @@
-(defun ag-at-point ()
+(defun remember-old-name (w)
+  (setq jbo-oldname (format "%s" w))
+  (setq jbo-newname nil)
+  jbo-oldname
+  )
+
+ (defun ag-at-point ()
   (let* ((word (symbol-at-point))
 		 (jbo-dir (file-name-directory (car (jbo-projectiles)))))
 	(message "find-references %s in %s" word jbo-dir)
+	(remember-old-name word)
 	(if word
-		(let ((w (format "%s" word)))
+		(let ((w jbo-oldname))
 		  ;; (xref-find-references w)
 		  (require 'ag)
 		  ;; note: use .agignore to ignore files.
@@ -17,6 +24,7 @@
 
 (defun find-definition-at-point ()
   (let* ((word (symbol-at-point)))
+	(remember-old-name word)
 	(message "find-definitions for %s" word)
 	(if word
 		(let ((w (format "%s" word)))
@@ -44,7 +52,7 @@
   )
 
 ;; does not work with lsp :-(
-(defun jbo/refactor-references ()
+(defun jbo/refactor-references--disabled ()
   (interactive)
   (save-excursion
 	(if (not (equal (buffer-name) "*xref*"))
@@ -61,18 +69,22 @@
 		)
 	  )))
 
-(defun jbo/rename-start ()
+(defun jbo/find-references-xref()
   (interactive)
-  (setq jbo/oldname (format "%s" (symbol-at-point)))
-  (setq jbo/newname (read-string "new name:" oldname))
-  (message "looking for %s" jbo/oldname)
-  (call-interactively 'xref-find-references)
-  ;;(xref-find-references jbo/oldname)
+  (remember-old-name (xref--read-identifier "identifier:"))
+  (message "looking for %s" jbo-oldname)
+  ;;(call-interactively 'xref-find-references)
+  (xref-find-references jbo-oldname)
   )
 
-(defun jbo/rename-iterate ()
+(defun jbo/replace-in-line ()
   (interactive)
-  (replace-string jbo/oldname jbo/newname nil (line-beginning-position) (line-end-position) nil nil)
+  ;;(next-error)
+  (if (not jbo-newname)
+	  (setq jbo-newname (read-string "new name:" jbo-oldname))
+	)
+  (message "[%s] -> [%s]" jbo-oldname jbo-newname)
+  (replace-string jbo-oldname jbo-newname nil (line-beginning-position) (line-end-position) nil nil)
   )
 
 

@@ -6,6 +6,7 @@
 (global-set-key (kbd "M-s") 'jbo/so-search)
 (global-set-key (kbd "<f4>") 'jbo/find-definitions)
 (global-set-key (kbd "<f3>") 'jbo/find-references)
+(global-set-key (kbd "<S-f3>") 'jbo/find-references-xref)
 (global-set-key (kbd "C-l") 'goto-line)
 (global-set-key (kbd "C-k") 'jbo/find-file)
 
@@ -21,6 +22,7 @@
 (define-key c++-mode-map (kbd "C-f") 'jbo/clang-format-buffer)
 
 (global-set-key (kbd "<f6>") 'next-error)
+(global-set-key (kbd "M-d") 'jbo/replace-in-line)
 (global-set-key (kbd "<C-f6>") 'first-error)
 (global-set-key (kbd "<S-f6>") 'previous-error)
 
