@@ -550,9 +550,16 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
   (setenv "THIRDPARTYDIR" "c:/home/jbourgeois/work/3rdparty")
   )
 
+(defun has-lsp ()
+  (if (or (locate-dominating-file default-directory "compile_commands.json")
+		  (locate-dominating-file default-directory "compile_flags.txt"))
+	  t
+	nil)
+  )
+
 (defun jbo-lsp-deferred ()
   (if (string-equal major-mode "c++-mode")
-	  (if (locate-dominating-file default-directory "compile_flags.txt")
+	  (if (has-lsp)
 		  (lsp-deferred)
 		(message "no compile_flags.txt"))
 	(message "no lsp for mode %s" major-mode))
@@ -562,12 +569,31 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
   (interactive)
   (message "a")
   (if (and (string-equal major-mode "c++-mode")
-		   (locate-dominating-file default-directory "compile_flags.txt"))
+		   (has-lsp))
 	  (call-interactively 'company-capf)
 	(call-interactively 'dabbrev-expand)
 	)
   )
 
 
-
-
+(defun jbo/revert-all-buffers ()
+  "Refresh all open buffers from their respective files."
+  (interactive)
+  (let* ((list (buffer-list))
+         (buffer (car list)))
+    (while buffer
+      (let ((filename (buffer-file-name buffer)))
+        ;; Revert only buffers containing files, which are not modified;
+        ;; do not try to revert non-file buffers like *Messages*.
+        (when filename
+          (if (file-exists-p filename)
+              ;; If the file exists, revert the buffer.
+              (with-demoted-errors "Error: %S"
+                (with-current-buffer buffer
+                  (revert-buffer :ignore-auto :noconfirm)))
+            ;; If the file doesn't exist, kill the buffer.
+            (let (kill-buffer-query-functions) ; No query done when killing buffer
+              (kill-buffer buffer)
+              (message "Killed non-existing file buffer: %s" buffer))))
+        (setq buffer (pop list)))))
+  (message "Finished reverting non-file buffers."))

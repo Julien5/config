@@ -28,6 +28,7 @@
 (load "jbo-search")
 (load "jbo-keys")
 (load "jbo-utils")
+(load "emacs-clang-rename")
 
 (jbo/fix-python-indentation)
 
@@ -37,7 +38,8 @@
 (use-package lsp-mode
   :config
   ;; `-background-index' requires clangd v8+!
-  (setq lsp-clients-clangd-args '("-cross-file-rename" "-j=4" "-background-index" "-log=error"))
+  ;;(setq lsp-clients-clangd-args '("-cross-file-rename" "-j=4" "-background-index" "-log=error"))
+  (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
   (setq lsp-clients-clangd-executable "clangd-10")
   (if (not (executable-find lsp-clients-clangd-executable))
 	  (setq lsp-clients-clangd-executable "clangd")

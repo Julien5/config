@@ -43,6 +43,7 @@
 	(find-definition-at-point))
   )
 
+;; does not work with lsp :-(
 (defun jbo/refactor-references ()
   (interactive)
   (save-excursion
@@ -59,6 +60,21 @@
 		(xref-query-replace-in-results ".*" to)
 		)
 	  )))
+
+(defun jbo/rename-start ()
+  (interactive)
+  (setq jbo/oldname (format "%s" (symbol-at-point)))
+  (setq jbo/newname (read-string "new name:" oldname))
+  (message "looking for %s" jbo/oldname)
+  (call-interactively 'xref-find-references)
+  ;;(xref-find-references jbo/oldname)
+  )
+
+(defun jbo/rename-iterate ()
+  (interactive)
+  (replace-string jbo/oldname jbo/newname nil (line-beginning-position) (line-end-position) nil nil)
+  )
+
 
 ;;(switch-to-buffer "main_devhost.cpp")
 ;;(refactor-references)
