@@ -28,9 +28,6 @@ n=0
 for FILE in $(filelist); do 
 	( clang-rename -qualified-name=$OLDNAME -new-name=$NEWNAME $FILE -export-fixes=$TMP/fixes/fix$n.yaml &> $TMP/fixes/$n.out || true ) &
 	n=$((n+1))
-	#if [[ $n -gt 3 ]]; then
-	#	break
-	#fi
 done
 n=$((n-1))
 
