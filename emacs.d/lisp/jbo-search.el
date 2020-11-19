@@ -4,8 +4,19 @@
   jbo-oldname
   )
 
- (defun ag-at-point ()
-  (let* ((word (symbol-at-point))
+(defun get-identifier-to-search ()
+  (setq jbo--region nil)
+  (if (use-region-p)
+	  (setq jbo--region (buffer-substring-no-properties (region-beginning) (region-end)))
+	)
+  (setq jbo--atpoint (format "%s" (symbol-at-point)))
+  (if (use-region-p)
+	  jbo--region
+	jbo--atpoint)
+  )  
+
+(defun ag-at-point ()
+  (let* ((word (get-identifier-to-search))
 		 (jbo-dir (file-name-directory (car (jbo-projectiles)))))
 	(message "find-references %s in %s" word jbo-dir)
 	(remember-old-name word)

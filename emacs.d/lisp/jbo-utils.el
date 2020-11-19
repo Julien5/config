@@ -1,8 +1,15 @@
+(defun jbo-lsp-compile-file ()
+  (setq jbo--lsp-compile-file (locate-dominating-file default-directory "compile_flags.txt"))
+  (if (not jbo--lsp-compile-file)
+	  (setq jbo--lsp-compile-file (locate-dominating-file default-directory "compile_commands.json"))
+	)
+  jbo--lsp-compile-file
+  )
+
 (defun jbo-projectiles-p ()
-  (setq lsp-candidate (locate-dominating-file default-directory "compile_flags.txt"))
   (setq D (list))
-  (if lsp-candidate
-	  (setq D (cons lsp-candidate D))
+  (if (jbo-lsp-compile-file)
+	  (setq D (cons (jbo-lsp-compile-file) D))
 	)
   (if (not D) ;; no dir, then use the default
 	  (setq D (list (read-directory-name "dir:")))
@@ -551,8 +558,7 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
   )
 
 (defun has-lsp ()
-  (if (or (locate-dominating-file default-directory "compile_commands.json")
-		  (locate-dominating-file default-directory "compile_flags.txt"))
+  (if (jbo-lsp-compile-file)
 	  t
 	nil)
   )
