@@ -3,7 +3,6 @@
 (global-set-key (kbd "<f8>") 'modal-mode)
 
 (global-set-key (kbd "M-g") 'jbo/google-search)
-(global-set-key (kbd "M-s") 'jbo/so-search)
 (global-set-key (kbd "<f4>") 'jbo/find-definitions)
 (global-set-key (kbd "<f3>") 'jbo/find-references)
 (global-set-key (kbd "<S-f3>") 'jbo/find-references-xref)

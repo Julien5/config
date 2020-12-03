@@ -25,7 +25,8 @@ function filelist() {
 rm -Rf $TMP/fixes
 mkdir -p $TMP/fixes
 n=0
-for FILE in $(filelist); do 
+for FILE in $(filelist); do
+	echo processing $FILE
 	( clang-rename -qualified-name=$OLDNAME -new-name=$NEWNAME $FILE -export-fixes=$TMP/fixes/fix$n.yaml &> $TMP/fixes/$n.out || true ) &
 	n=$((n+1))
 done
@@ -36,4 +37,11 @@ while [[ $(jobs | grep Running | grep clang-rename | wc -l) -gt 0  ]]; do
 	sleep 2
 done
 
-clang-apply-replacements $TMP/fixes
+echo affected files:
+grep FilePath $TMP/fixes/*.yaml | sort | uniq
+
+echo "execute changes? type yes"
+read ok
+if [[ $ok = "yes" ]]; then
+	clang-apply-replacements $TMP/fixes
+fi

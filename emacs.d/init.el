@@ -28,7 +28,6 @@
 (load "jbo-search")
 (load "jbo-keys")
 (load "jbo-utils")
-(load "emacs-clang-rename")
 
 (jbo/fix-python-indentation)
 

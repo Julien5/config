@@ -573,7 +573,6 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 
 (defun jbo/expand ()
   (interactive)
-  (message "a")
   (if (and (string-equal major-mode "c++-mode")
 		   (has-lsp))
 	  (call-interactively 'company-capf)
