@@ -4,7 +4,7 @@ for a in "$@"; do
 	echo $a;
 done > ~/args
 set -e
-# set -x
+#set -x
 
 source $JULIEN5CONFIGPATH/scripts/normalize.sh
 
@@ -58,9 +58,9 @@ function getcandidates() {
 	fi
 	
 	if [[ "$line" =~ "include" ]]; then
-		cat $CACHEFILE | grep $fname 
+		cat $CACHEFILE | grep -F "$fname"
 	else
-		cat $CACHEFILE | grep $(othername "$fname")
+		cat $CACHEFILE | grep -F "$(othername $fname)"
 	fi
 }
 
