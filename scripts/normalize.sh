@@ -15,7 +15,8 @@ function system()
 
 function winify() {
 	if [[ "$(system)" = "msys"  ]]; then
-		echo "$@" | sed 's|^/\([a-z,A-Z]\)/|\1:/|';
+		cygpath.exe -m "$@"
+		#echo "$@" | sed 's|^/\([a-z,A-Z]\)/|\1:/|';
 	else
 		echo "$@";
 	fi
