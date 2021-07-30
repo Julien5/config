@@ -11,10 +11,13 @@ find ~/Downloads/ -name "*.json" -exec mv -v "{}" keyboards/atreus/keymaps/jbo/j
 #pushd ~/qmk/qmk_firmware/keyboards/atreus/keymaps/jbo/
 #\~/qmk/qmk_firmware/bin/qmk compile
 #popd
-./bin/qmk compile keyboards/atreus/keymaps/jbo/jbo.json
-# make -v atreus/promicro:jbo 
-
-HEX=$(find .build/ -name "*.hex")
+if [[ -z $1 ]]; then
+	./bin/qmk compile keyboards/atreus/keymaps/jbo/jbo.json
+	# make -v atreus/promicro:jbo
+	HEX=$(find .build/ -name "*.hex")
+else
+	HEX=$1
+fi
 
 if [[ ! -f $HEX ]]; then
 	echo could not find $HEX
