@@ -422,7 +422,7 @@ If buffer-or-name is nil return current buffer's mode."
   (setq clang-format-executable "clang-format")
   (if (executable-find jbo-clang-format-executable)
 	  (setq clang-format-executable jbo-clang-format-executable)
-	(message "could not find %s" jbo-clang-format-executable)
+	(setq clang-format-executable "clang-format-10")
 	)
   (message "formatting with %s" clang-format-executable)  
   (clang-format-buffer)
