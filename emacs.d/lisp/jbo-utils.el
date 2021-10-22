@@ -25,7 +25,7 @@
 	  (setq jbo-projectiles-cache (jbo-projectiles-p))
 	)
   jbo-projectiles-cache
-   )
+  )
 
 (defun jbo-tags-path ()
   (expand-file-name (format "~/.op/TAGS"))
@@ -410,20 +410,24 @@ If buffer-or-name is nil return current buffer's mode."
 (defun jbo-clang-format-buffer-p ()
   (require 'clang-format)
   (setq clang-format-style-option nil)
-  (setq jbo-clang-format-executable nil)
-
+  (setq win-clang-format-executable nil)
 
   (if (locate-dominating-file buffer-file-name ".svn")
-	  (setq jbo-clang-format-executable "clang-format-4.0")
+	  (setq win-clang-format-executable "clang-format-4.0")
     (if (locate-dominating-file buffer-file-name ".git")
-  		(setq jbo-clang-format-executable "clang-format-9")
+  		(setq win-clang-format-executable "clang-format-9")
 	  ))
   
-  (setq clang-format-executable "clang-format")
-  (if (executable-find jbo-clang-format-executable)
-	  (setq clang-format-executable jbo-clang-format-executable)
-	(setq clang-format-executable "clang-format-10")
+  (if (eq system-type 'windows-nt)
+	  (setq clang-format-executable win-clang-format-executable)
+	(setq clang-format-executable "clang-format")
 	)
+  
+  (if (executable-find clang-format-executable)
+	  (message "using %s" clang-format-executable)
+	(message "could not find %s" clang-format-executable)
+	)
+  
   (message "formatting with %s" clang-format-executable)  
   (clang-format-buffer)
   (message "formatted with %s" clang-format-executable)
@@ -537,7 +541,7 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 (defun jbo--mingw73-path-fixup ()
   (setenv "PATH"
 		  (concat
-		   "c:/tools/Qt/5.12.4/mingw73_32/bin" ";"
+		   "c:/tools/Qt/5.12.10/mingw73_32/bin" ";"
 		   "c:/tools/Qt/Tools/mingw730_32/bin" ";"
 		   "c:/home/jbourgeois/setup/make/win32" ";"
 		   (getenv "PATH")
@@ -549,12 +553,14 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
   (jbo--mingw49-path-fixup)
   (setenv "PROJECTSDIR" "c:/home/jbourgeois/work/projects")
   (setenv "THIRDPARTYDIR" "c:/home/jbourgeois/work/3rdparty")
+  (setenv "TARGET_ARCH" "x86")
   )
 
 (defun jbo-dev-mingw73 ()
   (jbo--mingw73-path-fixup)
   (setenv "PROJECTSDIR" "c:/home/jbourgeois/work/projects")
   (setenv "THIRDPARTYDIR" "c:/home/jbourgeois/work/3rdparty")
+  (setenv "TARGET_ARCH" "x86")
   )
 
 (defun has-lsp ()

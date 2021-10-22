@@ -40,6 +40,9 @@
   ;;(setq lsp-clients-clangd-args '("-cross-file-rename" "-j=4" "-background-index" "-log=error"))
   (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
   (setq lsp-clients-clangd-executable "clangd-10")
+  (if (eq system-type 'windows-nt)
+	  (setq lsp-clients-clangd-executable "clangd-11")
+	)
   (if (not (executable-find lsp-clients-clangd-executable))
 	  (setq lsp-clients-clangd-executable "clangd")
 	)
@@ -47,7 +50,6 @@
 	  (message "could not find clangd executable."))
   (setq lsp-log-io nil)
   (setq gc-cons-threshold 100000000)
-  (message "lsp")
   ;; ..
   )
 
@@ -55,7 +57,7 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
-(add-hook 'c++-mode-hook 'jbo-lsp-deferred)
+;(add-hook 'c++-mode-hook 'jbo-lsp-deferred)
 
 (setq exec-path (append exec-path '("c:/tools/llvm/llvm-10/bin/")))
 
@@ -66,9 +68,15 @@
 (jbo-fix-expand-region-for-line)
 
 ;; prevent custom from messing up my init.el
-(setq custom-file (format "~/.emacs.d/%s/custom.el" (getenv "OSTYPE")))
+(setq custom-file-dirname "linux-gnu")
+(if (eq system-type 'windows-nt)
+	(setq custom-file-dirname "msys")
+  )
+(setq custom-file (format "~/.emacs.d/%s/custom.el" custom-file-dirname))
 (load custom-file)
 
+(set-face-attribute 'region nil :background "yellow")
+(set-face-attribute 'region nil :foreground "black")
 ;; https://stackoverflow.com/questions/23142699/in-gnu-emacs-how-to-set-background-color-by-mode
 ;;(add-hook 'post-command-hook 'jbo-set-background-for-mode)
 ;;(add-hook 'change-major-mode-hook 'jbo-set-background-for-mode)
@@ -100,5 +108,6 @@
 
 ;; (add-hook 'after-save-hook 'jbo/update-tags-for-file)
 (add-hook 'before-save-hook 'jbo/clang-format-buffer)
-(ido-mode)
-(message "hi")
+(ido-mode nil)
+(fido-mode 't)
+(message "ready")

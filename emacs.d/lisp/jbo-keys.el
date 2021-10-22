@@ -34,9 +34,10 @@
 
 ;; c-c c-v for copy paste
 (cua-mode t)
+(setq cua-keep-region-after-copy t)
+
 (global-set-key (kbd "<C-backspace>") 'jbo/backward-delete-word)
 (global-set-key (kbd "<C-delete>") 'jbo/delete-line)
-
 
 (defun jbo-c-s-tab ()
   (if (eq system-type 'windows-nt)
