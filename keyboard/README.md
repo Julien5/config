@@ -11,9 +11,7 @@ To flash a new layout:
 do it yourself build:
 install qmk with:
 ```
-git clone https://github.com/qmk/qmk_firmware.git
-cd qmk_firmware/
-python3 -m pip install -U -r /home/julien/projects/config/keyboard/qmk_firmware/requirements.txt
-make git-submodule
+python3 -m pip install -qmk
 ```
-to be continued.
+and always enter yes. 
+see https://beta.docs.qmk.fm/tutorial/newbs_getting_started
