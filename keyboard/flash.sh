@@ -1,20 +1,29 @@
 #!/usr/bin/env bash
 
 set -e
-set -x
-DIR=$(dirname $0)
+#set -x
+
+DIR=$(realpath $(dirname $0))
 cd $DIR
 # backup file.
 ( pushd keyboards/atreus/keymaps/jbo/ &> /dev/null;  cp -v jbo.json jbo.bak.$(find -name "*.json" | wc -l).json  )
+QMKDIR="$(realpath ~/qmk_firmware)"
+find ~/Downloads/ -name "*.json" -type f | while read file; do
+	cp -v $file keyboards/atreus/keymaps/jbo/jbo.json;
+	mv -v $file $QMKDIR/keyboards/atreus/keymaps/jbo/jbo.json;
+done
 
-find ~/Downloads/ -name "*.json" -exec mv -v "{}" keyboards/atreus/keymaps/jbo/jbo.json \;
 #pushd ~/qmk/qmk_firmware/keyboards/atreus/keymaps/jbo/
 #\~/qmk/qmk_firmware/bin/qmk compile
 #popd
 if [[ -z $1 ]]; then
-	./bin/qmk compile keyboards/atreus/keymaps/jbo/jbo.json
+	pushd $QMKDIR
+	echo "clean"
+	rm -Rf .build
+	qmk compile $DIR/keyboards/atreus/keymaps/jbo/jbo.json
 	# make -v atreus/promicro:jbo
-	HEX=$(find .build/ -name "*.hex")
+	HEX=$(find $QMKDIR/.build/ -name "*.hex")
+	popd
 else
 	HEX=$1
 fi
