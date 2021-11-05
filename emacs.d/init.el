@@ -108,6 +108,6 @@
 
 ;; (add-hook 'after-save-hook 'jbo/update-tags-for-file)
 (add-hook 'before-save-hook 'jbo/clang-format-buffer)
-(ido-mode nil)
-(fido-mode 't)
+(fido-mode nil)
+(ido-mode 't)
 (message "ready")

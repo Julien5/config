@@ -38,7 +38,7 @@
 
 (defun jbo/find-file ()
   (interactive)
-  (project-or-external-find-file)
+  (projectile-find-file)
   )
 
 (defun jbo-update-tags-for-file-execute (filename)
