@@ -1,4 +1,1 @@
-# config
-
-My config files.
-a
+git clone ssh://julien5/Julien5/config.git
