@@ -38,7 +38,7 @@
   :config
   ;; `-background-index' requires clangd v8+!
   ;;(setq lsp-clients-clangd-args '("-cross-file-rename" "-j=4" "-background-index" "-log=error"))
-  (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
+  ;;(setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
   (setq lsp-clients-clangd-executable "clangd-10")
   (if (eq system-type 'windows-nt)
 	  (setq lsp-clients-clangd-executable "clangd-11")
@@ -57,7 +57,7 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
-;(add-hook 'c++-mode-hook 'jbo-lsp-deferred)
+(add-hook 'c++-mode-hook 'jbo-lsp-deferred)
 
 (setq exec-path (append exec-path '("c:/tools/llvm/llvm-10/bin/")))
 
@@ -109,5 +109,6 @@
 ;; (add-hook 'after-save-hook 'jbo/update-tags-for-file)
 (add-hook 'before-save-hook 'jbo/clang-format-buffer)
 (ido-mode nil)
-(fido-mode 't)
+(fido-mode t)
+(projectile-mode t)
 (message "ready")
