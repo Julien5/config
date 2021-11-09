@@ -51,16 +51,24 @@ function getdirs() {
 	_getdirs | sort | uniq | tr "\n" " "
 }
 
+function debug() {
+	echo debug: $@ 1>&2
+}
+
 CACHEFILE=/tmp/cache.jtfap.$(basename $3).txt
 function getcandidates() {
 	if [[ ! -f $CACHEFILE ]]; then
+		# debug rebuild cache
 		find $(getdirs) -type f -iname "*.cpp" -o -iname "*.c"  -o -iname "*.h" | grep -v "moc_" | sort | uniq > $CACHEFILE
 	fi
-	
 	if [[ "$line" =~ "include" ]]; then
-		cat $CACHEFILE | grep -F "$fname"
+		if ! cat $CACHEFILE | grep -F "$fname"; then
+			echo -n
+		fi
 	else
-		cat $CACHEFILE | grep -F "$(othername $fname)"
+		if ! cat $CACHEFILE | grep -F "$(othername $fname)"; then
+			echo -n
+		fi
 	fi
 }
 
@@ -79,13 +87,18 @@ function selectcandidate() {
 	done 
 }
 
+# debug hey
 list=$(getcandidates)
-count=$(echo "$list" | wc -l)
-if [[ "$count" -eq "0" ]]; then
+if [[ -z "$list" ]]; then
 	rm -f $CACHEFILE
-	exit 1;
+	list=$(getcandidates)
+	if [[ -z "$list" ]]; then
+		rm -f $CACHEFILE
+		exit 1
+	fi
 fi
 
+count=$(echo "$list" | wc -l)
 if [[ "$count" -gt "1" ]]; then
 	ret=$(selectcandidate $(realpath $fname) $list | sort -n -r | head -1 | cut -f2 -d" ")
 else
