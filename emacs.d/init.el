@@ -39,7 +39,7 @@
   ;; `-background-index' requires clangd v8+!
   ;;(setq lsp-clients-clangd-args '("-cross-file-rename" "-j=4" "-background-index" "-log=error"))
   ;;(setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
-  (setq lsp-clients-clangd-executable "clangd-10")
+  (setq lsp-clients-clangd-executable "clangd-12")
   (if (eq system-type 'windows-nt)
 	  (setq lsp-clients-clangd-executable "clangd-11")
 	)

@@ -22,6 +22,9 @@
 -I./backend/local-backend/lib/include/
 -I./backend/local-backend/lib/src
 -I./backend/local-backend/main
+-I./logging/lib/include
+-I./backend/update/lib/include/
+-I./backend/update/mender-once/lib/include/
 -I/opt/Qt/5.12.12/gcc_64/include
 -I/opt/Qt/5.12.12/gcc_64/include/QtANGLE
 -I/opt/Qt/5.12.12/gcc_64/include/QtCore
