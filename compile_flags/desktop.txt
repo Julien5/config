@@ -23,6 +23,7 @@
 -I./backend/local-backend/lib/src
 -I./backend/local-backend/main
 -I./backend/logging/lib/include
+-I./backend/server/example/lib/include/
 -I./backend/update/lib/include/
 -I./backend/update/mender-once/lib/include/
 -I/opt/Qt/5.12.12/gcc_64/include
