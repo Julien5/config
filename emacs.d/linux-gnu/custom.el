@@ -18,7 +18,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Source Code Pro" :slant normal :weight light :height 137 :width normal :antialias true :foundry "ADBO")))))
+ '(default ((t (:family "Source Code Pro" :slant normal :weight normal :height 128 :width normal :antialias true :foundry "ADBO")))))
 
 (set-face-attribute 'mode-line nil :font "Source Code Pro-12")
 (set-face-attribute 'mode-line-inactive nil :font "Source Code Pro-12")
