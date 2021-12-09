@@ -21,5 +21,6 @@
  '(default ((t (:family "Source Code Pro" :slant normal :weight light :height 137 :width normal :antialias true :foundry "ADBO")))))
 
 (set-face-attribute 'mode-line nil :font "Source Code Pro-12")
+(set-face-attribute 'mode-line-inactive nil :font "Source Code Pro-12")
 
 
