@@ -7,7 +7,7 @@ DIR=$(realpath $(dirname $0))
 cd $DIR
 # backup file.
 ( pushd keyboards/atreus/keymaps/jbo/ &> /dev/null;  cp -v jbo.json jbo.bak.$(find -name "*.json" | wc -l).json  )
-QMKDIR="$(realpath ~/qmk_firmware)"
+QMKDIR="$(realpath /opt/qmk/qmk_firmware)"
 find ~/Downloads/ -name "*.json" -type f | while read file; do
 	cp -v $file keyboards/atreus/keymaps/jbo/jbo.json;
 	mv -v $file $QMKDIR/keyboards/atreus/keymaps/jbo/jbo.json;

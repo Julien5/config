@@ -231,6 +231,7 @@ If buffer-or-name is nil return current buffer's mode."
 			  (not (string-prefix-p "*lsp" name))
 			  (not (string-prefix-p "*clangd" name))
 			  (not (string-equal "*Messages*" name))
+			  (not (string-equal "*shell*" name))
 			  )
 		 )
 	)
