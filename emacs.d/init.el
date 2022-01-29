@@ -39,6 +39,13 @@
   ;; `-background-index' requires clangd v8+!
   ;;(setq lsp-clients-clangd-args '("-cross-file-rename" "-j=4" "-background-index" "-log=error"))
   ;;(setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
+  (setq lsp-clients-clangd-args
+          '("-j=2"
+            "--clang-tidy"
+            "--completion-style=bundled"
+            "--pch-storage=memory"
+            "--header-insertion=never"
+            "--header-insertion-decorators=0"))
   (setq lsp-clients-clangd-executable "clangd-12")
   (if (eq system-type 'windows-nt)
 	  (setq lsp-clients-clangd-executable "clangd-11")
@@ -105,6 +112,9 @@
 (jbo-fix-project-roots)
 
 (setq compilation-scroll-output 'first-error)
+
+;; projectile-globally-ignored-directories (append '("*__pycache__/")
+;; projectile-globally-ignored-directories)
 
 ;; (add-hook 'after-save-hook 'jbo/update-tags-for-file)
 (add-hook 'before-save-hook 'jbo/clang-format-buffer)

@@ -3,7 +3,7 @@
 set -e
 #set -x
 
-TMP=c:/tmp
+TMP=/tmp
 OLDNAME=$1
 NEWNAME=$2
 
@@ -22,18 +22,46 @@ function filelist() {
 	ag -l -cpp $BASENAME | tr -d "\r" | cut -f1 -d: | egrep "(.cpp$|.h$)"
 }
 
+function hashfind() {
+	if hash $1 &> /dev/null; then
+		echo $1
+		return 0;
+	fi
+	return 1;
+}
+
+function fixversion() {
+	if hashfind $1-12; then
+		return;
+	fi
+	if hashfind $1; then
+		return
+	fi
+	echo no $1 found
+}
+	
+
+function clang_rename() {
+	fixversion clang-rename
+}
+
+function clang_apply_replacements() {
+	fixversion clang-apply-replacements;
+}
+
 rm -Rf $TMP/fixes
 mkdir -p $TMP/fixes
 n=0
 for FILE in $(filelist); do
 	echo processing $FILE
-	( clang-rename -qualified-name=$OLDNAME -new-name=$NEWNAME $FILE -export-fixes=$TMP/fixes/fix$n.yaml &> $TMP/fixes/$n.out || true ) &
+	CLANGRENAME=$(clang_rename)
+	($CLANGRENAME -qualified-name=$OLDNAME -new-name=$NEWNAME $FILE -export-fixes=$TMP/fixes/fix$n.yaml &> $TMP/fixes/$n.out || true ) &
 	n=$((n+1))
 done
 n=$((n-1))
-
-while [[ $(jobs | grep Running | grep clang-rename | wc -l) -gt 0  ]]; do
-	printf "%s jobs running\n" $(jobs | grep clang-rename | wc -l)
+jobs
+while [[ $(jobs | grep Running | grep -i CLANGRENAME | wc -l) -gt 0  ]]; do
+	printf "%s jobs running\n" $(jobs | grep CLANGRENAME | wc -l)
 	sleep 2
 done
 
@@ -43,5 +71,6 @@ grep FilePath $TMP/fixes/*.yaml | sort | uniq
 echo "execute changes? type yes"
 read ok
 if [[ $ok = "yes" ]]; then
-	clang-apply-replacements $TMP/fixes
+	echo applying changes..
+	clang_apply_replacements $TMP/fixes
 fi

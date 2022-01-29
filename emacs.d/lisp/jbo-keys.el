@@ -10,7 +10,8 @@
 (global-set-key (kbd "C-k") 'jbo/find-file)
 
 (global-set-key (kbd "C-u") 'er/expand-region)
-(global-set-key (kbd "C-a") 'jbo/expand)
+(global-set-key (kbd "C-q") 'save-some-buffers)
+(global-set-key (kbd "C-w") 'kill-this-define)
 
 (define-key c++-mode-map [f5] 'jbo/compile)
 (define-key qt-pro-mode-map [f5] 'jbo/compile)

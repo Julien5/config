@@ -3,6 +3,7 @@
   (if (not jbo--lsp-compile-file)
 	  (setq jbo--lsp-compile-file (locate-dominating-file default-directory "compile_commands.json"))
 	)
+  (message "xx:%s" jbo--lsp-compile-file)
   jbo--lsp-compile-file
   )
 
@@ -18,51 +19,12 @@
   )
 
 (defun jbo-projectiles ()
-  (if (not (boundp 'jbo-projectiles-cache))
-	  (setq jbo-projectiles-cache nil)
-	)
-  (if (not jbo-projectiles-cache)
-	  (setq jbo-projectiles-cache (jbo-projectiles-p))
-	)
-  jbo-projectiles-cache
-  )
-
-(defun jbo-tags-path ()
-  (expand-file-name (format "~/.op/TAGS"))
-  )
-
-(defun jbo/reload-tags ()
-  (interactive)
-  (visit-tags-table (jbo-tags-path))
+  (jbo-projectiles-p)
   )
 
 (defun jbo/find-file ()
   (interactive)
   (projectile-find-file)
-  )
-
-(defun jbo-update-tags-for-file-execute (filename)
-  (setq executable (format "%s/bash/%s" user-emacs-directory "update-tags.sh"))
-  (setq cmd (format "%s %s" executable (shell-quote-argument filename)))
-  (require 'subr-x)
-  (message "exe %s" cmd)
-  (setq error (string-trim (shell-command-to-string cmd)))
-  (if (equal "" error)
-	  (progn (jbo/reload-tags) ;; necessary ? (the tags filename has not changed)
-			 (message "updated %s" filename))
-	(message "error %s" error)
-	)
-  (when (get-buffer "TAGS")
-	(kill-buffer (get-buffer "TAGS")))
-  )
-
-(defun jbo/update-tags-for-file ()
-  (let* ((file (buffer-file-name (current-buffer)))
-		 (extension (file-name-extension file)))
-	(if (or (equal extension "c") (equal extension "cpp") (equal extension "h"))
-		(jbo-update-tags-for-file-execute file)
-	  )
-	)
   )
 
 (defun jbo/diff ()
@@ -104,7 +66,7 @@
 	  jbo-compilation-command
 	(if (file-directory-p (expand-file-name (format "%s/make" (getenv "SETUPROOT"))))
 		(expand-file-name (format "%s/make/mk -r" (getenv "SETUPROOT")))
-	  "make"
+	  "make -C /tmp/build_pc"
 	  )
 	))
 
@@ -171,7 +133,8 @@
 ;; do not switch to a buffer shown on the frame
 ;; note: switch-to-next-buffer cycle according to the specified window’s history list,
 ;;       rather than the global buffer list
-(setq switch-to-prev-buffer-skip 'this)
+;;(setq switch-to-prev-buffer-skip 'this)
+(setq switch-to-prev-buffer-skip nil)
 
 (defun jbo/next-code-buffer ()
   (interactive)
