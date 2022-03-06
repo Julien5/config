@@ -10,7 +10,8 @@
 (global-set-key (kbd "C-k") 'jbo/find-file)
 
 (global-set-key (kbd "C-u") 'er/expand-region)
-(global-set-key (kbd "C-q") 'save-some-buffers)
+;;(global-set-key (kbd "C-q") 'save-some-buffers)
+(global-set-key (kbd "C-q") 'buffer-menu)
 (global-set-key (kbd "C-w") 'kill-this-define)
 
 (define-key c++-mode-map [f5] 'jbo/compile)
@@ -48,7 +49,9 @@
   )
 
 (global-set-key (kbd "<C-tab>") 'jbo/prev-code-buffer)
-(global-set-key  (jbo-c-s-tab) 'jbo/next-code-buffer)
+(global-set-key (kbd "<C-S-tab>") 'ido-switch-buffer)
+;;(global-set-key  (jbo-c-s-tab) 'jbo/next-code-buffer)
+(global-set-key  (jbo-c-s-tab) 'ido-switch-buffer)
 (global-set-key (kbd "C-S-p") 'jbo/kill-invisible-buffers)
 (global-set-key (kbd "C-p") 'jbo/kill-internal-buffers)
 

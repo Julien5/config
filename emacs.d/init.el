@@ -105,8 +105,6 @@
 ;; reload files if changed on disk
 (global-auto-revert-mode t)
 
-;; (setq tags-file-name nil)
-(setq tags-table-list (list (jbo-tags-path)))
 (setq large-file-warning-threshold 100000000)
 
 (jbo-fix-project-roots)
