@@ -3,7 +3,6 @@
   (if (not jbo--lsp-compile-file)
 	  (setq jbo--lsp-compile-file (locate-dominating-file default-directory "compile_commands.json"))
 	)
-  (message "xx:%s" jbo--lsp-compile-file)
   jbo--lsp-compile-file
   )
 

@@ -3,108 +3,93 @@
 for a in "$@"; do
 	echo $a;
 done > ~/args
+
 set -e
 #set -x
 
+if [[ -z $JULIEN5CONFIGPATH ]]; then
+	echo JULIEN5CONFIGPATH is not set
+	exit 1
+fi
+
 source $JULIEN5CONFIGPATH/scripts/normalize.sh
 
-line="$1" # #include <foo/bar.h> -> foo/bar
-fname="$2" # filename.cpp -> filename.h
-dirs="${@:3:$#}"
-dir=$(dirname $fname)
-
-if [[  -z "$fname" ]]; then
-	echo missing fname;
-	exit 1;
-fi
-
-if [[ "$line" =~ "include" ]]; then
-	included=$(echo "$line" | tr "\t " " " | tr -s " " | cut -f2 -d" " | tr -d "\"<>");
-	fname="$included"
-fi
+LINE="$1" # #include <foo/bar.h> -> foo/bar
+FILENAME="$2" # filename.cpp -> filename.h
 
 function corename() {
 	local f=$1;
 	echo $(basename $f | cut -f1 -d".") # TODO: support aa.bbb.ccc.h
 }
 
+function parseinclude() {
+	echo "$LINE" | tr "\t " " " | tr -s " " | cut -f2 -d" " | tr -d "\"<>"
+}
+
 function othername() {
-	local f=$1;
-	local bb=$(corename $f)
-	if [[ "$fname" == *h ]] && [[ ! "$line" =~ "include" ]]; then
-		# not #include and we are in header file => we want cpp file.
-		printf "%s" "$bb.c"
+	if [[ "$LINE" =~ "include" ]]; then
+		parseinclude
+		return;
+	fi
+	
+	if [[ "$FILENAME" == *h ]]; then
+		# we are in header file => we want cpp file
+		printf "%s" "$(corename $FILENAME).c"
 	else
-		# we are in cpp file or the line is #include
-		printf "%s" "$bb.h"
+		# we are in cpp file => we want header file
+		printf "%s" "$(corename $FILENAME).h"
 	fi
 }
 
-function _getdirs() {
-	printf "%s\n" "$(realpath $dir)"
-	for d in "$dirs"; do
-		printf "%s\n" "$(realpath $d)"
+function projectroot() {
+	local D=$1
+	while true; do
+		if [[ -d $D/.git ]] || [[ -d $D/compile_flags.txt ]]; then
+			echo $D
+			return 0
+		fi
+		if [[ "$D" = "/" ]]; then
+			break
+		fi
+		D=$(realpath $D/..)
 	done
+	return 1
 }
 
-function getdirs() {
-	_getdirs | sort | uniq | tr "\n" " "
-}
-
-function debug() {
-	echo debug: $@ 1>&2
-}
-
-CACHEFILE=/tmp/cache.jtfap.$(basename $3).txt
-function getcandidates() {
-	if [[ ! -f $CACHEFILE ]]; then
-		# debug rebuild cache
-		find $(getdirs) -type f -iname "*.cpp" -o -iname "*.c"  -o -iname "*.h" | grep -v "moc_" | sort | uniq > $CACHEFILE
-	fi
-	if [[ "$line" =~ "include" ]]; then
-		if ! cat $CACHEFILE | grep -F "$fname"; then
-			echo -n
+function main_include() {
+	# if we are processing an include, start at projectroot
+	if [[ "$LINE" =~ "include" ]]; then
+		D=$(projectroot $(pwd))
+		if find $D -ipath "*$(othername)*" | grep .; then
+			return 0
 		fi
-	else
-		if ! cat $CACHEFILE | grep -F "$(othername $fname)"; then
-			echo -n
+		return 1
+	fi
+}
+
+function main_no_include() {
+	D=$(dirname $FILENAME)
+	R=$(projectroot $D)
+	while true; do
+		if find $D -name "$(othername)*" | grep .; then
+			return 0
 		fi
+		if [[ $D = $R ]]; then
+			break;
+		fi
+		D=$(realpath $D/..)
+	done
+	return 1
+}
+
+
+function main() {
+	# if we are processing an include, start at projectroot
+	if [[ "$LINE" =~ "include" ]]; then
+		main_include
+		return 
 	fi
+	main_no_include
 }
 
-function commonprefix() {
-	string1="$1"
-	string2="$2"
-	printf '%s\x0%s' "$string1" "$string2" | sed 's/\(.*\).*\x0\1.*/\1/'
-}
-
-function selectcandidate() {
-	declare -A candidates;
-	for a in "${@:2:$#}"; do
-		c=$(commonprefix $1 $a)
-		length=${#c}
-		echo $length $a
-	done 
-}
-
-# debug hey
-list=$(getcandidates)
-if [[ -z "$list" ]]; then
-	rm -f $CACHEFILE
-	list=$(getcandidates)
-	if [[ -z "$list" ]]; then
-		rm -f $CACHEFILE
-		exit 1
-	fi
-fi
-
-count=$(echo "$list" | wc -l)
-if [[ "$count" -gt "1" ]]; then
-	ret=$(selectcandidate $(realpath $fname) $list | sort -n -r | head -1 | cut -f2 -d" ")
-else
-	ret=$(realpath $list)
-fi
-
-if [[ -f "$ret" ]]; then
- 	printf "%s" "$(normalize.path $ret)"
-fi
+main

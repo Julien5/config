@@ -19,7 +19,7 @@
 					  (format fmt qqD)
 					  )))
 	(require 'subr-x)
-	;;(message "executing:%s" cmd)
+	(message "executing:%s" cmd)
 	(message "searching other file for %s in %s" filename (jbo-projectiles))
 	(setq result (string-trim (shell-command-to-string cmd)))
 	(if (not (equal "" result))
@@ -33,9 +33,8 @@
 (defun jbo/jump-to-file-at-point ()
   (interactive)
   (save-excursion
-    (let ((basename (file-name-nondirectory buffer-file-name))
-		  (line (thing-at-point 'line' 'no-properties)))
-	  (jump-to-file-at-point-execute line basename)
+    (let ((line (thing-at-point 'line' 'no-properties)))
+	  (jump-to-file-at-point-execute line buffer-file-name)
 	  )))
 
 ;;(switch-to-buffer "debug.cpp")
