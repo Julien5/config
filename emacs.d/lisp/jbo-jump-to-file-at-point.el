@@ -30,11 +30,17 @@
 	)
   )
 
+(defun un-nil-string  (s)
+  (if (equal s nil)
+	  ""
+	s)
+  )
+
 (defun jbo/jump-to-file-at-point ()
   (interactive)
   (save-excursion
     (let ((line (thing-at-point 'line' 'no-properties)))
-	  (jump-to-file-at-point-execute line buffer-file-name)
+	  (jump-to-file-at-point-execute (un-nil-string line) buffer-file-name)
 	  )))
 
 ;;(switch-to-buffer "debug.cpp")
