@@ -5,7 +5,7 @@ for a in "$@"; do
 done > ~/args
 
 set -e
-#set -x
+set -x
 
 if [[ -z $JULIEN5CONFIGPATH ]]; then
 	echo JULIEN5CONFIGPATH is not set
@@ -59,10 +59,12 @@ function projectroot() {
 function main_include() {
 	# if we are processing an include, start at projectroot
 	if [[ "$LINE" =~ "include" ]]; then
-		D=$(projectroot $(pwd))
 		if [[ $(dirname $(othername)) = "." ]]; then
-			D=$(pwd)
+			if find $(pwd) -name "$(othername)" | grep -v "#"; then
+				return 0
+			fi
 		fi
+		local D=$(projectroot $(pwd))
 		if find $D -ipath "*$(othername)*" | grep -v "#"; then
 			return 0
 		fi
@@ -71,7 +73,7 @@ function main_include() {
 }
 
 function main_no_include() {
-	D=$(dirname $FILENAME)
+	local D=$(dirname $FILENAME)
 	R=$(projectroot $D)
 	while true; do
 		if find $D -name "$(othername)*" | grep .; then
