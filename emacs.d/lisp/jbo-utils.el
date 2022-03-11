@@ -571,3 +571,15 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
               (message "Killed non-existing file buffer: %s" buffer))))
         (setq buffer (pop list)))))
   (message "Finished reverting non-file buffers."))
+
+(defun jbo/split-window-right ()
+  (interactive)
+  (split-window-right)
+  (other-window 1)
+  )
+
+(defun jbo/split-window-below ()
+  (interactive)
+  (split-window-below)
+  (other-window 1)
+  )

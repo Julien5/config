@@ -58,6 +58,9 @@
 (global-set-key (kbd "<C-next>") 'other-window)
 (defun prev-window ()  (interactive)  (other-window -1))
 (global-set-key (kbd "<C-prior>") 'prev-window)
+(global-set-key (kbd "C-S-t") 'jbo/split-window-below)
+(global-set-key (kbd "C-t") 'jbo/split-window-right)
+
 
 (global-set-key (kbd "<S-f12>") 'jbo/save-window-configuration)
 (global-set-key (kbd "<f12>") 'jbo/restore-window-configuration)
