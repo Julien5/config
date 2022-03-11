@@ -118,17 +118,6 @@
   (message "windows saved")
   )
 
-(defun jbo/save-private-window-configuration ()
-  (window-configuration-to-register 'p)
-  (message "saved")
-  )
-
-(defun jbo/restore-private-window-configuration ()
-  (interactive)
-  (jump-to-register 'p)
-  (message "restored")
-  )
-
 ;; do not switch to a buffer shown on the frame
 ;; note: switch-to-next-buffer cycle according to the specified window’s history list,
 ;;       rather than the global buffer list
@@ -225,8 +214,6 @@ If buffer-or-name is nil return current buffer's mode."
 (defun jbo/compile ()
   (interactive)
   (save-selected-window
-	;;(delete-other-windows)
-	(jbo/save-private-window-configuration)
 	(setq orig-dd nil)
 	(if (boundp 'jbo-compilation-directory)
 		(progn (setq orig-dd default-directory)
@@ -437,22 +424,10 @@ With argument, do this that many times."
 
 (defun jbo/magit-status ()
   (interactive)
-  (jbo/save-private-window-configuration)
+  (jbo/save-window-configuration)
   (magit-status)
   (delete-other-windows)
   )
-
-(defun jbo/so-search ()
-  (interactive)
-  (jbo/save-private-window-configuration)
-  (delete-other-windows)
-  ;;(setq sx-tab-default-order "Most Voted")
-  (setq sx-tab-default-order "Score")
-  (setq jboword nil)
-  (if (use-region-p)
-      (setq jboword (buffer-substring (region-beginning) (region-end))))
-  (setq jboword (read-string "so: " jboword))
-  (sx-search "stackoverflow" jboword))
 
 ;;; The custom search URLs
 (defvar *internet-search-urls*
@@ -582,4 +557,10 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
   (interactive)
   (split-window-below)
   (other-window 1)
+  )
+
+(defun jbo/fix-and-zoom-window ()
+  (interactive)
+  (jbo/save-window-configuration)
+  (delete-other-windows)
   )
