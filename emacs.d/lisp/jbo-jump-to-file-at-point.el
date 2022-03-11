@@ -15,7 +15,7 @@
 		 (cmd (format "%s %s %s %s"
 					  executable
 					  (shell-quote-argument (string-trim line))
-					  (shell-quote-argument filename) ;; (format "%s%s" default-directory filename)
+					  (shell-quote-argument filename)
 					  (format fmt qqD)
 					  )))
 	(require 'subr-x)

@@ -60,7 +60,10 @@ function main_include() {
 	# if we are processing an include, start at projectroot
 	if [[ "$LINE" =~ "include" ]]; then
 		D=$(projectroot $(pwd))
-		if find $D -ipath "*$(othername)*" | grep .; then
+		if [[ $(dirname $(othername)) = "." ]]; then
+			D=$(pwd)
+		fi
+		if find $D -ipath "*$(othername)*" | grep -v "#"; then
 			return 0
 		fi
 		return 1
