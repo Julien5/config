@@ -5,7 +5,7 @@ for a in "$@"; do
 done > ~/args
 
 set -e
-set -x
+# set -x
 
 if [[ -z $JULIEN5CONFIGPATH ]]; then
 	echo JULIEN5CONFIGPATH is not set

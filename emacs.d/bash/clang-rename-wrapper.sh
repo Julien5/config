@@ -34,6 +34,9 @@ function fixversion() {
 	if hashfind $1-12; then
 		return;
 	fi
+	if hashfind $1-11; then
+		return;
+	fi
 	if hashfind $1; then
 		return
 	fi
