@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
-#set -x
+set -x
 
 TMP=/tmp
 OLDNAME=$1
@@ -49,7 +49,7 @@ function clang_rename() {
 }
 
 function clang_apply_replacements() {
-	fixversion clang-apply-replacements;
+	fixversion clang-apply-replacements "$@"
 }
 
 rm -Rf $TMP/fixes
@@ -58,9 +58,11 @@ n=0
 for FILE in $(filelist); do
 	echo processing $FILE
 	CLANGRENAME=$(clang_rename)
+	echo cmd: "$CLANGRENAME -qualified-name=$OLDNAME -new-name=$NEWNAME $FILE -export-fixes=$TMP/fixes/fix$n.yaml"
 	($CLANGRENAME -qualified-name=$OLDNAME -new-name=$NEWNAME $FILE -export-fixes=$TMP/fixes/fix$n.yaml &> $TMP/fixes/$n.out || true ) &
 	n=$((n+1))
 done
+
 n=$((n-1))
 jobs
 while [[ $(jobs | grep Running | grep -i CLANGRENAME | wc -l) -gt 0  ]]; do
@@ -75,5 +77,5 @@ echo "execute changes? type yes"
 read ok
 if [[ $ok = "yes" ]]; then
 	echo applying changes..
-	clang_apply_replacements $TMP/fixes
+	$(clang_apply_replacements) $TMP/fixes
 fi
