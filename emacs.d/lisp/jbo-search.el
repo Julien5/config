@@ -47,13 +47,11 @@
 
 (defun jbo/find-references ()
   (interactive)
-  (jbo/save-private-window-configuration)
   (ag-at-point)
   )
 
 (defun jbo/find-definitions ()
   (interactive)
-  (jbo/save-private-window-configuration)
   (if (bound-and-true-p lsp-mode)
 	  (progn
 		(message "running lsp-find-definition")
