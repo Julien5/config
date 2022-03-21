@@ -497,8 +497,14 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
   (setenv "TARGET_ARCH" "x86")
   )
 
+(defun jbo-dev-desktop ()
+  (let ((ENV (shell-command-to-string "( source ~/setup/profile/profile.sh; dev.desktop ) &> /dev/null; printenv")))
+	(message "%s" ENV)
+	)
+  )
+
 (defun has-lsp ()
-  (if (jbo-lsp-compile-file)
+  (if (jbo-lsp-root)
 	  t
 	nil)
   )
@@ -520,26 +526,25 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 	)
   )
 
-
 (defun jbo/revert-all-buffers ()
   "Refresh all open buffers from their respective files."
   (interactive)
   (let* ((list (buffer-list))
          (buffer (car list)))
     (while buffer
-      (let ((filename (buffer-file-name buffer)))
+	  (let ((filename (buffer-file-name buffer)))
         ;; Revert only buffers containing files, which are not modified;
         ;; do not try to revert non-file buffers like *Messages*.
         (when filename
-          (if (file-exists-p filename)
-              ;; If the file exists, revert the buffer.
-              (with-demoted-errors "Error: %S"
+		  (if (file-exists-p filename)
+			  ;; If the file exists, revert the buffer.
+			  (with-demoted-errors "Error: %S"
                 (with-current-buffer buffer
-                  (revert-buffer :ignore-auto :noconfirm)))
+				  (revert-buffer :ignore-auto :noconfirm)))
             ;; If the file doesn't exist, kill the buffer.
             (let (kill-buffer-query-functions) ; No query done when killing buffer
-              (kill-buffer buffer)
-              (message "Killed non-existing file buffer: %s" buffer))))
+			  (kill-buffer buffer)
+			  (message "Killed non-existing file buffer: %s" buffer))))
         (setq buffer (pop list)))))
   (message "Finished reverting non-file buffers."))
 

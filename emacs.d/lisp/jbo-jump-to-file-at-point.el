@@ -5,18 +5,13 @@
     (concat (format-time-string "[%Y-%m-%dT%T" nowtime) (format ".%d]" now-ms))))
 
 (defun jump-to-file-at-point-execute (line filename)
-  ;; todo: cache results.  
   (let* ((executable (format "%s/bash/%s"
 							 user-emacs-directory
 							 "jump-to-file-at-point.sh"))
-		 (qD (mapcar 'shell-quote-argument (jbo-projectiles)))
-		 (qqD (mapconcat 'identity (jbo-projectiles) " "))
-		 (fmt (car (mapcar (lambda (arg) "%s") qD)))
-		 (cmd (format "%s %s %s %s"
+		 (cmd (format "%s %s %s"
 					  executable
 					  (shell-quote-argument (string-trim line))
 					  (shell-quote-argument filename)
-					  (format fmt qqD)
 					  )))
 	(require 'subr-x)
 	(message "executing:%s" cmd)
