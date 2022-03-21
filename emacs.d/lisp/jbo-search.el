@@ -9,23 +9,19 @@
   (if (use-region-p)
 	  (setq jbo--region (buffer-substring-no-properties (region-beginning) (region-end)))
 	)
-  (setq jbo--atpoint (format "%s" (symbol-at-point)))
   (if (use-region-p)
 	  jbo--region
-	jbo--atpoint)
+	(format "%s" (symbol-at-point)))
   )  
 
-(defun ag-at-point ()
+(defun jbo/ag-at-point ()
+  (interactive)
   (let* ((word (get-identifier-to-search))
-		 (jbo-dir (file-name-directory (car (jbo-projectiles)))))
+		 (jbo-dir (file-name-directory (jbo-projectiles))))
 	(message "find-references %s in %s" word jbo-dir)
-	(remember-old-name word)
 	(if word
-		(let ((w jbo-oldname))
-		  ;; (xref-find-references w)
+		(let ((w word))
 		  (require 'ag)
-		  ;; note: use .agignore to ignore files.
-		  ;; setup: ~/work/projects/.gitignore ~/.agignore
 		  (ag/search w jbo-dir :file-regex ".cpp$|.c$|.h$|.sh$|.py$|.pro$|.el$")
 		  )
 	  (message "no symbol at cursor")
@@ -47,7 +43,11 @@
 
 (defun jbo/find-references ()
   (interactive)
-  (ag-at-point)
+  (if (bound-and-true-p lsp-mode)
+	  (progn
+		(lsp-find-references)
+		)
+	(jbo/ag-at-point))
   )
 
 (defun jbo/find-definitions ()
@@ -58,42 +58,6 @@
 		(lsp-find-definition)
 		)
 	(find-definition-at-point))
-  )
-
-;; does not work with lsp :-(
-(defun jbo/refactor-references--disabled ()
-  (interactive)
-  (save-excursion
-	(if (not (equal (buffer-name) "*xref*"))
-		(find-references)
-	  nil)
-	(message "current buffer %s" (current-buffer))
-	(let* ((fromsymbol (symbol-at-point)))
-	  (message "refactor-references %s" fromsymbol)
-	  (let* ((from (format "%s" fromsymbol)))
-		(setq to (read-string "new name:" from))
-		(message "from %s to %s" from to)
-		(switch-to-buffer "*xref*")
-		(xref-query-replace-in-results ".*" to)
-		)
-	  )))
-
-(defun jbo/find-references-xref()
-  (interactive)
-  (remember-old-name (xref--read-identifier "identifier:"))
-  (message "looking for %s" jbo-oldname)
-  ;;(call-interactively 'xref-find-references)
-  (xref-find-references jbo-oldname)
-  )
-
-(defun jbo/replace-in-line ()
-  (interactive)
-  ;;(next-error)
-  (if (not jbo-newname)
-	  (setq jbo-newname (read-string "new name:" jbo-oldname))
-	)
-  (message "[%s] -> [%s]" jbo-oldname jbo-newname)
-  (query-replace jbo-oldname jbo-newname nil (line-beginning-position) (line-end-position) nil nil)
   )
 
 

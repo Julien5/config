@@ -1,24 +1,20 @@
-(defun jbo-lsp-compile-file ()
-  (setq jbo--lsp-compile-file (locate-dominating-file default-directory "compile_flags.txt"))
-  (if (not jbo--lsp-compile-file)
-	  (setq jbo--lsp-compile-file (locate-dominating-file default-directory "compile_commands.json"))
-	)
-  jbo--lsp-compile-file
+(defun jbo-git-root ()
+  (locate-dominating-file default-directory ".git")
   )
 
-(defun jbo-projectiles-p ()
-  (setq D (list))
-  (if (jbo-lsp-compile-file)
-	  (setq D (cons (jbo-lsp-compile-file) D))
-	)
-  (if (not D) ;; no dir, then use the default
-	  (setq D (list (read-directory-name "dir:")))
-	)
-  (delete-dups D)
+(defun jbo-lsp-root ()
+  (setq jbo--lsp-compile-file (locate-dominating-file default-directory "compile_flags.txt"))
+  (if jbo--lsp-compile-file
+	  jbo--lsp-compile-file
+	(locate-dominating-file default-directory "compile_commands.json"))
   )
 
 (defun jbo-projectiles ()
-  (jbo-projectiles-p)
+  (setq jbo--lsp (jbo-lsp-root))
+  (if jbo--lsp
+	  jbo--lsp
+	(jbo-git-root)
+	)
   )
 
 (defun jbo/find-file ()
