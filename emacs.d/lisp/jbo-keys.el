@@ -8,9 +8,11 @@
 (global-set-key (kbd "<f7>") 'jbo/ag-at-point)
 (global-set-key (kbd "C-l") 'goto-line)
 (global-set-key (kbd "C-k") 'jbo/find-file)
+(global-set-key (kbd "C-o") 'ido-find-file)
+(global-set-key (kbd "C-w") 'ido-kill-buffer)
 
-(global-set-key (kbd "C-u") 'er/expand-region)
-;;(global-set-key (kbd "C-q") 'save-some-buffers)
+(global-set-key (kbd "C-u") 'jbo/expand-region)
+
 (global-set-key (kbd "C-q") 'buffer-menu)
 (global-set-key (kbd "C-w") 'kill-this-define)
 
