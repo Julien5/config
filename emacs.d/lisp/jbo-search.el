@@ -1,9 +1,3 @@
-(defun remember-old-name (w)
-  (setq jbo-oldname (format "%s" w))
-  (setq jbo-newname nil)
-  jbo-oldname
-  )
-
 (defun get-identifier-to-search ()
   (setq jbo--region nil)
   (if (use-region-p)
@@ -12,7 +6,7 @@
   (if (use-region-p)
 	  jbo--region
 	(format "%s" (symbol-at-point)))
-  )  
+  )
 
 (defun jbo/ag-at-point ()
   (interactive)
@@ -31,7 +25,6 @@
 
 (defun find-definition-at-point ()
   (let* ((word (symbol-at-point)))
-	(remember-old-name word)
 	(message "find-definitions for %s" word)
 	(if word
 		(let ((w (format "%s" word)))
@@ -62,9 +55,9 @@
 
 (defun jbo/projectile-ag ()
   (interactive)
-  (projectile-ag (get-identifier-to-search))
+  (setq jboword (read-string "ag: " (get-identifier-to-search)))
+  (projectile-ag jboword)
   )
-
-;;(switch-to-buffer "main_devhost.cpp")
-;;(refactor-references)
-;;(switch-to-buffer "search.el")
+  ;;(switch-to-buffer "main_devhost.cpp")
+  ;;(refactor-references)
+  ;;(switch-to-buffer "search.el")

@@ -9,7 +9,7 @@
 (global-set-key (kbd "C-l") 'goto-line)
 (global-set-key (kbd "C-k") 'jbo/find-file)
 (global-set-key (kbd "C-o") 'ido-find-file)
-(global-set-key (kbd "C-w") 'ido-kill-buffer)
+(global-set-key (kbd "C-w") 'jbo/kill-this-buffer)
 
 (global-set-key (kbd "C-f") 'isearch-forward)
 (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
@@ -19,7 +19,6 @@
 (global-set-key (kbd "C-u") 'jbo/expand-region)
 
 (global-set-key (kbd "C-q") 'buffer-menu)
-(global-set-key (kbd "C-w") 'kill-this-define)
 
 (define-key c++-mode-map [f5] 'jbo/compile)
 (define-key qt-pro-mode-map [f5] 'jbo/compile)

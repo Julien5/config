@@ -574,3 +574,8 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 		(er/expand-region 1))
 	)
   )
+
+(defun jbo/kill-this-buffer ()
+  (interactive)
+  (kill-buffer (current-buffer))
+  )
