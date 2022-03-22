@@ -568,8 +568,9 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
 
 (defun jbo/expand-region ()
   (interactive)
-  (setq expand-region-reset-fast-key "<up>")
   (if (not (region-active-p))
-	  (er/expand-region 1)
+	  (progn
+		(setq expand-region-reset-fast-key "<up>")
+		(er/expand-region 1))
 	)
   )

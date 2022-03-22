@@ -60,6 +60,10 @@
 	(find-definition-at-point))
   )
 
+(defun jbo/projectile-ag ()
+  (interactive)
+  (projectile-ag (get-identifier-to-search))
+  )
 
 ;;(switch-to-buffer "main_devhost.cpp")
 ;;(refactor-references)
