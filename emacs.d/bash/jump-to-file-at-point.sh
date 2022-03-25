@@ -5,7 +5,7 @@ for a in "$@"; do
 done > ~/args
 
 set -e
-# set -x
+#set -x
 
 if [[ -z $JULIEN5CONFIGPATH ]]; then
 	echo JULIEN5CONFIGPATH is not set
@@ -34,7 +34,11 @@ function othername() {
 	
 	if [[ "$FILENAME" == *h ]]; then
 		# we are in header file => we want cpp file
-		printf "%s" "$(corename $FILENAME).c"
+		EXT=c
+		if egrep -q "(class|namespace)" $FILENAME; then
+			EXT=cpp
+		fi
+		printf "%s" "$(corename $FILENAME).$EXT"
 	else
 		# we are in cpp file => we want header file
 		printf "%s" "$(corename $FILENAME).h"
@@ -65,7 +69,7 @@ function main_include() {
 			fi
 		fi
 		local D=$(projectroot $(pwd))
-		if find $D -ipath "*$(othername)*" | grep -v "#"; then
+		if find $D -ipath "*$(othername)" | grep -v "#"; then
 			return 0
 		fi
 		return 1
@@ -76,7 +80,7 @@ function main_no_include() {
 	local D=$(dirname $FILENAME)
 	R=$(projectroot $D)
 	while true; do
-		if find $D -name "$(othername)*" | grep .; then
+		if find $D -name "$(othername)" | grep .; then
 			return 0
 		fi
 		if [[ $D = $R ]]; then
