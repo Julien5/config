@@ -11,7 +11,7 @@
 (global-set-key (kbd "C-o") 'ido-find-file)
 (global-set-key (kbd "C-w") 'jbo/kill-this-buffer)
 
-(global-set-key (kbd "C-f") 'isearch-forward)
+(global-set-key (kbd "C-f") 'isearch-forward-symbol-at-point)
 (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
 
 (global-set-key (kbd "C-e") 'jbo/projectile-ag)
