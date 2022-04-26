@@ -518,26 +518,24 @@ Version 2016-07-18"
   )
 
 (defun jbo-read-env (ENV name)
-  (setq ENVs (split-string ENV "\0" t))
-  (message "%s" ENV)
-  (message "%s" name)
-  (setq EL (xah-filter-list
-			(lambda (string) (string-prefix-p (format "%s=" name) string))
-			ENVs)
-		)
-  (setq EL2 (split-string (car EL) "=" t))
-  (pop EL2)
-  (string-join EL2 "=")
-  )
-
-(defun jbo-fix-path-separator (path)
-  (replace-regexp-in-string ":" ";" path)
+  (let* (
+		 (ENVs (split-string ENV "\0" t))
+		 (EL (xah-filter-list
+			  (lambda (string) (string-prefix-p (format "%s=" name) string))
+			  ENVs))
+		 (EL2 (split-string (car EL) "=" t))
+		 )
+	(progn (pop EL2)
+		   (string-join EL2 "=")
+		   )
+	)
   )
 
 (defun jbo-dev-desktop ()
   (let ((ENV (jbo-env-from-dev "dev.desktop")))
-	;;(setenv "PROJECTSDIR" (jbo-read-env ENV "PROJECTSDIR"))
-	(message "projectsdir:%s" (jbo-read-env ENV "PROJECTSDIR"))
+	(setenv "PROJECTSDIR" (jbo-read-env ENV "PROJECTSDIR"))
+	(setenv "THIRDPARTYDIR" (jbo-read-env ENV "THIRDPARTYDIR"))
+	(setenv "PATH" (jbo-read-env ENV "PATH"))
 	)
   )
 
