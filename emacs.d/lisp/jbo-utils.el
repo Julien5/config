@@ -497,9 +497,47 @@ The prefix number ARG indicates the Search URL to use. By default the search URL
   (setenv "TARGET_ARCH" "x86")
   )
 
+(defun xah-filter-list (*predicate *sequence)
+  "Return a new list such that *predicate is true on all members of *sequence.
+URL `http://ergoemacs.org/emacs/elisp_filter_list.html'
+Version 2016-07-18"
+  (delete
+   "e3824ad41f2ec1ed"
+   (mapcar
+    (lambda (-x)
+      (if (funcall *predicate -x)
+          -x
+        "e3824ad41f2ec1ed" ))
+    *sequence)))
+
+(defun jbo-env-from-dev (dev)
+  (setq fmt0 "source ~/setup/profile/profile.sh &> /dev/null; %s &> /dev/null; printenv -0")
+  (let ((cmd (format fmt0 dev)))
+	(shell-command-to-string cmd)
+	)
+  )
+
+(defun jbo-read-env (ENV name)
+  (setq ENVs (split-string ENV "\0" t))
+  (message "%s" ENV)
+  (message "%s" name)
+  (setq EL (xah-filter-list
+			(lambda (string) (string-prefix-p (format "%s=" name) string))
+			ENVs)
+		)
+  (setq EL2 (split-string (car EL) "=" t))
+  (pop EL2)
+  (string-join EL2 "=")
+  )
+
+(defun jbo-fix-path-separator (path)
+  (replace-regexp-in-string ":" ";" path)
+  )
+
 (defun jbo-dev-desktop ()
-  (let ((ENV (shell-command-to-string "( source ~/setup/profile/profile.sh; dev.desktop ) &> /dev/null; printenv")))
-	(message "%s" ENV)
+  (let ((ENV (jbo-env-from-dev "dev.desktop")))
+	;;(setenv "PROJECTSDIR" (jbo-read-env ENV "PROJECTSDIR"))
+	(message "projectsdir:%s" (jbo-read-env ENV "PROJECTSDIR"))
 	)
   )
 
