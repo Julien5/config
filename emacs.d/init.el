@@ -119,4 +119,5 @@
 (fido-mode nil)
 (ido-mode 't)
 (projectile-mode t)
+(server-start)
 (message "ready")
