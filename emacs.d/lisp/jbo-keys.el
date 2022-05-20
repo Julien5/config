@@ -36,14 +36,15 @@
 (global-set-key (kbd "<f10>") 'jbo/magit-status)
 (global-set-key (kbd "M-a") 'jbo/buffer-list)
 
-(global-set-key (kbd "<M-left>") 'xref-pop-marker-stack)
-;;(global-set-key (kbd "<M-right>") 'forward-word)
+(global-set-key (kbd "<M-left>") 'backward-word)
+(global-set-key (kbd "<M-right>") 'forward-word)
 
 ;; c-c c-v for copy paste
 (cua-mode t)
 (setq cua-keep-region-after-copy t)
 
 (global-set-key (kbd "<C-backspace>") 'jbo/backward-delete-word)
+(global-set-key (kbd "<M-backspace>") 'mark-whole-buffer)
 (global-set-key (kbd "<C-delete>") 'jbo/delete-line)
 
 (defun jbo-c-s-tab ()

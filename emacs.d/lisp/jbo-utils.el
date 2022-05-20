@@ -397,16 +397,12 @@ If buffer-or-name is nil return current buffer's mode."
      (progn (forward-visible-line 1) (point)))))
 
 (defun jbo/delete-word (arg)
-  "Delete characters forward until encountering the end of a word.
-With argument, do this that many times."
   (interactive "p")
   (if (use-region-p)
       (delete-region (region-beginning) (region-end))
     (delete-region (point) (progn (forward-word arg) (point)))))
 
 (defun jbo/backward-delete-word (arg)
-  "Delete characters backward until encountering the end of a word.
-With argument, do this that many times."
   (interactive "p")
   (jbo/delete-word (- arg)))
 
