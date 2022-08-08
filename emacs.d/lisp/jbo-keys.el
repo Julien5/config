@@ -43,8 +43,8 @@
 (cua-mode t)
 (setq cua-keep-region-after-copy t)
 
-(global-set-key (kbd "<C-backspace>") 'jbo/backward-delete-word)
-(global-set-key (kbd "<M-backspace>") 'mark-whole-buffer)
+;; (global-set-key (kbd "<C-backspace>") 'jbo/backward-delete-word)
+(global-set-key (kbd "<M-backspace>") 'jbo/backward-delete-word)
 (global-set-key (kbd "<C-delete>") 'jbo/delete-line)
 
 (defun jbo-c-s-tab ()
