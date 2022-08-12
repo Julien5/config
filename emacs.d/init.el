@@ -5,6 +5,8 @@
 ;; (package-initialize)
 
 (setq inhibit-startup-screen t)
+;; ask before quitting
+(setq confirm-kill-emacs 'yes-or-no-p)
 ;; stop creating backup files and autosave.
 (setq auto-save-default nil)
 (setq make-backup-files nil)
