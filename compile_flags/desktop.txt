@@ -14,6 +14,7 @@
 -I./core/lib/include
 -I./backend/cycling-interface/simulation/lib/include
 -I./backend/cycling-interface/test/testhandler/include
+-I./backend/cycling-interface/test/serverthread/include
 -I./backend/cycling-interface/lib/include
 -I./backend/cycling-interface/main
 -I./backend/transaction/lib/include

@@ -611,3 +611,11 @@ Version 2016-07-18"
   (interactive)
   (kill-buffer (current-buffer))
   )
+
+(defun open-all-recent-files ()
+  "Open all recent files."
+  (interactive)
+  (require 'recentf)
+  (recentf-mode 1)
+  (setq recentf-menu-open-all-flag t)
+  (dolist (file  recentf-list) (find-file file)))

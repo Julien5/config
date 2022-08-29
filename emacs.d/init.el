@@ -13,6 +13,8 @@
 (setq completion-ignore-case  t)
 (setq read-file-name-completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
+;; remove warning "package cl is deprecated"
+(setq byte-compile-warnings '(cl-functions))
 
 ;; Tell emacs where is your personal elisp lib dir
 ;;{{{ Set up package and use-package
@@ -122,4 +124,5 @@
 (ido-mode 't)
 (projectile-mode t)
 (server-start)
+(open-all-recent-files)
 (message "ready")
