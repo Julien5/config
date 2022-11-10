@@ -93,6 +93,8 @@
 ;;(add-hook 'change-major-mode-hook 'jbo-set-background-for-mode)
 ;;(add-hook 'window-configuration-change-hook 'jbo-set-background-for-mode)
 
+(add-hook 'kill-emacs-hook 'jbo-update-recentf-list)
+
 ;; hide toolbar
 (tool-bar-mode -1)
 

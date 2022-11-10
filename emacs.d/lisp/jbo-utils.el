@@ -619,3 +619,22 @@ Version 2016-07-18"
   (recentf-mode 1)
   (setq recentf-menu-open-all-flag t)
   (dolist (file  recentf-list) (find-file file)))
+
+
+(defun jbo-update-recentf-list ()
+  "Sync opened files to recent files."
+  (interactive)
+  (require 'recentf)
+  (recentf-mode 1)
+  (setq recentf-list '())
+  (dolist (buf  (buffer-list))
+    (if (buffer-file-name buf)
+	  (progn
+		(message "add: %s" (buffer-file-name buf))
+		(add-to-list 'recentf-list (buffer-file-name buf))
+		)
+	  (message "ignore: %s" (buffer-name buf))
+	  )
+	)
+  (recentf-save-list)
+  )
