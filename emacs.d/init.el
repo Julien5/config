@@ -5,6 +5,9 @@
 ;; (package-initialize)
 
 (setq inhibit-startup-screen t)
+;; menubar/toolbar blocks F12 in xubuntu-emacs
+(menu-bar-mode -1)
+(tool-bar-mode -1)
 ;; ask before quitting
 (setq confirm-kill-emacs 'yes-or-no-p)
 ;; stop creating backup files and autosave.
