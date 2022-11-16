@@ -18,7 +18,7 @@
 
 (global-set-key (kbd "C-u") 'jbo/expand-region)
 
-(global-set-key (kbd "C-q") 'buffer-menu)
+(global-set-key (kbd "C-q") 'jbo/buffer-menu)
 
 (define-key c++-mode-map [f5] 'jbo/compile)
 (define-key qt-pro-mode-map [f5] 'jbo/compile)

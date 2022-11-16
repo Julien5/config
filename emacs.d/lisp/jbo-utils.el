@@ -638,3 +638,10 @@ Version 2016-07-18"
 	)
   (recentf-save-list)
   )
+
+(defun jbo/buffer-menu ()
+  (interactive)
+  (ibuffer)
+  (ibuffer-do-sort-by-alphabetic)
+  (ibuffer-do-sort-by-alphabetic)
+  )
