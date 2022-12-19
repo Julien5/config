@@ -131,3 +131,4 @@
 (server-start)
 (open-all-recent-files)
 (message "ready")
+(put 'downcase-region 'disabled nil)
