@@ -3,6 +3,8 @@
 set -e
 #set -x
 
+echo use projectile-replace for macros.
+
 TMP=/tmp
 OLDNAME=$1
 NEWNAME=$2
