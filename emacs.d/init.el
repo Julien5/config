@@ -38,40 +38,32 @@
 
 (jbo/fix-python-indentation)
 
-(require 'lsp-mode)
-;;(setq lsp-clients-clangd-args "-cross-file-rename")
-;;(defvar lsp-clients-clangd-args '("-cross-file-rename"))
-(use-package lsp-mode
-  :config
-  ;; `-background-index' requires clangd v8+!
-  ;;(setq lsp-clients-clangd-args '("-cross-file-rename" "-j=4" "-background-index" "-log=error"))
-  ;;(setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=error"))
-  (setq lsp-clients-clangd-args
-          '("-j=2"
-            "--clang-tidy"
-            "--completion-style=bundled"
-            "--pch-storage=memory"
-            "--header-insertion=never"
-            "--header-insertion-decorators=0"))
-  (setq lsp-clients-clangd-executable "clangd-12")
-  (if (eq system-type 'windows-nt)
-	  (setq lsp-clients-clangd-executable "clangd-11")
-	)
-  (if (not (executable-find lsp-clients-clangd-executable))
-	  (setq lsp-clients-clangd-executable "clangd")
-	)
-  (if (not (executable-find lsp-clients-clangd-executable))
-	  (message "could not find clangd executable."))
-  (setq lsp-log-io nil)
-  (setq gc-cons-threshold 100000000)
-  ;; ..
-  )
+(progn
+    (customize-set-variable 'eglot-autoshutdown t)
+    (customize-set-variable 'eglot-extend-to-xref t)
+
+    (with-eval-after-load 'eglot
+        (add-to-list 'eglot-server-programs
+            '((c-mode c++-mode)
+                 . ("clangd"
+                       "-j=2"
+                       "--log=error"
+                       "--background-index"
+                       "--clang-tidy"
+                       "--cross-file-rename"
+                       "--completion-style=detailed"
+                       "--pch-storage=memory"
+                       "--header-insertion=never"
+                       "--header-insertion-decorators=0"))))
+)
 
 (require 'cc-mode)
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
-(add-hook 'c++-mode-hook 'jbo-lsp-deferred)
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(global-company-mode)
 
 (setq exec-path (append exec-path '("c:/tools/llvm/llvm-10/bin/")))
 

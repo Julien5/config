@@ -36,19 +36,19 @@
 
 (defun jbo/find-references ()
   (interactive)
-  (if (bound-and-true-p lsp-mode)
+  (if (bound-and-true-p eglot-mode)
 	  (progn
-		(lsp-find-references)
+		(xref-find-references)
 		)
 	(jbo/ag-at-point))
   )
 
 (defun jbo/find-definitions ()
   (interactive)
-  (if (bound-and-true-p lsp-mode)
+  (if (bound-and-true-p eglot-mode)
 	  (progn
 		(message "running lsp-find-definition")
-		(lsp-find-definition)
+		(xref-find-definitions)
 		)
 	(find-definition-at-point))
   )

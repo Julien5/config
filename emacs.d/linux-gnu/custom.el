@@ -6,21 +6,16 @@
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
-   ["black" "#d55e00" "#009e73" "#f8ec59" "#0072b2" "#cc79a7" "#56b4e9" "white"])
- '(blink-cursor-mode nil)
+   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
  '(cua-mode t nil (cua-base))
  '(custom-enabled-themes '(deeper-blue))
+ '(menu-bar-mode nil)
  '(package-selected-packages
-   '(cmake-mode use-package lsp-mode flycheck smartscan magit expand-region company-fuzzy ag projectile company))
+   '(use-package smartscan projectile magit lsp-mode flycheck expand-region company ag))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Source Code Pro" :slant normal :weight normal :height 128 :width normal :antialias true :foundry "ADBO")))))
-
-(set-face-attribute 'mode-line nil :font "Source Code Pro-12")
-(set-face-attribute 'mode-line-inactive nil :font "Source Code Pro-12")
-
-
+ '(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight normal :height 121 :width normal)))))

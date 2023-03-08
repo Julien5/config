@@ -542,13 +542,6 @@ Version 2016-07-18"
 	nil)
   )
 
-(defun jbo-lsp-deferred ()
-  (if (string-equal major-mode "c++-mode")
-	  (if (has-lsp)
-		  (lsp-deferred)
-		(message "no compile_flags.txt"))
-	(message "no lsp for mode %s" major-mode))
-  )
 
 (defun jbo/expand ()
   (interactive)

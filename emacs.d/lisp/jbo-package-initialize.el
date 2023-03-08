@@ -52,7 +52,6 @@ There are two things you can do about this warning:
   (package-install 'ag)
   (package-install 'flycheck)
   (package-install 'company)
-  (package-install 'lsp-mode)
   (package-install 'use-package)
   (package-install 'projectile)
   )
