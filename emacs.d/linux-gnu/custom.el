@@ -11,7 +11,7 @@
  '(custom-enabled-themes '(deeper-blue))
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(use-package smartscan projectile magit lsp-mode flycheck expand-region company ag))
+   '(markdown-mode use-package smartscan projectile magit lsp-mode flycheck expand-region company ag))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
