@@ -39,6 +39,9 @@
 (global-set-key (kbd "<M-left>") 'backward-word)
 (global-set-key (kbd "<M-right>") 'forward-word)
 
+(global-set-key (kbd "C-+") 'jbo/change-font-size-up)
+(global-set-key (kbd "C--") 'jbo/change-font-size-down)
+
 ;; c-c c-v for copy paste
 (cua-mode t)
 (setq cua-keep-region-after-copy t)

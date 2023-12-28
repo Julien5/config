@@ -8,16 +8,7 @@ if [[ -z "$JULIEN5CONFIGPATH" ]]; then
 	SCRIPTPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/"
 	export JULIEN5CONFIGPATH="$SCRIPTPATH/.."
 fi
-
 initpath;
-
-case "$-" in
-	*i*)
-		;;
-	*)  # do nothing: only path is important
-		return;
-		;;
-esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -118,7 +109,7 @@ function dev.esp8266.open.rtos() {
 
 function dev.esp8266() {
 	initpath;
-    DIR=/opt/esp8266/esp8266-toolchain-espressif
+    local DIR=/opt/esp8266/esp8266-toolchain-espressif
     export PATH=$PATH:$DIR/compiler/xtensa-lx106-elf/bin
     export IDF_PATH=$DIR/ESP8266_RTOS_SDK/
     export SDK_PATH=$DIR/ESP8266_RTOS_SDK/
@@ -126,4 +117,14 @@ function dev.esp8266() {
 
 function agr() {
 	ag -0 -l "$1" | xargs -0 sed -ri -e "s/$1/$2/g";
+}
+
+function dev.flutter() {
+	initpath;
+    export PATH=$PATH:/opt/flutter/flutter/bin/
+}
+
+function dev.jekyll() {
+	export GEM_HOME="/opt/gems"
+	export PATH="${GEM_HOME}/bin:$PATH"
 }
