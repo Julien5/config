@@ -13,30 +13,10 @@
  '(menu-bar-mode nil)
  '(package-selected-packages nil)
  '(tool-bar-mode nil))
-;;(custom-set-faces
+
+(custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;;'(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight normal :height 98 :width normal)))))
-
-
-;;(set-frame-font "Source Code Pro 14" nil t)
-
-(setq jbo-font-size 12);
-(defun jbo-change-font-size (increment)
-  (setq jbo-font-size (+ jbo-font-size increment))
-  (setq jbo-font-name (format "Source Code Pro %d" jbo-font-size))
-  (set-frame-font jbo-font-name nil t)
-  (message "new font: %s" jbo-font-name)
-  )
-
-(defun jbo-change-font-size-up ()
-  (interactive)
-  (jbo-change-font-size 1)
-  )
-
-(defun jbo-change-font-size-down ()
-  (interactive)
-  (jbo-change-font-size -1)
-  )
+ )

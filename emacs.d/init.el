@@ -6,6 +6,7 @@
 
 (setq inhibit-startup-screen t)
 ;; menubar/toolbar blocks F12 in xubuntu-emacs
+
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 ;; ask before quitting
@@ -13,7 +14,7 @@
 ;; stop creating backup files and autosave.
 (setq auto-save-default nil)
 (setq make-backup-files nil)
-(setq completion-ignore-case  t)
+(setq completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
 ;; remove warning "package cl is deprecated"
@@ -35,34 +36,16 @@
 (load "jbo-search")
 (load "jbo-keys")
 (load "jbo-utils")
+(load "jbo-lsp")
+(load "jbo-colors-linux")
 
 (jbo/fix-python-indentation)
-
-(progn
-    (customize-set-variable 'eglot-autoshutdown t)
-    (customize-set-variable 'eglot-extend-to-xref t)
-
-    (with-eval-after-load 'eglot
-        (add-to-list 'eglot-server-programs
-            '((c-mode c++-mode)
-                 . ("clangd"
-                       "-j=2"
-                       "--log=error"
-                       "--background-index"
-                       "--clang-tidy"
-                       "--cross-file-rename"
-                       "--completion-style=detailed"
-                       "--pch-storage=memory"
-                       "--header-insertion=never"
-                       "--header-insertion-decorators=0"))))
-)
 
 (require 'cc-mode)
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
-(add-hook 'c-mode-hook 'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
+
 (global-company-mode)
 
 (setq exec-path (append exec-path '("c:/tools/llvm/llvm-10/bin/")))
@@ -89,9 +72,6 @@
 ;;(add-hook 'window-configuration-change-hook 'jbo-set-background-for-mode)
 
 (add-hook 'kill-emacs-hook 'jbo-update-recentf-list)
-
-;; hide toolbar
-(tool-bar-mode -1)
 
 ;; scroll one line at a time (less "jumpy" than defaults)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time

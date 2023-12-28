@@ -332,8 +332,6 @@ If buffer-or-name is nil return current buffer's mode."
 ;; must be called in init.el
 (defun jbo-fix-project-roots ()
   (setq project-find-functions nil)
-  ;;(setq dirname (expand-file-name "~/.op/"))
-  ;;(setq project-list-file (expand-file-name (format "%s/projects-delme" dirname)))
   (add-hook 'project-find-functions 'jbo/project-try)
   )
 
