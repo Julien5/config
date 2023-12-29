@@ -1,3 +1,9 @@
+(defun sh/current-time-microseconds ()
+  "Return the current time formatted to include microseconds."
+  (let* ((nowtime (current-time))
+         (now-ms (nth 2 nowtime)))
+    (concat (format-time-string "[%Y-%m-%dT%T" nowtime) (format ".%d]" now-ms))))
+
 (defun jbo-git-root ()
   (locate-dominating-file default-directory ".git")
   )
@@ -38,24 +44,6 @@
 	  (message "file not found:%s" file))
 	))
 
-(defun jbo/create-proper-compilation-window ()
-  "Setup the *compilation* window with custom settings."
-  (when (not (get-buffer-window "*compilation*"))
-    (save-selected-window
-      (save-excursion
-        (let* ((w (split-window-vertically))
-               (h (window-height w)))
-          (select-window w)
-          (switch-to-buffer "*compilation*")
-
-          ;; Reduce window height
-          (shrink-window (- h compilation-window-height))
-
-          ;; Prevent other buffers from displaying inside
-          (set-window-dedicated-p w +1) 
-		  )))))
-
-
 (defun jbo-compile-command ()
   (if (and (boundp 'jbo-compilation-command) jbo-compilation-command)
 	  jbo-compilation-command
@@ -64,43 +52,6 @@
 	  "make -C /tmp/build_pc"
 	  )
 	))
-
-(defun jbo-setup-windows ()
-  (setq jbo/main-window (get-buffer-window))
-  (delete-other-windows)
-  (setq jbo/current-buffer (current-buffer))
-  (if (get-buffer "*compilation*")
-	  (progn (message "killing compilation")
-			 ;;(kill-compilation)
-			 (kill-buffer "*compilation*")
-			 (message "killed compilation")
-			 )
-	(message "no")
-	)
-  
-  (setq compilation-window-height 15);
-  (setq compilation-mode-hook nil)
-  (add-hook 'compilation-mode-hook 'jbo/create-proper-compilation-window)
-  (compile "echo")
-  (setq compile-command (jbo-compile-command))
-  (message "compile-command:%s" compile-command)
-  (save-selected-window
-	(setq jbo/bottom-window (get-buffer-window "*compilation*"))
-	(select-window jbo/bottom-window)
-	(set-window-dedicated-p jbo/bottom-window +1)
-	(setq jbo/compilation-state (window-state-get jbo/bottom-window))
-	(switch-to-buffer "*xref*")
-	(set-window-buffer jbo/bottom-window "*xref*")
-	(setq jbo/xref-state (window-state-get jbo/bottom-window))
-	)
-  (select-window (get-buffer-window jbo/current-buffer))
-  (save-selected-window
-  	(let ((w (split-window-right 100)))
-	  (select-window w))
-	(switch-to-buffer "*other*")
-	(setq jbo/right-window (get-buffer-window))
-	)
-  )
 
 (defun jbo/restore-window-configuration ()
   (interactive)
@@ -156,12 +107,12 @@ If buffer-or-name is nil return current buffer's mode."
   )
 
 (defun jbo-kill-buffer-verbose (buf)
-  (message "killing buffer %s" (buffer-name buf))
+  (message "kill buffer: %s" (buffer-name buf))
   (kill-buffer buf)
   (sit-for 0.1)
   )
 
-(defun jbo-is-internal-buffer (buf)
+(defun jbo-is-temporary-buffer (buf)
   (let ((name (buffer-name buf))
 		(mode (buffer-mode buf)))
 	;;(message "name: '%s'" name)
@@ -184,27 +135,30 @@ If buffer-or-name is nil return current buffer's mode."
 	)
   )
 
-(defun jbo/kill-internal-buffers ()
-  "Kill all buffers not currently shown in a window somewhere."
-  (interactive)
-  (dolist (buf  (buffer-list))
-    (if (jbo-is-internal-buffer buf)
-		(jbo-kill-buffer-verbose buf)
-	  (message "pass %s" (buffer-name buf))
-	  )
-	)
-  (message "ok")
-  )
-
 (defun jbo/kill-invisible-buffers ()
   "Kill all buffers not currently shown in a window somewhere."
   (interactive)
+  (dolist (buf (buffer-list))
+	(setq is-file (buffer-file-name buf))
+	(setq visible (get-buffer-window buf 'visible))
+	(if (and (not visible) is-file)
+		(jbo-kill-buffer-verbose buf)
+	  )
+	)
+  (jbo-update-recentf-list)
+  )
+
+(defun jbo/clean-buffers ()
+  "Kill all 'internal' buffers, like *ag: blah*."
+  (interactive)
   (dolist (buf  (buffer-list))
-    (unless (get-buffer-window buf 'visible)
-	  (jbo-kill-buffer-verbose buf)
+    (if (jbo-is-temporary-buffer buf)
+		(jbo-kill-buffer-verbose buf)
+	  (message "keep: %s" (buffer-name buf))
 	  )
 	)
   (message "ok")
+  (jbo-update-recentf-list)
   )
 
 (defun jbo/compile ()
@@ -225,26 +179,6 @@ If buffer-or-name is nil return current buffer's mode."
   (interactive)
   (setq jbo-compilation-directory default-directory)
   (jbo/compile)
-  )
-
-(defun jbo-clear-window (w)
-  (if (not (or (equal w jbo/main-window)
-			   (equal w jbo/bottom-window)
-			   (equal w jbo/right-window)))
-	  (progn (select-window w)
-			 (delete-window))
-	)
-  )
-
-(defun jbo/take-buffer ()
-  (interactive)
-  (let* ((f (buffer-file-name))
-		 (w (get-buffer-window)))
-	(if f
-		(progn (select-window jbo/main-window)
-			   (find-file f)
-			   ))
-	(jbo-clear-window w))
   )
 
 (defun jbo/reload-init ()
@@ -286,8 +220,7 @@ If buffer-or-name is nil return current buffer's mode."
 		))
 	))
 
-(defun jbo/fix-python-indentation() 
-  (setq python-mode-hook nil)
+(defun jbo/fix-python-indentation () 
   (add-hook 'python-mode-hook
 			(lambda ()
 			  (setq indent-tabs-mode nil)
@@ -334,23 +267,6 @@ If buffer-or-name is nil return current buffer's mode."
   (setq project-find-functions nil)
   (add-hook 'project-find-functions 'jbo/project-try)
   )
-
-(defun jbo-set-white-background ()
-  (set-background-color "gray"))
-
-(defun jbo-set-blue-background ()
-  (set-background-color "dark blue"))
-
-(defun jbo-set-dark-background ()
-  (set-background-color "#242424"))
-
-(defun jbo-set-background-for-mode ()
-  (message "mm:%s" major-mode)
-  (let ((mm (format "%s" major-mode)))
-	(cond
-	 ((string-prefix-p "ebrowse" mm) (jbo-set-white-background))
-	 (t (jbo-set-dark-background))
-	 )))
 
 (defun jbo-clang-format-buffer-p ()
   (require 'clang-format)
@@ -540,7 +456,6 @@ Version 2016-07-18"
 	nil)
   )
 
-
 (defun jbo/expand ()
   (interactive)
   (if (and (string-equal major-mode "c++-mode")
@@ -604,22 +519,23 @@ Version 2016-07-18"
   (kill-buffer (current-buffer))
   )
 
-(defun open-all-recent-files ()
+(defun jbo/open-all-recent-files ()
   "Open all recent files."
   (interactive)
   (require 'recentf)
   (recentf-mode 1)
+  (setq recentf-max-saved-items 5)
   (setq recentf-menu-open-all-flag t)
-  (dolist (file  recentf-list) (find-file file)))
-
+  (dolist (file recentf-list) (find-file file)))
 
 (defun jbo-update-recentf-list ()
   "Sync opened files to recent files."
   (interactive)
   (require 'recentf)
   (recentf-mode 1)
+  ;; clear the list
   (setq recentf-list '())
-  (dolist (buf  (buffer-list))
+  (dolist (buf (buffer-list))
     (if (buffer-file-name buf)
 	  (progn
 		(message "add: %s" (buffer-file-name buf))
@@ -629,15 +545,21 @@ Version 2016-07-18"
 	  )
 	)
   (recentf-save-list)
+  (dolist (element recentf-list)
+	(message "recent:%s" element)
+	)
   )
 
 (defun jbo/buffer-menu ()
   (interactive)
+
   (ibuffer)
+  
+  (ibuffer-do-sort-by-recency)
+  (ibuffer-invert-sorting)
+
+  ;;(ibuffer-do-sort-by-alphabetic)
+  ;;(ibuffer-do-sort-by-alphabetic)
+
   (ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list))))
-  ;;(ibuffer-do-sort-by-recency)
-  ;;(ibuffer-do-sort-by-recency)
-  ;;(ibuffer-invert-sorting)
-  ;;(ibuffer-do-sort-by-alphabetic)
-  ;;(ibuffer-do-sort-by-alphabetic)
   )

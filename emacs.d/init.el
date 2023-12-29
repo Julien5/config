@@ -32,7 +32,6 @@
 (load "csharp-mode")
 (load "qt-pro-mode")
 
-(load "jbo-jump-to-file-at-point")
 (load "jbo-search")
 (load "jbo-keys")
 (load "jbo-utils")
@@ -55,21 +54,6 @@
 
 (require 'expand-region)
 (jbo-fix-expand-region-for-line)
-
-;; prevent custom from messing up my init.el
-(setq custom-file-dirname "linux-gnu")
-(if (eq system-type 'windows-nt)
-	(setq custom-file-dirname "msys")
-  )
-(setq custom-file (format "~/.emacs.d/%s/custom.el" custom-file-dirname))
-(load custom-file)
-
-(set-face-attribute 'region nil :background "yellow")
-(set-face-attribute 'region nil :foreground "black")
-;; https://stackoverflow.com/questions/23142699/in-gnu-emacs-how-to-set-background-color-by-mode
-;;(add-hook 'post-command-hook 'jbo-set-background-for-mode)
-;;(add-hook 'change-major-mode-hook 'jbo-set-background-for-mode)
-;;(add-hook 'window-configuration-change-hook 'jbo-set-background-for-mode)
 
 (add-hook 'kill-emacs-hook 'jbo-update-recentf-list)
 
@@ -101,6 +85,6 @@
 (ido-mode 't)
 (projectile-mode t)
 (server-start)
-(open-all-recent-files)
+(jbo/open-all-recent-files)
 (message "ready")
 (put 'downcase-region 'disabled nil)

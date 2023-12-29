@@ -12,9 +12,9 @@
                       "--pch-storage=memory"
                       "--header-insertion=never"
                       "--header-insertion-decorators=0")))
-	(add-hook 'c-mode-hook 'eglot-ensure)
-	(add-hook 'c++-mode-hook 'eglot-ensure)
 	)
+  (add-hook 'c-mode-hook 'eglot-ensure)
+  (add-hook 'c++-mode-hook 'eglot-ensure)
   )
 
 (jbo-lsp-c++-init)

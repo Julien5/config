@@ -6,6 +6,7 @@
 (global-set-key (kbd "<f4>") 'jbo/find-definitions)
 (global-set-key (kbd "<f3>") 'jbo/find-references)
 (global-set-key (kbd "<f7>") 'jbo/ag-at-point)
+
 (global-set-key (kbd "C-l") 'goto-line)
 (global-set-key (kbd "C-k") 'jbo/find-file)
 (global-set-key (kbd "C-o") 'ido-find-file)
@@ -62,7 +63,7 @@
 ;;(global-set-key  (jbo-c-s-tab) 'jbo/next-code-buffer)
 (global-set-key  (jbo-c-s-tab) 'ido-switch-buffer)
 (global-set-key (kbd "C-S-p") 'jbo/kill-invisible-buffers)
-(global-set-key (kbd "C-p") 'jbo/kill-internal-buffers)
+(global-set-key (kbd "C-p") 'jbo/clean-buffers)
 
 (global-set-key (kbd "<C-next>") 'other-window)
 (defun prev-window ()  (interactive)  (other-window -1))
@@ -79,5 +80,3 @@
 
 (global-set-key (kbd "<M-home>") 'smartscan-symbol-go-backward)
 (global-set-key (kbd "<M-end>") 'smartscan-symbol-go-forward)
-
-
