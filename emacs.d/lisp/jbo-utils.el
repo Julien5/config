@@ -44,7 +44,7 @@
 	  (message "file not found:%s" file))
 	))
 
-(defun jbo-compile-command ()
+(defun jbo-make-command ()
   (if (and (boundp 'jbo-compilation-command) jbo-compilation-command)
 	  jbo-compilation-command
 	(if (file-directory-p (expand-file-name (format "%s/make" (getenv "SETUPROOT"))))
@@ -161,24 +161,29 @@ If buffer-or-name is nil return current buffer's mode."
   (jbo-update-recentf-list)
   )
 
-(defun jbo/compile ()
+(defun jbo/make ()
   (interactive)
   (save-selected-window
 	(setq orig-dd nil)
-	(if (boundp 'jbo-compilation-directory)
+	(if (boundp 'jbo-make-directory)
 		(progn (setq orig-dd default-directory)
-			   (cd jbo-compilation-directory))
+			   (cd jbo-make-directory))
 	  )
-	(setq compile-command (jbo-compile-command))
-	(message "compile-command:%s" compile-command)
-	(compile compile-command)
+	(setq make-command (jbo-make-command))
+	(message "make-command:%s" make-command)
+	(compile make-command)
 	(if orig-dd (cd orig-dd))
 	))
 
-(defun jbo/set-compile ()
+(defun jbo/make-in-preset-directory ()
   (interactive)
-  (setq jbo-compilation-directory default-directory)
-  (jbo/compile)
+  (setq jbo-make-directory default-directory)
+  (jbo/make-in-preset-directory)
+  )
+
+(defun jbo/run-compile-command ()
+  (interactive)
+  (compile compile-command)
   )
 
 (defun jbo/reload-init ()
@@ -563,3 +568,4 @@ Version 2016-07-18"
 
   (ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list))))
   )
+

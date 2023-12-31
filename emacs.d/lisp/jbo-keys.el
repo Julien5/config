@@ -21,11 +21,14 @@
 
 (global-set-key (kbd "C-q") 'jbo/buffer-menu)
 
-(define-key c++-mode-map [f5] 'jbo/compile)
-(define-key qt-pro-mode-map [f5] 'jbo/compile)
-(define-key makefile-mode-map [f5] 'jbo/compile)
+(define-key emacs-lisp-mode-map [f5] 'eval-buffer)
 
-(define-key c++-mode-map [S-f5] 'jbo/set-compile)
+;;(define-key python-mode-map [f5] 'jbo/run-compile-command)
+(define-key c++-mode-map [f5] 'jbo/make)
+(define-key qt-pro-mode-map [f5] 'jbo/make)
+(define-key makefile-mode-map [f5] 'jbo/make)
+
+(define-key c++-mode-map [S-f5] 'jbo/make-in-preset-directory)
 (define-key c++-mode-map [f2] 'jbo/jump-to-file-at-point)
 (define-key c++-mode-map (kbd "C-f") 'jbo/clang-format-buffer)
 

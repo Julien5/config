@@ -33,10 +33,10 @@
 (load "qt-pro-mode")
 
 (load "jbo-search")
-(load "jbo-keys")
 (load "jbo-utils")
 (load "jbo-lsp")
 (load "jbo-colors-linux")
+(load "jbo-keys")
 
 (jbo/fix-python-indentation)
 
@@ -88,3 +88,4 @@
 (jbo/open-all-recent-files)
 (message "ready")
 (put 'downcase-region 'disabled nil)
+(put 'erase-buffer 'disabled nil)
