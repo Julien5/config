@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
-#set -x
+set -x
 
 echo use projectile-replace for macros.
 
@@ -33,6 +33,9 @@ function hashfind() {
 }
 
 function fixversion() {
+	if hashfind $1-13; then
+		return;
+	fi
 	if hashfind $1-12; then
 		return;
 	fi
