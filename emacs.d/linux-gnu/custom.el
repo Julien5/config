@@ -6,16 +6,19 @@
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
-   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
+   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff"
+	"#eeeeec"])
  '(cua-mode t nil (cua-base))
  '(custom-enabled-themes '(deeper-blue))
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(markdown-mode use-package smartscan projectile magit flycheck expand-region company ag))
+   '(ag company expand-region flycheck magit markdown-mode projectile
+		smartscan use-package))
  '(tool-bar-mode nil))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Source Code Pro" :foundry "ADBO" :slant normal :weight normal :height 121 :width normal)))))
+ )
