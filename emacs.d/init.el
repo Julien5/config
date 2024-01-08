@@ -48,7 +48,7 @@
                  . ("clangd"
                        "-j=2"
                        "--log=error"
-                       "--background-index"
+                       "--background-index=false"
                        "--clang-tidy"
                        "--cross-file-rename"
                        "--completion-style=detailed"
@@ -124,3 +124,4 @@
 (open-all-recent-files)
 (message "ready")
 (put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
