@@ -181,6 +181,13 @@ If buffer-or-name is nil return current buffer's mode."
   (jbo/make-in-preset-directory)
   )
 
+(defun jbo/execute-buffer ()
+  (interactive)
+  (let ((filename (buffer-file-name (window-buffer (minibuffer-selected-window)))))
+	(executable-interpret filename)
+	)
+  )
+
 (defun jbo/run-compile-command ()
   (interactive)
   (compile compile-command)

@@ -86,6 +86,7 @@
 (projectile-mode t)
 (server-start)
 (jbo/open-all-recent-files)
-(message "ready")
 (put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
 (put 'erase-buffer 'disabled nil)
+(message "ready")

@@ -23,7 +23,14 @@
 
 (define-key emacs-lisp-mode-map [f5] 'eval-buffer)
 
-;;(define-key python-mode-map [f5] 'jbo/run-compile-command)
+;; jbo/run-compile-command is meant to be set with a file-local
+;; compile-command variable. Example:
+;;     #!/usr/bin/env bash
+;;     # -*- compile-command: "/home/julien/work/jbo/scripts/2024.01.12.sh"; -*-
+
+(define-key sh-mode-map [f5] 'jbo/execute-buffer)
+;;(define-key python-mode-map [f5] 'jbo/execute-buffer-python1)
+
 (define-key c++-mode-map [f5] 'jbo/make)
 (define-key qt-pro-mode-map [f5] 'jbo/make)
 (define-key makefile-mode-map [f5] 'jbo/make)
