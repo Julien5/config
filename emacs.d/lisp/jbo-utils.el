@@ -258,23 +258,29 @@ If buffer-or-name is nil return current buffer's mode."
   (add-hook 'special-mode-hook 'jbo-fix-expand-region-for-line-p)
   )
 
-
 (defun jbo/project-try (dir)
   (cons 'jbo dir)
   )
 
+;; (head jbo) :  https://www.gnu.org/software/emacs/manual/html_node/elisp/Generic-Functions.html
 (cl-defmethod project-root ((project (head jbo)))
+  "Return root directory of current PROJECT."
+  (message "project-root:  %s" project)
+  ;; returns the cdr from (cons 'jbo dir)
+  ;; => dir.
   (cdr project)
   )
 
 (cl-defmethod project-external-roots ((project (head jbo)))
   ;; jbo-projectiles + current dir
+  (message "project-external-roots: %s" project)
   (setq P (list (project-root project)))
   (setq R (jbo-projectiles))
   (set-difference R P :test #'equal)
   )
 
 ;; must be called in init.el
+;; why? i dont remember
 (defun jbo-fix-project-roots ()
   (setq project-find-functions nil)
   (add-hook 'project-find-functions 'jbo/project-try)

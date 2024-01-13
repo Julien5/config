@@ -28,7 +28,7 @@
 ;;     #!/usr/bin/env bash
 ;;     # -*- compile-command: "/home/julien/work/jbo/scripts/2024.01.12.sh"; -*-
 
-(define-key sh-mode-map [f5] 'jbo/execute-buffer)
+;;(define-key sh-mode-map [f5] 'jbo/execute-buffer)
 ;;(define-key python-mode-map [f5] 'jbo/execute-buffer-python1)
 
 (define-key c++-mode-map [f5] 'jbo/make)
