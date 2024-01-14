@@ -4,6 +4,9 @@
 (add-hook 'python-mode-hook 'eglot-ensure)
 
 
+(eval-after-load 'python
+  '(define-key python-mode-map [f5] 'jbo/execute-buffer))
+
 ;; https://emacs.stackexchange.com/questions/32140/python-mode-indentation
 (defun how-many-region (begin end regexp &optional interactive)
   "Print number of non-trivial matches for REGEXP in region.                    

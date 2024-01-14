@@ -23,9 +23,6 @@
 
 (define-key emacs-lisp-mode-map [f5] 'eval-buffer)
 
-;;(define-key sh-mode-map [f5] 'jbo/execute-buffer)
-;;(define-key python-mode-map [f5] 'jbo/execute-buffer-python1)
-
 (define-key c++-mode-map [f5] 'jbo/make)
 (define-key qt-pro-mode-map [f5] 'jbo/make)
 (define-key makefile-mode-map [f5] 'jbo/make)

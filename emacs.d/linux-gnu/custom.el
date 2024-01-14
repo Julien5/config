@@ -11,9 +11,7 @@
  '(cua-mode t nil (cua-base))
  '(custom-enabled-themes '(deeper-blue))
  '(menu-bar-mode nil)
- '(package-selected-packages
-   '(ag cmake-mode company expand-region flycheck magit markdown-mode
-		projectile smartscan use-package))
+ '(package-selected-packages nil)
  '(tool-bar-mode nil))
 
 (custom-set-faces

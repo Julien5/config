@@ -3,4 +3,5 @@
 (customize-set-variable 'eglot-extend-to-xref t)
 (load "jbo-c++")
 (load "jbo-python")
+(load "jbo-shell")
 
