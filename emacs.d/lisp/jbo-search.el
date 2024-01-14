@@ -23,7 +23,7 @@
 	)
   )
 
-(defun find-definition-at-point ()
+(defun jbo--find-definition-at-point ()
   (let* ((word (symbol-at-point)))
 	(message "find-definitions for %s" word)
 	(if word
@@ -36,21 +36,28 @@
 
 (defun jbo/find-references ()
   (interactive)
-  (if (bound-and-true-p eglot-mode)
+  (if (bound-and-true-p eglot--managed-mode)
 	  (progn
-		(xref-find-references)
+		(message "running xref-find-references with eglot")
+		(xref-find-references nil)
 		)
 	(jbo/ag-at-point))
   )
 
 (defun jbo/find-definitions ()
   (interactive)
-  (if (bound-and-true-p eglot-mode)
+  (if (bound-and-true-p eglot--managed-mode)
 	  (progn
-		(message "running lsp-find-definition")
-		(xref-find-definitions)
+		(message "running xref-find-definition with eglot")
+		(xref-find-definitions nil)
 		)
-	(find-definition-at-point))
+	(jbo--find-definition-at-point))
+  )
+
+
+(defun jbo/other-file ()
+  (interactive)
+  (projectile-find-other-file)
   )
 
 (defun jbo/projectile-ag ()
@@ -61,3 +68,5 @@
   ;;(switch-to-buffer "main_devhost.cpp")
   ;;(refactor-references)
   ;;(switch-to-buffer "search.el")
+
+(message "loaded jbo-search")
