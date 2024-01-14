@@ -23,11 +23,6 @@
 
 (define-key emacs-lisp-mode-map [f5] 'eval-buffer)
 
-;; jbo/run-compile-command is meant to be set with a file-local
-;; compile-command variable. Example:
-;;     #!/usr/bin/env bash
-;;     # -*- compile-command: "/home/julien/work/jbo/scripts/2024.01.12.sh"; -*-
-
 ;;(define-key sh-mode-map [f5] 'jbo/execute-buffer)
 ;;(define-key python-mode-map [f5] 'jbo/execute-buffer-python1)
 
@@ -69,8 +64,8 @@
   )
 
 (global-set-key (kbd "<C-tab>") 'jbo/prev-code-buffer)
-(global-set-key (kbd "<C-S-tab>") 'ido-switch-buffer)
-;;(global-set-key  (jbo-c-s-tab) 'jbo/next-code-buffer)
+;;(global-set-key (kbd "<C-S-tab>") 'ido-switch-buffer)
+(global-set-key  (jbo-c-s-tab) 'jbo/next-code-buffer)
 (global-set-key  (jbo-c-s-tab) 'ido-switch-buffer)
 (global-set-key (kbd "C-S-p") 'jbo/kill-invisible-buffers)
 (global-set-key (kbd "C-p") 'jbo/clean-buffers)

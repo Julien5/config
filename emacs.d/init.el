@@ -34,7 +34,7 @@
 
 (load "jbo-search")
 (load "jbo-utils")
-(load "jbo-lsp")
+(load "jbo-dev")
 (load "jbo-colors-linux")
 (load "jbo-keys")
 
