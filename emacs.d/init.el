@@ -5,6 +5,7 @@
 ;; (package-initialize)
 
 (setq inhibit-startup-screen t)
+(switch-to-buffer "*Messages*") 
 ;; menubar/toolbar blocks F12 in xubuntu-emacs
 
 (menu-bar-mode -1)
