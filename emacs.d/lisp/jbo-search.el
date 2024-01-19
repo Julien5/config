@@ -16,7 +16,7 @@
 	(if word
 		(let ((w word))
 		  (require 'ag)
-		  (ag/search w jbo-dir :file-regex ".cpp$|.c$|.h$|.sh$|.py$|.pro$|.el|Jenkinsfile$")
+		  (ag/search w jbo-dir :file-regex ".cpp$|.c$|.h$|.sh$|.py$|.pro$|.el|Jenkinsfile$|[^.]*$")
 		  )
 	  (message "no symbol at cursor")
 	  )
