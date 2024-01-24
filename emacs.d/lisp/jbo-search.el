@@ -54,7 +54,8 @@
 	(jbo--find-definition-at-point))
   )
 
-
+;; TODO: filter the ouput from
+;; (projectile-get-other-files (buffer-file-name))
 (defun jbo/other-file ()
   (interactive)
   (projectile-find-other-file)
