@@ -250,16 +250,6 @@ If buffer-or-name is nil return current buffer's mode."
   (setq clang-format-style-option nil)
   (setq win-clang-format-executable nil)
 
-  ;; return when there is no .clang-format file in the project root.
-  (let ((topdir (locate-dominating-file buffer-file-name ".clang-format")))
-	(if (not topdir)
-		(progn
-		  (message "no clang-format for %s" buffer-file-name)
-		  (error "no .clang-format found for " buffer-file-name)
-		  )
-	  )
-	)
-
   (if (locate-dominating-file buffer-file-name ".svn")
 	  (setq win-clang-format-executable "clang-format-4.0")
     (if (locate-dominating-file buffer-file-name ".git")
