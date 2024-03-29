@@ -66,7 +66,7 @@
   ;;(switch-to-buffer "search.el")
 
 
-(defun file-distance (f1 f2)
+(defun file-affinity (f1 f2)
   (defun common (A B)
 	(let ((a (car A))
 		  (b (car B))
@@ -97,7 +97,7 @@
   (unless L (error "No other file found for %s" f))
   (setq Q nil)
   (dolist (o L)
-	(let ((d (file-distance f o)))
+	(let ((d (file-affinity f o)))
 	  (if (not Q)
 		  (setq Q (list (cons o d)))
 		(setq Q (append (list (cons o d)) Q))

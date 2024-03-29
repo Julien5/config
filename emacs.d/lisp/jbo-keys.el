@@ -1,6 +1,6 @@
 (require 'project)
 (require 'make-mode)
-(global-set-key (kbd "<f8>") 'modal-mode)
+
 
 (global-set-key (kbd "M-g") 'jbo/google-search)
 (global-set-key (kbd "<f2>") 'jbo/other-file)
@@ -32,7 +32,6 @@
 (define-key c++-mode-map (kbd "C-f") 'jbo/clang-format-buffer)
 
 (global-set-key (kbd "<f6>") 'next-error)
-(global-set-key (kbd "<C-f6>") 'first-error)
 (global-set-key (kbd "<S-f6>") 'previous-error)
 
 (global-set-key (kbd "<f9>") 'jbo/diff)
@@ -42,10 +41,7 @@
 (global-set-key (kbd "<M-left>") 'backward-word)
 (global-set-key (kbd "<M-right>") 'forward-word)
 
-(global-set-key (kbd "C-+") 'jbo/change-font-size-up)
-(global-set-key (kbd "C--") 'jbo/change-font-size-down)
-
-;; c-c c-v for copy paste
+; c-c c-v for copy paste
 (cua-mode t)
 (setq cua-keep-region-after-copy t)
 
@@ -67,10 +63,11 @@
 (global-set-key (kbd "C-S-p") 'jbo/kill-invisible-buffers)
 (global-set-key (kbd "C-p") 'jbo/clean-buffers)
 
-(global-set-key (kbd "<C-next>") 'other-window)
+(global-set-key (kbd "<C-home>") 'other-window)
+(global-set-key (kbd "<C-next>") 'prev-window)
 (defun prev-window ()  (interactive)  (other-window -1))
 (global-set-key (kbd "<C-prior>") 'prev-window)
-(global-set-key (kbd "C-S-t") 'jbo/split-window-below)
+(global-set-key (kbd "C-b") 'jbo/split-window-below)
 (global-set-key (kbd "C-t") 'jbo/split-window-right)
 (global-set-key (kbd "C-r") 'jbo/fix-and-zoom-window)
 
