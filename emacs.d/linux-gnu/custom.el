@@ -9,7 +9,6 @@
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff"
 	"#eeeeec"])
  '(cua-mode t nil (cua-base))
- '(custom-enabled-themes '(leuven-dark))
  '(package-selected-packages nil)
  '(tool-bar-mode nil))
 

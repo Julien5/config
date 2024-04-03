@@ -3,6 +3,7 @@
 
 
 (global-set-key (kbd "M-g") 'jbo/google-search)
+(global-set-key (kbd "M-k") 'dabbrev-expand)
 (global-set-key (kbd "<f2>") 'jbo/other-file)
 (global-set-key (kbd "<f4>") 'jbo/find-definitions)
 (global-set-key (kbd "<f3>") 'jbo/find-references)
@@ -29,7 +30,6 @@
 (define-key makefile-mode-map [f5] 'jbo/make)
 
 (define-key c++-mode-map [S-f5] 'jbo/make-in-preset-directory)
-(define-key c++-mode-map (kbd "C-f") 'jbo/clang-format-buffer)
 
 (global-set-key (kbd "<f6>") 'next-error)
 (global-set-key (kbd "<S-f6>") 'previous-error)

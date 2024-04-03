@@ -2,7 +2,6 @@
 
 set -e
 # set -x
-
 archive() {
     filename="$1.tgz"
     dir="$HOME/.$1"

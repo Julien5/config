@@ -2,3 +2,4 @@ XTerm*eightBitInput:   false
 XTerm*eightBitOutput:  true
 XTerm*metaSendsEscape: true
 XTerm*selectToClipboard: true
+XTerm*vt100.allowTitleOps: false

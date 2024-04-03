@@ -2,12 +2,7 @@
 
 ## Font
 
-1. Copy the .ttf files from https://github.com/google/fonts/tree/master/ofl/sourcecodepro into ~/.fonts/ (or any sub directory, like ~/.fonts/source-code-pro/) and 
-2. run fc-cache -f ~/.fonts.
-
-
 ### Bitmaps Fonts
-
 
 Available [from here](https://files.ax86.net/terminus-ttf/#fontsizes) and [even better here](https://github.com/Tecate/bitmap-fonts/tree/master):
 ```
@@ -30,7 +25,7 @@ Note: i get often a error:
 fonttosfnt -b -c -g 2 -m 2 -o Neep-Bold.otb ./bitmap/jmk-x11-fonts-3.0/neep-iso8859-1-10x20-bold.bdf
 Couldn't select character map: 6.
 ```
-but could not fix it.
+but could *not* fix it.
 
 fix markdown:
 ```
@@ -38,6 +33,25 @@ fix markdown:
  '(markdown-pre-face ((t (:inherit (markdown-code-face font-lock-constant-face) :family "fixed")))))
 ```
 
+### Source Code Pro 
+
+1. Copy the .ttf files from https://github.com/google/fonts/tree/master/ofl/sourcecodepro into ~/.fonts/ (or any sub directory, like ~/.fonts/source-code-pro/) and 
+2. run fc-cache -f ~/.fonts.
+
+## Running in xfce4-terminal
+
+`start-emacs.sh` contains:
+```
+xfce4-terminal --maximize --hide-menubar --hide-scrollbar --title=emacs -e "emacs -nw"
+```
+The `F10` shortcut collides with my key bindings. 
+Solution: Edit > Preferences > Advanced > Disable menu shortkey (F10 by default)
+**Note**: 
+Version 0.9.2 should have better menu. I have version 0.8.9.1.
+
+```
+(gtk_accel_path "<Actions>/terminal-window/toggle-menubar" "<Alt>0")
+```
 
 ## Python LSP
 
