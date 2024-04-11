@@ -1,0 +1,7 @@
+# ~/.local/share/applications/emacs.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=jbo-emacs
+Exec=/home/julien/.emacs.d/start-emacs.sh
+Categories=Editor
