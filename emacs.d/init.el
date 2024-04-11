@@ -10,6 +10,8 @@
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(setq visible-bell t)
+(setq ring-bell-function 'ignore)
 ;; ask before quitting
 (setq confirm-kill-emacs 'yes-or-no-p)
 ;; stop creating backup files and autosave.
