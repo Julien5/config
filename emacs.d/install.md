@@ -33,7 +33,7 @@ fix markdown:
  '(markdown-pre-face ((t (:inherit (markdown-code-face font-lock-constant-face) :family "fixed")))))
 ```
 
-At the moment, Tamzen (and other bitmap fonts i think) look nicer in the terminal than in the GTK emacs frontend.
+At the moment, Tamzen (and other bitmap fonts i think) look nicer in the terminal than in the GTK emacs frontend. I start the terminal with `--maximize`, but sometimes emacs is not maximized.
 
 ### Source Code Pro 
 
