@@ -47,6 +47,7 @@
 
 ;; (global-set-key (kbd "<C-backspace>") 'jbo/backward-delete-word)
 (global-set-key (kbd "<M-backspace>") 'jbo/backward-delete-word)
+(global-set-key (kbd "M-DEL") 'jbo/backward-delete-word)
 (global-set-key (kbd "<C-delete>") 'jbo/delete-line)
 
 (defun jbo-c-s-tab ()
@@ -71,7 +72,6 @@
 (global-set-key (kbd "C-b") 'jbo/split-window-below)
 (global-set-key (kbd "C-t") 'jbo/split-window-right)
 (global-set-key (kbd "C-r") 'jbo/fix-and-zoom-window)
-
 
 (global-set-key (kbd "<S-f12>") 'jbo/save-window-configuration)
 (global-set-key (kbd "<f12>") 'jbo/restore-window-configuration)

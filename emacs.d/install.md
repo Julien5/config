@@ -35,6 +35,25 @@ fix markdown:
 
 At the moment, Tamzen (and other bitmap fonts i think) look nicer in the terminal than in the GTK emacs frontend. I start the terminal with `--maximize`, but sometimes emacs is not maximized.
 
+Note:
+VMWare has a keyboard lag problem. Fixes:
+```
+You could try Virtual Machine Settings > Processors > Virtualization engine > Virtualize  IOMMU.
+It resolved my keyboard lag issue.
+https://communities.vmware.com/t5/VMware-Workstation-Pro/VMware-Workstation-17-Pro-Linux-VMs-keyboard-lag/td-p/2965064
+```
+and
+```
+Hi thread,
+I submitted a ticket to VMWare and they finally came up with a solution today, which seems to be working perfectly on my machine:
+Add these to your .vmx:
+keyboard.allowBothIRQs = "FALSE"
+keyboard.vusb.enable = "TRUE"
+And restart the VM. This works for me with VMware 17.5.0 and Kali rolling (KDE, Wayland).
+https://communities.vmware.com/t5/VMware-Workstation-Pro/Noticeable-typing-lag-in-Linux-VM-terminals-since-v16-2-upgrade/td-p/2872427/page/6
+```
+It mitigates the problem.
+
 ### Source Code Pro 
 
 1. Copy the .ttf files from https://github.com/google/fonts/tree/master/ofl/sourcecodepro into ~/.fonts/ (or any sub directory, like ~/.fonts/source-code-pro/) and 
