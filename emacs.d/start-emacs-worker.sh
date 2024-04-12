@@ -1,16 +1,15 @@
 #!/usr/bin/env bash
 
 set -e
-# set -x
+set -x
 
 function find-emacs() {
-	source ~/.bashrc
-	if which emacs; then
+	source ~/.bashrc &> /dev/null
+	if hash emacs; then
 		EXE="$(which emacs)"
 	else
 		EXE=/usr/local/emacs-29-no-pgtk/bin/emacs
 	fi
-	# "${EXE}" --maximized "$@" &> /tmp/emacs.out
 	echo "${EXE}"
 }
 
@@ -18,7 +17,7 @@ function start-nw() {
 	export TERM=xterm-256color
 	local EXE=$(find-emacs)
 	cd $HOME
-	"${EXE}" -nw &> /tmp/emacs.out
+	"${EXE}" -mm -nw &> /tmp/emacs.nw.out
 }
 
 function main() {

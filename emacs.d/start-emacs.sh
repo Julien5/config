@@ -9,19 +9,20 @@ STARTER=$HOME/.emacs.d/start-emacs-worker.sh
 function start-gui() {
 	EXE="$($STARTER find-emacs)"
 	cd $HOME
-	"${EXE}" --maximized "$@" &> /tmp/emacs.out
+	"${EXE}" --maximized "$@" &> /tmp/emacs.gui.out
 }
 
 function start-terminal() {
-	xfce4-terminal --hide-menubar --hide-scrollbar --title=emacs --maximize -e "$STARTER start-nw"
+	xfce4-terminal --maximize --hide-menubar --hide-scrollbar --title=emacs  -e "$STARTER start-nw"
 }
 
 function main() {
-	if [ $# -gt 1 ]; then
+	if [ $# -gt 0 ]; then
 		local cmd="$1"
 		shift
 		echo "running $cmd" "$@"
 		"$cmd" "$@"
+		return
 	fi
 	# default 
 	start-terminal
