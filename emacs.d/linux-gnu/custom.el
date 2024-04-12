@@ -3,26 +3,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
- '(cua-mode t nil (cua-base))
-<<<<<<< Updated upstream
- '(custom-enabled-themes '(wombat))
- '(package-selected-packages nil)
-=======
- '(package-selected-packages
-   '(ag cmake-mode company editorconfig expand-region flycheck magit
-		markdown-mode projectile smartscan xclip xclip-mode))
->>>>>>> Stashed changes
- '(tool-bar-mode nil))
+ '(package-selected-packages nil))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "TamzenForPowerline" :foundry "UNKN" :slant normal :weight medium :height 120 :width normal))))
- '(markdown-code-face ((t (:family "terminus"))))
- '(markdown-pre-face ((t (:inherit (markdown-code-face font-lock-constant-face) :family "fixed")))))
+ )

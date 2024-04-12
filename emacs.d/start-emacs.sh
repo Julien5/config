@@ -11,4 +11,5 @@ fi
 
 # "${EXE}" --maximized "$@" &> /tmp/emacs.out
 
-xfce4-terminal --maximize --hide-menubar --hide-scrollbar --title=emacs -e "emacs -nw &> /tmp/emacs.out"
+cd $HOME
+xfce4-terminal --maximize --hide-menubar --hide-scrollbar --title=emacs -e "$HOME/.emacs.d/start-emacs-worker.sh"
