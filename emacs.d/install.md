@@ -33,6 +33,8 @@ fix markdown:
  '(markdown-pre-face ((t (:inherit (markdown-code-face font-lock-constant-face) :family "fixed")))))
 ```
 
+At the moment, Tamzen (and other bitmap fonts i think) look nicer in the terminal than in the GTK emacs frontend.
+
 ### Source Code Pro 
 
 1. Copy the .ttf files from https://github.com/google/fonts/tree/master/ofl/sourcecodepro into ~/.fonts/ (or any sub directory, like ~/.fonts/source-code-pro/) and 
