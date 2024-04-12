@@ -8,8 +8,14 @@
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
  '(cua-mode t nil (cua-base))
+<<<<<<< Updated upstream
  '(custom-enabled-themes '(wombat))
  '(package-selected-packages nil)
+=======
+ '(package-selected-packages
+   '(ag cmake-mode company editorconfig expand-region flycheck magit
+		markdown-mode projectile smartscan xclip xclip-mode))
+>>>>>>> Stashed changes
  '(tool-bar-mode nil))
 
 (custom-set-faces

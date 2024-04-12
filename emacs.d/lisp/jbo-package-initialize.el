@@ -56,6 +56,7 @@ There are two things you can do about this warning:
   (package-install 'projectile)
   (package-install 'markdown-mode)
   (package-install 'cmake-mode)
+  (package-install 'xclip)
   )
 
 (jbo-package-initialize)
