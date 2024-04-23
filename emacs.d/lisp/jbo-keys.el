@@ -4,6 +4,7 @@
 
 (global-set-key (kbd "M-g") 'jbo/google-search)
 (global-set-key (kbd "M-k") 'dabbrev-expand)
+
 (global-set-key (kbd "<f2>") 'jbo/other-file)
 (global-set-key (kbd "<f4>") 'jbo/find-definitions)
 (global-set-key (kbd "<f3>") 'jbo/find-references)
@@ -65,10 +66,12 @@
 (global-set-key (kbd "C-S-p") 'jbo/kill-invisible-buffers)
 (global-set-key (kbd "C-p") 'jbo/clean-buffers)
 
+(defun jbo-prev-window ()  (interactive)  (other-window -1))
+(defun jbo-next-window ()  (interactive)  (other-window +1))
 (global-set-key (kbd "<C-home>") 'other-window)
-(global-set-key (kbd "<C-next>") 'prev-window)
-(defun prev-window ()  (interactive)  (other-window -1))
-(global-set-key (kbd "<C-prior>") 'prev-window)
+(global-set-key (kbd "<C-next>") 'jbo-prev-window)
+(global-set-key (kbd "<C-prior>") 'jbo-next-window)
+
 (global-set-key (kbd "C-b") 'jbo/split-window-below)
 (global-set-key (kbd "C-t") 'jbo/split-window-right)
 (global-set-key (kbd "C-r") 'jbo/fix-and-zoom-window)

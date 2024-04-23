@@ -153,6 +153,9 @@ If buffer-or-name is nil return current buffer's mode."
 (defun jbo/clean-buffers ()
   "Kill all 'internal' buffers, like *ag: blah*."
   (interactive)
+  ;; todo: close small buffer popup (psw-switch-buffer)
+  ;; (keyboard-quit) does not work because the popup switch redefines the
+  ;; key bindings and this function is just not called.
   (dolist (buf  (buffer-list))
     (if (jbo-is-temporary-buffer buf)
 		(jbo-kill-buffer-verbose buf)
@@ -529,15 +532,15 @@ Version 2016-07-18"
 
 (defun jbo/buffer-menu ()
   (interactive)
-
-  (ibuffer)
-  
-  (ibuffer-do-sort-by-recency)
-  (ibuffer-invert-sorting)
+  (psw-switch-buffer 'nil)
+				  
+  ;;(ibuffer)
+  ;;(ibuffer-do-sort-by-recency)
+  ;;(ibuffer-invert-sorting)
 
   ;;(ibuffer-do-sort-by-alphabetic)
   ;;(ibuffer-do-sort-by-alphabetic)
 
-  (ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list))))
+  ;;(ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list))))
   )
 

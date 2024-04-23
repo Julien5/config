@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(xclip smartscan projectile markdown-mode magit flycheck expand-region company cmake-mode ag)))
+   '(popup-switcher use-package xclip smartscan projectile markdown-mode magit flycheck expand-region company cmake-mode ag)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

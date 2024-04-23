@@ -57,6 +57,7 @@ There are two things you can do about this warning:
   (package-install 'markdown-mode)
   (package-install 'cmake-mode)
   (package-install 'xclip)
+  (package-install 'popup-switcher)
   )
 
 (jbo-package-initialize)
