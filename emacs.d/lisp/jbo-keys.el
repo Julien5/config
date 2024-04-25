@@ -68,9 +68,9 @@
 
 (defun jbo-prev-window ()  (interactive)  (other-window -1))
 (defun jbo-next-window ()  (interactive)  (other-window +1))
-(global-set-key (kbd "<C-home>") 'other-window)
-(global-set-key (kbd "<C-next>") 'jbo-prev-window)
-(global-set-key (kbd "<C-prior>") 'jbo-next-window)
+;;default ? (global-set-key (kbd "<C-home>") 'beginning-of-buffer)
+(global-set-key (kbd "<C-prior>") 'jbo-prev-window)
+(global-set-key (kbd "<C-next>") 'jbo-next-window)
 
 (global-set-key (kbd "C-b") 'jbo/split-window-below)
 (global-set-key (kbd "C-t") 'jbo/split-window-right)
