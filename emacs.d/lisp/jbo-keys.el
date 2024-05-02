@@ -24,13 +24,10 @@
 
 (global-set-key (kbd "C-q") 'jbo/buffer-menu)
 
-(define-key emacs-lisp-mode-map [f5] 'eval-buffer)
+(global-set-key (kbd "<f5>") 'jbo/make)
+(global-set-key (kbd "<S-f5>") 'jbo/make-shift)
+(global-set-key (kbd "<M-f5>") 'jbo/make-meta) ;; alt-F5
 
-(define-key c++-mode-map [f5] 'jbo/make)
-(define-key qt-pro-mode-map [f5] 'jbo/make)
-(define-key makefile-mode-map [f5] 'jbo/make)
-
-(define-key c++-mode-map [S-f5] 'jbo/make-in-preset-directory)
 
 (global-set-key (kbd "<f6>") 'next-error)
 (global-set-key (kbd "<S-f6>") 'previous-error)

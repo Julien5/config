@@ -45,14 +45,6 @@
 	  (message "file not found:%s" file))
 	))
 
-(defun jbo-make-command ()
-  (if (and (boundp 'jbo-compilation-command) jbo-compilation-command)
-	  jbo-compilation-command
-	(if (file-directory-p (expand-file-name (format "%s/make" (getenv "SETUPROOT"))))
-		(expand-file-name (format "%s/make/mk -r" (getenv "SETUPROOT")))
-	  "make -C /tmp/build_pc"
-	  )
-	))
 
 (defun jbo/restore-window-configuration ()
   (interactive)
@@ -169,22 +161,42 @@ If buffer-or-name is nil return current buffer's mode."
 (defun jbo/make ()
   (interactive)
   (save-selected-window
-	(setq orig-dd nil)
-	(if (boundp 'jbo-make-directory)
-		(progn (setq orig-dd default-directory)
-			   (cd jbo-make-directory))
-	  )
-	(setq make-command (jbo-make-command))
-	(message "make-command:%s" make-command)
-	(compile make-command)
-	(if orig-dd (cd orig-dd))
-	))
+	(save-current-buffer
+	  ;; if jbo-make-buffer is defined and not nil
+	  (if (and (boundp 'jbo-make-buffer) jbo-make-buffer)
+		  (progn (message "switch to: %S" jbo-make-buffer)
+				 (switch-to-buffer jbo-make-buffer)
+				 )
+		)
 
-(defun jbo/make-in-preset-directory ()
-  (interactive)
-  (setq jbo-make-directory default-directory)
-  (jbo/make-in-preset-directory)
+	  (message "=> current buffer: %s" (current-buffer))
+	  (message "=> major mode:%s" major-mode)
+	  ;; (message "=> buffer mode:%s" (buffer-mode (current-buffer)))
+	  (message "=> current directory:%s" default-directory)
+	  (cond
+	   ((eq major-mode 'c++-mode)	(jbo-make-c++-mode))
+	   ((eq major-mode 'sh-mode)  (jbo-make-shell-mode))
+	   ((eq major-mode 'emacs-lisp-mode)  (eval-buffer))
+	   )
+	  ))
+	
+  (message "current: %S" (current-buffer))
+  ;; we need to do reload the current buffer, i dont understand really why:
+  (switch-to-buffer (current-buffer))
   )
+
+(defun jbo/make-shift ()
+  (interactive)
+  (setq jbo-make-buffer (window-buffer (minibuffer-selected-window)))
+  (message "jbo-make-buffer:%s" jbo-make-buffer)
+  )
+
+(defun jbo/make-meta ()
+  (interactive)
+  (setq jbo-make-buffer 'nil)
+  (message "jbo-make-buffer:%s" jbo-make-buffer)
+  )
+
 
 (defun jbo/execute-buffer ()
   (interactive)
