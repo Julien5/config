@@ -177,6 +177,7 @@ If buffer-or-name is nil return current buffer's mode."
 	   ((eq major-mode 'c++-mode)	(jbo-make-c++-mode))
 	   ((eq major-mode 'sh-mode)  (jbo-make-shell-mode))
 	   ((eq major-mode 'emacs-lisp-mode)  (eval-buffer))
+	   ((eq major-mode 'python-mode)  (jbo-make-python-mode))
 	   )
 	  ))
 	

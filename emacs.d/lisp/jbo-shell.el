@@ -4,7 +4,7 @@
 
 (defun jbo-make-shell-mode ()
   (message "shell mode")
-  (let ((filename (buffer-file-name (window-buffer (minibuffer-selected-window)))))
+  (let ((filename (buffer-file-name (current-buffer))))
 	(executable-interpret filename)
 	)
   )
