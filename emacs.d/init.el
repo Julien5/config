@@ -67,7 +67,10 @@
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 (put 'scroll-left 'disabled nil)
 
+;; follow the output
 (setq compilation-scroll-output t)
+;; stops at the first error or warning
+;;(setq compilation-scroll-output 'first-error)
 
 (setq-default tab-width 4)
 ;; reload files if changed on disk
@@ -77,7 +80,7 @@
 
 (jbo-fix-project-roots)
 
-(setq compilation-scroll-output 'first-error)
+
 
 ;; projectile-globally-ignored-directories (append '("*__pycache__/")
 ;; projectile-globally-ignored-directories)

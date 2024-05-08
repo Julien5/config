@@ -4,9 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ag cmake-mode company editorconfig expand-region flycheck magit
-		markdown-mode popup-switcher projectile smartscan use-package
-		xclip)))
+   '(ag cmake-mode company editorconfig expand-region flycheck magit markdown-mode popup-switcher projectile smartscan use-package xclip)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
