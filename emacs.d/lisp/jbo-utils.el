@@ -437,6 +437,7 @@ Version 2016-07-18"
 
 (defun jbo-dev-desktop ()
   (let ((ENV (jbo-env-from-dev "dev.desktop")))
+	(setenv "SETUPROOT" (jbo-read-env ENV "SETUPROOT"))
 	(setenv "PROJECTSDIR" (jbo-read-env ENV "PROJECTSDIR"))
 	(setenv "THIRDPARTYDIR" (jbo-read-env ENV "THIRDPARTYDIR"))
 	(setenv "PATH" (jbo-read-env ENV "PATH"))
