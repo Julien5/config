@@ -7,4 +7,5 @@
 (load "jbo-c++")
 (load "jbo-python")
 (load "jbo-shell")
+(load "jbo-cmake")
 
