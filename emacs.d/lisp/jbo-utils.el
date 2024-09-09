@@ -518,7 +518,7 @@ Version 2016-07-18"
   (interactive)
   (require 'recentf)
   (recentf-mode 1)
-  (setq recentf-max-saved-items 5)
+  (setq recentf-max-saved-items 'nil)
   (setq recentf-menu-open-all-flag t)
   (dolist (file recentf-list) (find-file file)))
 
