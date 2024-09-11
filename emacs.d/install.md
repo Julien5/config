@@ -76,7 +76,8 @@ Version 0.9.2 should have better menu. I have version 0.8.9.1.
 
 ## Python LSP
 
-Install pylsp and customize the code style.
+Install:
+pylsp, pycodestyle, pyflakes and customize the code style.
 ```
 # sudo pip3 install python-lsp-server
 
