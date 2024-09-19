@@ -4,7 +4,6 @@ set -e
 set -x
 
 function find-emacs() {
-	source ~/.bashrc &> /dev/null
 	if hash emacs; then
 		EXE="$(which emacs)"
 	else
@@ -14,6 +13,10 @@ function find-emacs() {
 }
 
 function start-nw() {
+	local P=$HOME/setup/profile/profile.sh
+	if [ -f $P ]; then 
+		source ${P}
+	fi
 	export TERM=xterm-256color
 	local EXE=$(find-emacs)
 	cd $HOME
