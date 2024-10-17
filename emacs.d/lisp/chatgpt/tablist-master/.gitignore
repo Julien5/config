@@ -1,0 +1,6 @@
+*-autoloads.el
+*-pkg.el
+*.elc
+.dir-locals.el
+.cask
+dist

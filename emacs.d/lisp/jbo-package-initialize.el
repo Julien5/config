@@ -20,6 +20,20 @@
   (bootstrap-use-package)
   )
 
+(defun load-chatgpt ()
+  (load "~/.ssh/github-work/openai.el")
+  (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/chatgpt-master")
+  (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/openai-master")
+  (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/emacs-request-master")
+  (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/tblui.el-master")
+  (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/tablist-master")
+  (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/magit-popup-master")
+  (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/lv")
+  (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/ht.el-master")
+  (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/spinner.el-master")
+  (require 'chatgpt)
+  )
+
 (defun jbo-package-initialize ()
   (setq elpa-dirname (expand-file-name "~/.emacs.d/elpa/"))
   (jbo-setup-package-0);
