@@ -33,6 +33,7 @@
   (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/spinner.el-master")
   (require 'chatgpt)
   (load "openai-chat")
+  (load "chatgpt")
   )
 
 (defun jbo-package-initialize ()
@@ -76,3 +77,4 @@ There are two things you can do about this warning:
   )
 
 (jbo-package-initialize)
+(load-chatgpt)
