@@ -32,6 +32,7 @@
   (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/ht.el-master")
   (add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/spinner.el-master")
   (require 'chatgpt)
+  (load "openai-chat")
   )
 
 (defun jbo-package-initialize ()
