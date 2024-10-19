@@ -27,7 +27,6 @@
 ;;{{{ Set up package and use-package
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-(add-to-list 'load-path "/usr/share/emacs25/site-lisp/global")
 (load "jbo-package-initialize")
 (jbo-package-initialize)
 
@@ -49,8 +48,6 @@
 (add-to-list 'auto-mode-alist '("\\(/\\|\\`\\)[Mm]akefile" . makefile-gmake-mode))
 
 (global-company-mode)
-
-(setq exec-path (append exec-path '("c:/tools/llvm/llvm-10/bin/")))
 
 (require 'qt-pro-mode)
 (add-to-list 'auto-mode-alist '("\\.pr[io]$" . qt-pro-mode))
@@ -80,8 +77,6 @@
 
 (jbo-fix-project-roots)
 
-
-
 ;; projectile-globally-ignored-directories (append '("*__pycache__/")
 ;; projectile-globally-ignored-directories)
 
@@ -91,10 +86,10 @@
 (ido-mode 't)
 (xclip-mode 't)
 (projectile-mode t)
-(server-start)
 (jbo/open-all-recent-files)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'erase-buffer 'disabled nil)
 (toggle-frame-maximized)
+(server-start)
 (message "ready")
