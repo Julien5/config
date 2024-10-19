@@ -21,7 +21,11 @@ function build-emacs() {
 	fi
 	cd emacs-29.4
 	autogen.sh
-	./configure --prefix=/usr/local/emacs-29-no-pgtk # --with-tree-sitter 	
+	./configure \
+		--prefix=/usr/local/emacs-29-4-a \
+		--with-x-toolkit=gtk3 \
+		--with-pgtk=no \
+		--with-tree-sitter 	
 	make -j8
 	sudo -E make install
 }
@@ -32,14 +36,14 @@ function main() {
 	if [ ! -d ${BUILDDIR} ]; then
 		mkdir -p ${BUILDDIR}
 		cd ${BUILDDIR}
-		apt install build-essential libgtk-3-dev libgnutls28-dev \
+		sudo apt install build-essential libgtk-3-dev libgnutls28-dev \
 			 libtiff5-dev libgif-dev libjpeg-dev libpng-dev \
 			 libxpm-dev libncurses-dev texinfo
 		
 	fi
-	# build-tree-sitter
+	build-tree-sitter
 	sudo ldconfig /usr/local/lib
-	cd /tmp/buildemacs
+	cd ${BUILDDIR}
 	build-emacs	
 }
 
