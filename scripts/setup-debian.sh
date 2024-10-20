@@ -12,16 +12,20 @@ function surun() {
 }
 
 function install-ssh-keys() {
-	while [ ! -d /tmp/secret-ssh-keys/.ssh ]; do
-		echo "copy .ssh direcotory under /tmp/secret-ssh-keys"
-		echo "such that /tmp/secret-ssh-keys/.ssh exists."
+	if [ -d ~/.ssh ]; then
+		echo ssh directory is done
+		return
+	fi
+	local SRC=/tmp/X/.ssh
+	while [ ! -d ${X} ]; do
+		echo "copy .ssh directory under ${SRC}"
 		sleep 1
 		echo 
 	done
 	# best guess
 	# https://unix.stackexchange.com/questions/257590/ssh-key-permissions-chmod-settings
 	mkdir ~/.ssh/
-	cp -Rf /tmp/secret-ssh-keys/.ssh/* ~/.ssh/
+	cp -Rf ${SRC}/* ~/.ssh/
 	chmod 600 ~/.ssh/id_rsa
 	chmod 600 ~/.ssh/id_rsa.pub
 	chmod 700 ~/.ssh 
@@ -60,9 +64,9 @@ function get-source() {
 }
 
 function import-bookmarks() {
-	echo open firefox and
-	echo import /tmp/setup-source/tmp/passwords.csv 
-	echo import /tmp/setup-source/tmp/bookmarks.html 
+	echo open firefox and:
+	echo " * import /tmp/setup-source/tmp/passwords.csv"
+	echo " * import /tmp/setup-source/tmp/bookmarks.html" 
 }
 
 function build-emacs() {
