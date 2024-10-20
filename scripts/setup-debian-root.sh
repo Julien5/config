@@ -16,16 +16,18 @@ function install-bitmap-fonts() {
 		return;
 	fi
 	mkdir -p /usr/local/share/fonts/bitmaps/
-	cp /home/julien/projectsconfig/emacs.d/fonts/*.otb /usr/local/share/fonts/bitmaps/
+	cp /home/julien/projects/config/emacs.d/fonts/*.otb /usr/local/share/fonts/bitmaps/
 	/sbin/dpkg-reconfigure fontconfig-config
 	fc-cache -fv /usr/local/share/fonts/bitmaps/
 	fc-list | grep bitmaps 
 }
 
 function install-tree-sitter() {
+	echo todo
 }
 
 function install-emacs() {
+	echo todo
 }
 
 function hello() {
