@@ -8,6 +8,6 @@ for f in /tmp/passwords.csv /tmp/bookmarks.html; do
 		echo please export from firefox: ${f}
 		sleep 1
 	done
-fi
+done
 	
 tar cvf /tmp/source.tgz .ssh .gitconfig /tmp/passwords.csv /tmp/bookmarks.html projects/config/scripts
