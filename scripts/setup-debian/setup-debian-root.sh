@@ -7,7 +7,7 @@ function install-packages() {
 		echo "curl is installed => packages are considered installed"
 		return;
 	fi
-	apt install git curl
+	apt install git curl silversearcher-ag
 }
 
 function install-bitmap-fonts() {
