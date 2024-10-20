@@ -4,13 +4,18 @@ set -e
 
 function build-tree-sitter() {
 	if [ ! -d tree-sitter ]; then
-		git clone https://github.com/tree-sitter/tree-sitter
+		# git clone https://github.com/tree-sitter/tree-sitter
+		curl https://codeload.github.com/tree-sitter/tree-sitter/tar.gz/refs/tags/v0.23.2 -o tree-sitter.tgz
+		tar xvf tree-sitter.tgz
+		mv tree-sitter-0.23.2 tree-sitter
 	fi
 	pushd tree-sitter
 	#git checkout v0.23.0
-	git checkout master
+	#git checkout master
 	make 
-	sudo make install
+	echo now run as root:
+	echo "- make install"
+	echo "- /sbin/ldconfig /usr/local/lib" 
 	popd
 }
 
@@ -32,28 +37,25 @@ function build-emacs() {
 	./autogen.sh 
 	# ./configure --prefix=/tmp/emacs-29-4 --with-x=yes --with-x-toolkit=gtk3 --with-pgtk=no --with-tree-sitter
 	echo configure
-	./configure \
---build=x86_64-linux-gnu --prefix=/tmp/emacs-bin --disable-maintainer-mode --disable-dependency-tracking --program-suffix=-snapshot --with-modules=yes --with-x=yes --with-x-toolkit=gtk3 --with-pgtk=no
- 	
-	make -j8
-	make install
+	unset CFLAGS
+	unset LDFLAGS
+	unset LD_LIBRARY_PATH
+	export CFLAGS="-L$(realpath ${BUILDDIR}/tree-sitter) -I$(realpath ${BUILDDIR}/tree-sitter)/lib/include"
+	export LDFLAGS="-L$(realpath ${BUILDDIR}/tree-sitter)"
+	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(realpath ${BUILDDIR}/tree-sitter)"
+	export
+	./configure --build=x86_64-linux-gnu --prefix=/usr/local/emacs-29.4 --program-suffix=-snapshot --with-modules=yes --with-x=yes --with-x-toolkit=gtk3 --with-pgtk=no --with-tree-sitter 
+	# make -j8
+	# make install
 	# sudo -E make install
 }
 
 function main() {
 	BUILDDIR=/tmp/buildemacs
 	# rm -Rf ${BUILDDIR}
-	if [ ! -d ${BUILDDIR} ]; then
-		mkdir -p ${BUILDDIR}
-		cd ${BUILDDIR}
-		sudo apt install build-essential libgtk-3-dev libgnutls28-dev \
-			 libtiff5-dev libgif-dev libjpeg-dev libpng-dev \
-			 libxpm-dev libncurses-dev texinfo autoconf
-		
-	fi
-	# build-tree-sitter
-	sudo ldconfig /usr/local/lib
+	mkdir -p ${BUILDDIR}
 	cd ${BUILDDIR}
+	build-tree-sitter
 	build-emacs rebuild	
 }
 

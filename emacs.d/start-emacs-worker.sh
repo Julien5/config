@@ -4,12 +4,24 @@ set -e
 set -x
 
 function find-emacs() {
-	if hash emacs; then
-		EXE="$(which emacs)"
-	else
-		EXE=/usr/local/emacs-29-no-pgtk/bin/emacs
+	EXE=/usr/local/emacs-29-no-pgtk/bin/emacs
+	if [ -f ${EXE} ]; then
+		echo "${EXE}"	
+		return
 	fi
-	echo "${EXE}"
+
+	EXE=/usr/local/emacs-29.4/bin/emacs-29.4-snapshot
+	if [ -f ${EXE} ]; then
+		echo "${EXE}"	
+		return
+	fi
+
+	if hash emacs; then
+		echo "$(which emacs)"
+		return;
+	fi
+	# no emacs on this system?
+	return 1
 }
 
 function start-nw() {
@@ -20,7 +32,8 @@ function start-nw() {
 	export TERM=xterm-256color
 	local EXE=$(find-emacs)
 	cd $HOME
-	"${EXE}" -mm -nw &> /tmp/emacs.nw.out
+	printf "starting [%s -mm -nw]\n" "${EXE}" &> /tmp/emacs.nw.out
+	"${EXE}" -mm -nw &>> /tmp/emacs.nw.out
 }
 
 function main() {

@@ -84,7 +84,7 @@
 (add-hook 'before-save-hook 'jbo/clang-format-buffer)
 (fido-mode nil)
 (ido-mode 't)
-(xclip-mode 't)
+;;(xclip-mode 't)
 (projectile-mode t)
 (jbo/open-all-recent-files)
 (put 'downcase-region 'disabled nil)
