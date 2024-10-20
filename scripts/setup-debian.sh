@@ -95,7 +95,7 @@ function main() {
 	install-ssh-keys
 	clone-projects
 	import-bookmarks
-	build-emacs
+	echo todo build-emacs
 }
 
 cd $SCRIPTDIR

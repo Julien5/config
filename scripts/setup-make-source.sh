@@ -11,3 +11,9 @@ for f in /tmp/passwords.csv /tmp/bookmarks.html; do
 done
 	
 tar cvf /tmp/source.tgz .ssh .gitconfig /tmp/passwords.csv /tmp/bookmarks.html projects/config/scripts
+USB=$(find /media/julien -mindepth 1 -maxdepth 1 -type d)
+if [ ! -z $USB ]; then
+	cp -v /tmp/source.tgz ${USB};
+	cp -v projects/config/scripts/setup-run-usb.sh ${USB}
+	umount $USB
+fi
