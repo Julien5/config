@@ -11,7 +11,7 @@ function surun() {
 	su root $ROOTEXE "$@"
 }
 
-function install-ssh-key() {
+function install-ssh-keys() {
 	while [ ! -d /tmp/secret-ssh-keys/.ssh ]; do
 		echo "copy .ssh direcotory under /tmp/secret-ssh-keys"
 		echo "such that /tmp/secret-ssh-keys/.ssh exists."
@@ -65,6 +65,10 @@ function import-bookmarks() {
 	echo import /tmp/setup-source/tmp/bookmarks.html 
 }
 
+function build-emacs() {
+	cd ~/projects/config/emacs.d/
+}
+
 function base-packages() {
 	if ! hash git; then
 		surun install-packages
@@ -83,8 +87,11 @@ function fonts() {
 function main() {
 	base-packages
 	fonts
-	get-source
+	# get-source
+	install-ssh-keys
 	clone-projects
+	import-bookmarks
+	build-emacs
 }
 
 cd $SCRIPTDIR

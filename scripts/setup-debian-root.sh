@@ -3,6 +3,10 @@
 set -e
 
 function install-packages() {
+	if hash curl; then
+		echo "curl is installed => packages are considered installed"
+		return;
+	fi
 	apt install git curl
 }
 
@@ -16,6 +20,12 @@ function install-bitmap-fonts() {
 	/sbin/dpkg-reconfigure fontconfig-config
 	fc-cache -fv /usr/local/share/fonts/bitmaps/
 	fc-list | grep bitmaps 
+}
+
+function install-tree-sitter() {
+}
+
+function install-emacs() {
 }
 
 function hello() {
