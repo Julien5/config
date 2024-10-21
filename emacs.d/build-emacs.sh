@@ -37,15 +37,8 @@ function build-emacs() {
 	./autogen.sh 
 	# ./configure --prefix=/tmp/emacs-29-4 --with-x=yes --with-x-toolkit=gtk3 --with-pgtk=no --with-tree-sitter
 	echo configure
-	unset CFLAGS
-	unset LDFLAGS
-	unset LD_LIBRARY_PATH
-	export CFLAGS="-L$(realpath ${BUILDDIR}/tree-sitter) -I$(realpath ${BUILDDIR}/tree-sitter)/lib/include"
-	export LDFLAGS="-L$(realpath ${BUILDDIR}/tree-sitter)"
-	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$(realpath ${BUILDDIR}/tree-sitter)"
-	export
-	./configure --build=x86_64-linux-gnu --prefix=/usr/local/emacs-29.4 --program-suffix=-snapshot --with-modules=yes --with-x=yes --with-x-toolkit=gtk3 --with-pgtk=no --with-tree-sitter 
-	# make -j8
+	./configure --build=x86_64-linux-gnu --with-modules=yes --with-x=yes --with-x-toolkit=gtk3 --with-pgtk=no --with-tree-sitter # --prefix=/usr/local/emacs-29.4
+	 make -j8
 	# make install
 	# sudo -E make install
 }
@@ -55,7 +48,7 @@ function main() {
 	# rm -Rf ${BUILDDIR}
 	mkdir -p ${BUILDDIR}
 	cd ${BUILDDIR}
-	build-tree-sitter
+	# build-tree-sitter
 	build-emacs rebuild	
 }
 
