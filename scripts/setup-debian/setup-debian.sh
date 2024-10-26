@@ -89,11 +89,11 @@ function fonts() {
 }
 
 function main() {
-	base-packages
-	fonts
+	base-packages	
 	# get-source
 	install-ssh-keys
 	clone-projects
+	fonts
 	import-bookmarks
 	echo todo build-emacs
 }

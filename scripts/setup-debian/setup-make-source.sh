@@ -10,7 +10,7 @@ for f in /tmp/passwords.csv /tmp/bookmarks.html; do
 	done
 done
 	
-tar cvf /tmp/source.tgz .ssh .gitconfig /tmp/passwords.csv /tmp/bookmarks.html projects/config/scripts/setup-debian
+tar cvf /tmp/source.tgz .ssh .gitconfig /tmp/passwords.csv /tmp/bookmarks.html projects/config/scripts/setup-debian voyages tracks tours
 USB=$(find /media/julien -mindepth 1 -maxdepth 1 -type d)
 if [ ! -z $USB ]; then
 	cp -v /tmp/source.tgz ${USB};
