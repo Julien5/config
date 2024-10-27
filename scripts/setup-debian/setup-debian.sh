@@ -88,6 +88,18 @@ function fonts() {
 	echo fonts are installed
 }
 
+function build-emacs() {
+	D=$(find /usr/local/ -maxdepth 1 -name "emacs*")
+	if [ ! -z $D ]; then
+		echo found $D
+		return
+	fi
+	$HOME/projects/config/emacs.d/build-emacs.sh
+	D=$HOME/.local/share/applications; 
+	mkdir -p ${D}; 
+	cp -v ~/projects/config/emacs.d/emacs.desktop ${D}
+}
+
 function main() {
 	base-packages	
 	# get-source
@@ -95,7 +107,7 @@ function main() {
 	clone-projects
 	fonts
 	import-bookmarks
-	echo todo build-emacs
+	build-emacs
 }
 
 cd $SCRIPTDIR

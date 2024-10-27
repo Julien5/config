@@ -7,7 +7,7 @@ function install-packages() {
 		echo "curl is installed => packages are considered installed"
 		return;
 	fi
-	apt install git curl silversearcher-ag
+	apt install git curl silversearcher-ag autoconf build-essential pkg-config gnutls-bin libtree-sitter-dev libgnutls30-dev
 }
 
 function install-bitmap-fonts() {

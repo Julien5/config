@@ -9,7 +9,7 @@
 ;; menubar/toolbar blocks F12 in xubuntu-emacs
 
 (menu-bar-mode -1)
-(tool-bar-mode -1)
+;;(tool-bar-mode -1)
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
 ;; ask before quitting

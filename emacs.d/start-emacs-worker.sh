@@ -10,7 +10,7 @@ function find-emacs() {
 		return
 	fi
 
-	EXE=/usr/local/emacs-29.4/bin/emacs-29.4-snapshot
+	EXE=/usr/local/emacs-29.4/bin/emacs
 	if [ -f ${EXE} ]; then
 		echo "${EXE}"	
 		return
