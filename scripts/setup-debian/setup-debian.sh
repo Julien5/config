@@ -16,7 +16,7 @@ function install-ssh-keys() {
 		echo ssh directory is done
 		return
 	fi
-	local SRC=/tmp/X/.ssh
+	local SRC=$(find /tmp/X/ -name .ssh)
 	while [ ! -d ${X} ]; do
 		echo "copy .ssh directory under ${SRC}"
 		sleep 1
@@ -26,12 +26,14 @@ function install-ssh-keys() {
 	# https://unix.stackexchange.com/questions/257590/ssh-key-permissions-chmod-settings
 	mkdir ~/.ssh/
 	cp -Rf ${SRC}/* ~/.ssh/
-	chmod 600 ~/.ssh/id_rsa
-	chmod 600 ~/.ssh/id_rsa.pub
+	find ~/.ssh -type f -name "id_*" -print -exec chmod 600 "{}" \;
 	chmod 700 ~/.ssh 
 }
 
 function clone-projects() {
+	eval $(ssh-agent)
+	ssh-add -D
+	ssh-add $HOME/.ssh/github-julien5/id_ed25519
 	mkdir -p ~/projects
 	cd ~/projects/
 	for a in config sandbox private; do
@@ -88,16 +90,12 @@ function fonts() {
 	echo fonts are installed
 }
 
-function build-emacs() {
-	D=$(find /usr/local/ -maxdepth 1 -name "emacs*")
-	if [ ! -z $D ]; then
-		echo found $D
-		return
-	fi
-	$HOME/projects/config/emacs.d/build-emacs.sh
+function install-emacs() {
+	surun install-local-emacs
 	D=$HOME/.local/share/applications; 
 	mkdir -p ${D}; 
-	cp -v ~/projects/config/emacs.d/emacs.desktop ${D}
+	cp -v $HOME/projects/config/emacs.d/emacs.desktop ${D}
+	ln -s $HOME/projects/config/emacs.d ~/.emacs.d
 }
 
 function main() {
@@ -107,7 +105,7 @@ function main() {
 	clone-projects
 	fonts
 	import-bookmarks
-	build-emacs
+	install-emacs
 }
 
 cd $SCRIPTDIR

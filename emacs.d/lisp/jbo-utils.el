@@ -441,6 +441,7 @@ Version 2016-07-18"
 	(setenv "PROJECTSDIR" (jbo-read-env ENV "PROJECTSDIR"))
 	(setenv "THIRDPARTYDIR" (jbo-read-env ENV "THIRDPARTYDIR"))
 	(setenv "PATH" (jbo-read-env ENV "PATH"))
+	(setenv "CMAKE_GENERATOR" (jbo-read-env ENV "CMAKE_GENERATOR"))
 	)
   )
 

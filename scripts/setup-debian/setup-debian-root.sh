@@ -3,11 +3,13 @@
 set -e
 
 function install-packages() {
-	if hash curl; then
+	if hash fc-cache; then
 		echo "curl is installed => packages are considered installed"
 		return;
 	fi
-	apt install git curl silversearcher-ag autoconf build-essential pkg-config gnutls-bin libtree-sitter-dev libgnutls30-dev
+	apt install git curl silversearcher-ag fontconfig
+	# build emacs needs:
+	apt install build-essential autoconf pkg-config gnutls-bin libtree-sitter-dev libgnutls28-dev libncurses-dev texinfo
 }
 
 function install-bitmap-fonts() {
@@ -22,12 +24,13 @@ function install-bitmap-fonts() {
 	fc-list | grep bitmaps 
 }
 
-function install-tree-sitter() {
-	echo todo
-}
-
-function install-emacs() {
-	echo todo
+function install-local-emacs() {
+	D=$(find /usr/local/ -maxdepth 1 -name "emacs*")
+	if [ ! -z $D ]; then
+		echo found $D
+		return
+	fi
+	/home/julien/projects/config/emacs.d/build-emacs.sh
 }
 
 function hello() {

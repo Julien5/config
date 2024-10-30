@@ -5,7 +5,8 @@
  ;; If there is more than one, they won't work right.
  '(cua-mode t)
  '(custom-enabled-themes '(deeper-blue))
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(eglot xclip smartscan projectile popup-switcher markdown-mode magit flycheck expand-region company cmake-mode ag))
  '(tool-bar-mode nil))
 
 (custom-set-faces

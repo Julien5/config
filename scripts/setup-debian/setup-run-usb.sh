@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+set -e
+#set -x
+
 SCRIPTDIR=$(dirname $(realpath $0))
 
 mkdir -p /tmp/X
 tar xvf ${SCRIPTDIR}/source.tgz -C /tmp/X
-/tmp/X/projects/config/scripts/setup-debian/setup-debian.sh
+EXE=$(find /tmp/X/ -name "setup-debian.sh")
+$EXE
