@@ -33,7 +33,11 @@ function install-ssh-keys() {
 function clone-projects() {
 	eval $(ssh-agent)
 	ssh-add -D
-	ssh-add $HOME/.ssh/github-julien5/id_ed25519
+	if [ -f $HOME/.ssh/github-julien5/id_ed25519 ]; then
+		ssh-add $HOME/.ssh/github-julien5/id_ed25519
+	else
+		ssh-add $HOME/.ssh/id_rsa
+	fi
 	mkdir -p ~/projects
 	cd ~/projects/
 	for a in config sandbox private; do

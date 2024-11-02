@@ -52,7 +52,7 @@ function make-source() {
 
 function copy-usb() {
 	USB=$(find /media/julien -mindepth 1 -maxdepth 1 -type d)
-	USB=/media/julien/shares/shared-e
+	#USB=/media/julien/shares/shared-e
 	if [ ! -z $USB ]; then
 		cp -v /tmp/source.tgz ${USB};
 		cp -v ${REPODIR}/scripts/setup-debian/setup-run-usb.sh ${USB}
