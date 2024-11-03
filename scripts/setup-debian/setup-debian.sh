@@ -24,7 +24,7 @@ function install-ssh-keys() {
 	done
 	# best guess
 	# https://unix.stackexchange.com/questions/257590/ssh-key-permissions-chmod-settings
-	mkdir ~/.ssh/
+	mkdir -p ~/.ssh/
 	cp -Rf ${SRC}/* ~/.ssh/
 	find ~/.ssh -type f -name "id_*" -print -exec chmod 600 "{}" \;
 	chmod 700 ~/.ssh 
