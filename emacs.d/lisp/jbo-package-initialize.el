@@ -52,7 +52,6 @@
   (add-to-list 'load-path "~/.emacs.d/lisp/copilot/")
   (load "jbo-copilot")
   
-  (add-hook 'prog-mode-hook 'copilot-mode)
   ;; https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
   (add-to-list 'copilot-major-mode-alist '("cpp" . "cpp"))
   (add-to-list 'copilot-major-mode-alist '("python" . "python"))
