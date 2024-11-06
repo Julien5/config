@@ -9,7 +9,7 @@ function install-packages() {
 	fi
 	apt install git curl silversearcher-ag fontconfig
 	# build emacs needs:
-	apt install build-essential autoconf pkg-config gnutls-bin libtree-sitter-dev libgnutls28-dev libncurses-dev texinfo
+	apt install build-essential autoconf pkg-config gnutls-bin libtree-sitter-dev libgnutls28-dev libncurses-dev texinfo libjson-c-dev
 }
 
 function install-bitmap-fonts() {

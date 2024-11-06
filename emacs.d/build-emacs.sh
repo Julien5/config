@@ -37,8 +37,13 @@ function build-emacs() {
 	./autogen.sh 
 	# ./configure --prefix=/tmp/emacs-29-4 --with-x=yes --with-x-toolkit=gtk3 --with-pgtk=no --with-tree-sitter
 	echo configure
-	./configure --build=x86_64-linux-gnu --with-modules=yes --without-x --with-pgtk=no --with-tree-sitter --prefix=/usr/local/emacs-29.4  # --prefix=/usr/local/emacs-29.4
+	./configure --build=x86_64-linux-gnu \
+				--with-modules=yes \
+				--without-x --with-pgtk=no \
+				--with-tree-sitter --with-json \
+				--prefix=/usr/local/emacs-29.4  # --prefix=/usr/local/emacs-29.4
 	make -j8
+	return;
 	make install
 	# sudo -E make install
 }
