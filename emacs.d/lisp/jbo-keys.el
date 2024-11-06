@@ -12,16 +12,13 @@
 
 (global-set-key (kbd "C-l") 'goto-line)
 (global-set-key (kbd "C-k") 'jbo/find-file)
-(global-set-key (kbd "C-o") 'ido-find-file)
 (global-set-key (kbd "C-w") 'jbo/kill-this-buffer)
 
 (global-set-key (kbd "C-f") 'isearch-forward-symbol-at-point)
 (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
 
 (global-set-key (kbd "C-e") 'jbo/projectile-ag)
-
 (global-set-key (kbd "C-u") 'jbo/expand-region)
-
 (global-set-key (kbd "C-q") 'jbo/buffer-menu)
 
 (global-set-key (kbd "<f5>") 'jbo/make)
