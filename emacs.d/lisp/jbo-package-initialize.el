@@ -53,7 +53,12 @@
   ;;(use-package quelpa-use-package)
   (require 'quelpa-use-package)
 
-
+  ;; install copilot from github instead of melpa
+  (quelpa '(copilot :fetcher github
+					:repo "copilot-emacs/copilot.el"
+					:branch "main"
+					:files ("*.el")))
+  
   ;; commented out since it procudes an error when run at init
   ;;(use-package copilot
   ;;	:quelpa (copilot :fetcher github
