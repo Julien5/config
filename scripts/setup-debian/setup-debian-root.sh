@@ -3,8 +3,8 @@
 set -e
 
 function install-packages() {
-	if hash fc-cache; then
-		echo "curl is installed => packages are considered installed"
+	if hash git; then
+		echo "git is installed => packages are considered installed"
 		return;
 	fi
 	apt install git curl silversearcher-ag fontconfig
@@ -31,6 +31,7 @@ function install-local-emacs() {
 		return
 	fi
 	/home/julien/projects/config/emacs.d/build-emacs.sh
+	apt install xclip
 }
 
 function hello() {
