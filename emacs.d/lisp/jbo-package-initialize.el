@@ -20,6 +20,7 @@
   (bootstrap-use-package)
   )
 
+;; DELME
 (defun load-chatgpt ()
   (if (file-exists-p "~/.ssh/github-work/openai.el")
       (progn
@@ -42,6 +43,7 @@
 
 (defun load-copilot ()
   ;; copilot is not available on elpa => install manually
+  ;; see https://github.com/copilot-emacs/copilot.el
   (package-install 'f) 
   (package-install 'editorconfig)
   (add-to-list 'load-path "~/.emacs.d/lisp/copilot/copilot.el-main")
@@ -51,7 +53,7 @@
   (add-to-list 'copilot-major-mode-alist '("cpp" . "cpp"))
   (add-to-list 'copilot-major-mode-alist '("python" . "python"))
   (add-to-list 'copilot-major-mode-alist '("shellscript" . "shellscript"))
-  ;; no lisp ?
+  ;; (no lisp language support in copilot?)
 
   ;; https://github.com/chep/copilot-chat.el
   (package-install 'copilot-chat)
