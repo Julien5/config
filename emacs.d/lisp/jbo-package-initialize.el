@@ -5,7 +5,7 @@
                '("melpa" . "https://melpa.org/packages/"))
 
   ;; cause warning
-  ;; (package-initialize)
+  (package-initialize)
 
   ;; Bootstrap `use-package'
   (unless (package-installed-p 'use-package)
@@ -76,7 +76,7 @@
   ;; https://github.com/chep/copilot-chat.el
   (package-install 'copilot-chat)
   (require 'copilot-chat)
-  (setq copilot-chat-frontend "markdown")
+  (setq copilot-chat-frontend 'markdown)
   )
 
 (defun jbo-package-initialize ()
@@ -121,3 +121,4 @@ There are two things you can do about this warning:
 
 (jbo-package-initialize)
 (load-chatgpt)
+(load-copilot)

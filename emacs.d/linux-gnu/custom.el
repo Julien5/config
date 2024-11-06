@@ -6,7 +6,7 @@
  '(cua-mode t)
  '(custom-enabled-themes '(deeper-blue))
  '(package-selected-packages
-   '(copilot-chat copilot f editorconfig quelpa-use-package quelpa eglot xclip smartscan projectile popup-switcher markdown-mode magit flycheck expand-region company cmake-mode ag))
+   '(dash use-package copilot-chat copilot f editorconfig quelpa-use-package quelpa eglot xclip smartscan projectile popup-switcher markdown-mode magit flycheck expand-region company cmake-mode ag))
  '(tool-bar-mode nil))
 
 (custom-set-faces
