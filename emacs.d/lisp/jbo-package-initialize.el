@@ -41,30 +41,10 @@
   )
 
 (defun load-copilot ()
-  (require 'use-package)
-
-  (package-install 'quelpa)
-  (use-package quelpa :ensure)
-  ;;(use-package quelpa)
-  (require 'quelpa)
-  
-  (package-install 'quelpa-use-package)
-  (use-package quelpa-use-package :demand :config (quelpa-use-package-activate-advice))
-  ;;(use-package quelpa-use-package)
-  (require 'quelpa-use-package)
-
-  ;; install copilot from github instead of melpa
-  (quelpa '(copilot :fetcher github
-					:repo "copilot-emacs/copilot.el"
-					:branch "main"
-					:files ("*.el")))
-  
-  ;; commented out since it procudes an error when run at init
-  ;;(use-package copilot
-  ;;	:quelpa (copilot :fetcher github
-  ;;					 :repo "copilot-emacs/copilot.el"
-  ;;					 :branch "main"
-  ;;					 :files ("*.el")))
+  ;; copilot is not available on elpa => install manually
+  (package-install 'f) 
+  (package-install 'editorconfig)
+  (add-to-list 'load-path "~/.emacs.d/lisp/copilot/copilot.el-main")
   (require 'copilot)
   (add-hook 'prog-mode-hook 'copilot-mode)
   ;; https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
