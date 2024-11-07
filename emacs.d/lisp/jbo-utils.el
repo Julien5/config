@@ -556,3 +556,15 @@ Version 2016-07-18"
   ;;(ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list))))
   )
 
+(defun jbo/copy-file-name ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+	(if filename
+		(progn
+		  (kill-new filename)
+		  (message "Copied buffer file name '%s' to the clipboard." filename))
+	  (message "No file associated to this buffer.")
+	  )
+	)
+  )
