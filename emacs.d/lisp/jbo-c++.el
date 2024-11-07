@@ -30,7 +30,6 @@
 	  )
 	))
 
-
 (defun jbo-make-c++-mode ()
   (let ((make-command (jbo-make-command)))
 	(message "make-command:%s" make-command)

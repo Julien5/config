@@ -43,7 +43,11 @@
 		(message "running xref-find-references with eglot")
 		(xref-find-references nil)
 		)
-	(jbo/ag-at-point))
+	(progn
+	  (message "running ag-at-point (no eglot)")
+	  (jbo/ag-at-point)
+	  )
+	)
   )
 
 (defun jbo/find-definitions ()

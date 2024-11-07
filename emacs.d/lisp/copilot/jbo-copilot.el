@@ -15,11 +15,20 @@
   (add-to-list 'copilot-indentation-alist '(closure-mode 2))
   (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2)))
 
-
+(defun print-mode-status (mode)
+  "Prints 'enabled' if the given MODE is enabled."
+  (interactive "SMode: ")
+  (if (symbol-value mode)
+      (message "%s is enabled" mode)
+    (message "%s is disabled" mode)
+	)
+  )
 
 (defun jbo/switch-copilot ()
   (interactive)
-  (copilot-mode))
+  (copilot-mode 'toggle)
+  (print-mode-status 'copilot-mode)
+  )
 
 (defun jbo/copilot-chat ()
   (interactive)
