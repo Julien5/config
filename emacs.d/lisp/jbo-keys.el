@@ -62,6 +62,7 @@
 
 (global-set-key (kbd "C-S-p") 'jbo/kill-invisible-buffers)
 (global-set-key (kbd "C-p") 'jbo/clean-buffers)
+(global-set-key (kbd "C-o") 'jbo/list-buffers)
 
 (defun jbo-prev-window ()  (interactive)  (other-window -1))
 (defun jbo-next-window ()  (interactive)  (other-window +1))

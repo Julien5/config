@@ -159,6 +159,12 @@ If buffer-or-name is nil return current buffer's mode."
   (jbo-update-recentf-list)
   )
 
+(defun jbo/list-buffers ()
+  "list buffers"
+  (interactive)
+  (ibuffer)
+  )
+
 (defun jbo/make ()
   (interactive)
   (save-selected-window
