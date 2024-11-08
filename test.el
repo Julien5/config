@@ -7,7 +7,6 @@
   )
 
 (defun return-on-ok (err)
-  (message "err: %s" err)
   (let ((errstring (format "%s" err)))
 	(message "err: %s" errstring)
 	(if (string= errstring "(error ok)")
@@ -21,15 +20,12 @@
 
 (defun loc-maind ()
   (message "main")
-  (condition-case ok
-	  (condition-case err
-		  (progn
-			(loc-throw)
-			(signal ' "ok")
-			)
-		(user-error (return-on-ok err))
+  (condition-case err
+	  (progn
+		(loc-throw)
+		(error "ok")
 		)
-	(error (message "ok"))
+	(error (return-on-ok err))
 	)
   (message "continue")
   )
