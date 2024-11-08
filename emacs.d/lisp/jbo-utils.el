@@ -8,7 +8,6 @@
   (locate-dominating-file default-directory ".git")
   )
 
-
 (defun jbo-lsp-root ()
   (setq jbo--lsp-compile-file (locate-dominating-file default-directory "compile_flags.txt"))
   (if jbo--lsp-compile-file
@@ -162,6 +161,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun jbo/list-buffers ()
   "list buffers"
   (interactive)
+  (message "buffer list")
   (ibuffer)
   )
 

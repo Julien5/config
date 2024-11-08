@@ -1,5 +1,4 @@
 (use-package copilot
-  :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
               ("TAB" . 'copilot-accept-completion)
@@ -9,6 +8,7 @@
               ("C-p" . 'copilot-previous-completion))
 
   :config
+  (copilot-mode nil) ;; disable copilot by default
   (add-to-list 'copilot-indentation-alist '(prog-mode 2))
   (add-to-list 'copilot-indentation-alist '(org-mode 2))
   (add-to-list 'copilot-indentation-alist '(text-mode 2))

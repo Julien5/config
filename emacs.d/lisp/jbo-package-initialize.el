@@ -47,8 +47,6 @@
   (package-install 'f) 
   (package-install 'editorconfig)
   (add-to-list 'load-path "~/.emacs.d/lisp/copilot/copilot.el-main")
-  (require 'copilot)
-
   (add-to-list 'load-path "~/.emacs.d/lisp/copilot/")
   (load "jbo-copilot")
   
