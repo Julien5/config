@@ -7,7 +7,7 @@
   (message "worker-start")
 
   (if (not ok)
-	  (signal 'stop-signal "stop-1")
+	  (signal 'continue-signal "loc-1")
 	)
   
   (message "worker-end")
@@ -15,22 +15,18 @@
 
 (defun loc-worker-2 ()
   (message "worker-start")
-  (signal 'stop-signal "stop-2")
+  (signal 'continue-signal "loc-2")
   (message "worker-end")
   )
 
 (defun loc-main ()
-  (let ((code "OK"))
-
-	(condition-case _ (progn (loc-worker-1 1)
-							 (signal 'continue-signal "ok")
-							 )
-	  (stop-signal (message "stop found:%s" _))
-	  (continue-signal (message "continue found:%s" _))
-	  )
-	(message "code=%s" code)
-	
+  (condition-case _ (progn (loc-worker-1 1)
+						   (signal 'stop-signal "stop")
+						   )
+	(stop-signal (message "stop found:%s" _)(error "done"))
+	(continue-signal (message "continue found:%s" _))
 	)
+  (message "continuing loc-main")
   )
 
 (loc-main)
