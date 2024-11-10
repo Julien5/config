@@ -42,24 +42,28 @@
   )
 
 (defun load-copilot ()
-  ;; copilot is not available on elpa => install manually
-  ;; see https://github.com/copilot-emacs/copilot.el
-  (package-install 'f) 
-  (package-install 'editorconfig)
-  (add-to-list 'load-path "~/.emacs.d/lisp/copilot/copilot.el-main")
-  (add-to-list 'load-path "~/.emacs.d/lisp/copilot/")
-  (load "jbo-copilot")
-  
-  ;; https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
-  (add-to-list 'copilot-major-mode-alist '("cpp" . "cpp"))
-  (add-to-list 'copilot-major-mode-alist '("python" . "python"))
-  (add-to-list 'copilot-major-mode-alist '("shellscript" . "shellscript"))
-  ;; (no lisp language support in copilot?)
+  (if (file-exists-p "~/.ssh/github-work/jbo-copilot.el")
+      ;; copilot is not available on elpa => install manually
+      ;; see https://github.com/copilot-emacs/copilot.el
+      (progn
+		(package-install 'f) 
+		(package-install 'editorconfig)
+		(add-to-list 'load-path "~/.emacs.d/lisp/copilot/copilot.el-main")
+		(add-to-list 'load-path "~/.emacs.d/lisp/copilot/")
+		(load "jbo-copilot")
+		
+		;; https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
+		(add-to-list 'copilot-major-mode-alist '("cpp" . "cpp"))
+		(add-to-list 'copilot-major-mode-alist '("python" . "python"))
+		(add-to-list 'copilot-major-mode-alist '("shellscript" . "shellscript"))
+		;; (no lisp language support in copilot?)
 
-  ;; https://github.com/chep/copilot-chat.el
-  (package-install 'copilot-chat)
-  (require 'copilot-chat)
-  (setq copilot-chat-frontend 'markdown)
+		;; https://github.com/chep/copilot-chat.el
+		(package-install 'copilot-chat)
+		(require 'copilot-chat)
+		(setq copilot-chat-frontend 'markdown)
+		)
+	)
   )
 
 (defun jbo-package-initialize ()
