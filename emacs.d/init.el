@@ -28,7 +28,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (load "jbo-package-initialize")
-(jbo-package-initialize)
 
 (load "arduino-mode") 
 (load "csharp-mode")

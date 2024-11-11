@@ -8,7 +8,6 @@
   (locate-dominating-file default-directory ".git")
   )
 
-
 (defun jbo-lsp-root ()
   (setq jbo--lsp-compile-file (locate-dominating-file default-directory "compile_flags.txt"))
   (if jbo--lsp-compile-file
@@ -124,6 +123,7 @@ If buffer-or-name is nil return current buffer's mode."
 			  (not (string-prefix-p "*clangd" name))
 			  (not (string-equal "*Messages*" name))
 			  (not (string-equal "*shell*" name))
+			  (not (string-prefix-p "*Copilot-chat" name))
 			  )
 		 )
 	)
@@ -158,30 +158,54 @@ If buffer-or-name is nil return current buffer's mode."
   (jbo-update-recentf-list)
   )
 
+(defun jbo/list-buffers ()
+  "list buffers"
+  (interactive)
+  (message "buffer list")
+  (ibuffer)
+  )
+
+(defmacro safe-wrap (fn &rest clean-up)
+  `(unwind-protect
+       (let (retval)
+         (condition-case ex
+             (setq retval (progn ,fn))
+           ('error
+            (message (format "Caught exception: [%s]" ex))
+            (setq retval (cons 'exception (list ex)))))
+         retval)
+     ,@clean-up))
+
+(defun jbo-make-markdown-mode ()
+  ;; TBC
+  (message "markdown-make")
+  (condition-case err
+	  (markdown-follow-link-at-point)
+	(error "could not follow link"))
+  (message "continuation")
+  )
+
 (defun jbo/make ()
   (interactive)
+  ;; if the current major mode is markdown
   (save-selected-window
 	(save-current-buffer
 	  ;; if jbo-make-buffer is defined and not nil
 	  (if (and (boundp 'jbo-make-buffer) jbo-make-buffer)
-		  (progn (message "switch to: %S" jbo-make-buffer)
+		  (progn (message "switch to: %S" (buffer-file-name jbo-make-buffer))
 				 (switch-to-buffer jbo-make-buffer)
 				 )
 		)
 
-	  (message "=> current buffer: %s" (current-buffer))
-	  (message "=> major mode:%s" major-mode)
-	  ;; (message "=> buffer mode:%s" (buffer-mode (current-buffer)))
-	  (message "=> current directory:%s" default-directory)
 	  (cond
 	   ((eq major-mode 'c++-mode)	(jbo-make-c++-mode))
 	   ((eq major-mode 'sh-mode)  (jbo-make-shell-mode))
-	   ((eq major-mode 'emacs-lisp-mode)  (eval-buffer))
+	   ((eq major-mode 'emacs-lisp-mode)  (jbo-run-elisp))
 	   ((eq major-mode 'python-mode)  (jbo-make-python-mode))
+	   ((eq major-mode 'markdown-mode)  (jbo-make-markdown-mode))
 	   )
 	  ))
-	
-  (message "current: %S" (current-buffer))
+  
   ;; we need to do reload the current buffer, i dont understand really why:
   (switch-to-buffer (current-buffer))
   )
@@ -189,7 +213,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun jbo/make-shift ()
   (interactive)
   (setq jbo-make-buffer (window-buffer (minibuffer-selected-window)))
-  (message "jbo-make-buffer:%s" jbo-make-buffer)
+  (message "jbo-make-buffer:%s (undo with M-f5)" (buffer-file-name jbo-make-buffer))
   )
 
 (defun jbo/make-meta ()
@@ -198,7 +222,6 @@ If buffer-or-name is nil return current buffer's mode."
   (message "jbo-make-buffer:%s" jbo-make-buffer)
   )
 
-
 (defun jbo/execute-buffer ()
   (interactive)
   (let ((filename (buffer-file-name (window-buffer (minibuffer-selected-window)))))
@@ -206,20 +229,17 @@ If buffer-or-name is nil return current buffer's mode."
 	)
   )
 
-(defun jbo/run-compile-command ()
-  (interactive)
-  (compile compile-command)
-  )
-
 (defun jbo/reload-init ()
+  (interactive)
   (load-file (expand-file-name "~/.emacs.d/init.el"))
   )
 
 (defun jbo/mark-line ()
   (let ((inhibit-field-text-motion t))
+	(beginning-of-line)
+	(push-mark nil t t)
     (end-of-line)
-    (push-mark nil t t)
-    (beginning-of-line))
+	)
   )
 
 (defun jbo-fix-expand-region-for-line-p ()
@@ -514,6 +534,11 @@ Version 2016-07-18"
   (kill-buffer (current-buffer))
   )
 
+(defun jbo/close-this-window ()
+  (interactive)
+  (delete-window)
+  )
+
 (defun jbo/open-all-recent-files ()
   "Open all recent files."
   (interactive)
@@ -559,3 +584,15 @@ Version 2016-07-18"
   ;;(ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list))))
   )
 
+(defun jbo/copy-file-name ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+	(if filename
+		(progn
+		  (kill-new filename)
+		  (message "Copied buffer file name '%s' to the clipboard." filename))
+	  (message "No file associated to this buffer.")
+	  )
+	)
+  )

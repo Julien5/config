@@ -5,7 +5,7 @@
                '("melpa" . "https://melpa.org/packages/"))
 
   ;; cause warning
-  ;; (package-initialize)
+  (package-initialize)
 
   ;; Bootstrap `use-package'
   (unless (package-installed-p 'use-package)
@@ -20,24 +20,50 @@
   (bootstrap-use-package)
   )
 
+;; DELME
 (defun load-chatgpt ()
   (if (file-exists-p "~/.ssh/github-work/openai.el")
       (progn
-	(load "~/.ssh/github-work/openai.el")
-	(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/chatgpt-master")
-	(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/openai-master")
-	(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/emacs-request-master")
-	(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/tblui.el-master")
-	(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/tablist-master")
-	(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/magit-popup-master")
-	(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/lv")
-	(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/ht.el-master")
-	(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/spinner.el-master")
-	(require 'chatgpt)
-	(load "openai-chat")
-	(load "chatgpt")
-	)
+		(load "~/.ssh/github-work/openai.el")
+		(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/chatgpt-master")
+		(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/openai-master")
+		(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/emacs-request-master")
+		(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/tblui.el-master")
+		(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/tablist-master")
+		(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/magit-popup-master")
+		(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/lv")
+		(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/ht.el-master")
+		(add-to-list 'load-path "~/.emacs.d/lisp/chatgpt/spinner.el-master")
+		(require 'chatgpt)
+		(load "openai-chat")
+		(load "chatgpt")
+		)
     )
+  )
+
+(defun load-copilot ()
+  (if (file-exists-p "~/.ssh/github-work/jbo-copilot.el")
+      ;; copilot is not available on elpa => install manually
+      ;; see https://github.com/copilot-emacs/copilot.el
+      (progn
+		(package-install 'f) 
+		(package-install 'editorconfig)
+		(add-to-list 'load-path "~/.emacs.d/lisp/copilot/copilot.el-main")
+		(add-to-list 'load-path "~/.emacs.d/lisp/copilot/")
+		(load "jbo-copilot")
+		
+		;; https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
+		(add-to-list 'copilot-major-mode-alist '("cpp" . "cpp"))
+		(add-to-list 'copilot-major-mode-alist '("python" . "python"))
+		(add-to-list 'copilot-major-mode-alist '("shellscript" . "shellscript"))
+		;; (no lisp language support in copilot?)
+
+		;; https://github.com/chep/copilot-chat.el
+		(package-install 'copilot-chat)
+		(require 'copilot-chat)
+		(setq copilot-chat-frontend 'markdown)
+		)
+	)
   )
 
 (defun jbo-package-initialize ()
@@ -50,8 +76,8 @@
   ;; You may delete these explanatory comments.
 
   (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-		      (not (gnutls-available-p))))
-	 (proto (if no-ssl "http" "https")))
+					  (not (gnutls-available-p))))
+		 (proto (if no-ssl "http" "https")))
     (when no-ssl (warn "\
 Your version of Emacs does not support SSL connections,
 which is unsafe because it allows man-in-the-middle attacks.
@@ -82,3 +108,4 @@ There are two things you can do about this warning:
 
 (jbo-package-initialize)
 (load-chatgpt)
+(load-copilot)

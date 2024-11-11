@@ -10,7 +10,9 @@
                     "--completion-style=detailed"
                     "--pch-storage=memory"
                     "--header-insertion=never"
-                    "--header-insertion-decorators=0")))
+                    "--header-insertion-decorators=0"
+					"--compile-commands-dir=/tmp/builds/build"
+					)))
   )
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
@@ -27,7 +29,6 @@
 	  "make -C /tmp/build_pc"
 	  )
 	))
-
 
 (defun jbo-make-c++-mode ()
   (let ((make-command (jbo-make-command)))

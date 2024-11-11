@@ -12,22 +12,22 @@
 
 (global-set-key (kbd "C-l") 'goto-line)
 (global-set-key (kbd "C-k") 'jbo/find-file)
-(global-set-key (kbd "C-o") 'ido-find-file)
 (global-set-key (kbd "C-w") 'jbo/kill-this-buffer)
+(global-set-key (kbd "M-w") 'jbo/close-this-window)
 
 (global-set-key (kbd "C-f") 'isearch-forward-symbol-at-point)
 (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
 
 (global-set-key (kbd "C-e") 'jbo/projectile-ag)
-
 (global-set-key (kbd "C-u") 'jbo/expand-region)
-
 (global-set-key (kbd "C-q") 'jbo/buffer-menu)
 
 (global-set-key (kbd "<f5>") 'jbo/make)
 (global-set-key (kbd "<S-f5>") 'jbo/make-shift)
 (global-set-key (kbd "<M-f5>") 'jbo/make-meta) ;; alt-F5
 
+(global-set-key (kbd "<f1> <f1>") 'jbo/switch-copilot)
+(global-set-key (kbd "<f1> s") 'jbo/copilot-chat)
 
 (global-set-key (kbd "<f6>") 'next-error)
 (global-set-key (kbd "<S-f6>") 'previous-error)
@@ -62,6 +62,7 @@
 
 (global-set-key (kbd "C-S-p") 'jbo/kill-invisible-buffers)
 (global-set-key (kbd "C-p") 'jbo/clean-buffers)
+(global-set-key (kbd "C-o") 'jbo/list-buffers)
 
 (defun jbo-prev-window ()  (interactive)  (other-window -1))
 (defun jbo-next-window ()  (interactive)  (other-window +1))
