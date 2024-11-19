@@ -165,26 +165,6 @@ If buffer-or-name is nil return current buffer's mode."
   (ibuffer)
   )
 
-(defmacro safe-wrap (fn &rest clean-up)
-  `(unwind-protect
-       (let (retval)
-         (condition-case ex
-             (setq retval (progn ,fn))
-           ('error
-            (message (format "Caught exception: [%s]" ex))
-            (setq retval (cons 'exception (list ex)))))
-         retval)
-     ,@clean-up))
-
-(defun jbo-make-markdown-mode ()
-  ;; TBC
-  (message "markdown-make")
-  (condition-case err
-	  (markdown-follow-link-at-point)
-	(error "could not follow link"))
-  (message "continuation")
-  )
-
 (defun jbo/make ()
   (interactive)
   ;; if the current major mode is markdown

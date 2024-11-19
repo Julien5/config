@@ -25,15 +25,32 @@
 	)
   )
 
+(defun jbo-markdown-follow-link-at-point ()
+  (condition-case _
+	  (markdown-follow-link-at-point)
+  	(user-error (throw 'failed "markdown-follow-link-at-point failed"))
+	)
+  )
+
+(defun jbo--find-definition-at-point-markdown ()
+  (message "jbo--find-definition-at-point-markdown")
+  (catch 'failed (jbo-markdown-follow-link-at-point))
+  (message "jbo--find-definition-at-point-markdown done")
+  )
+
 (defun jbo--find-definition-at-point ()
   (let* ((word (symbol-at-point)))
 	(message "find-definitions for %s" word)
-	(if word
-		(let ((w (format "%s" word)))
-		  (xref-find-definitions w)
-		  )
-	  (message "no symbol at cursor")
-	  ))
+	(if (not word)
+		(error "no symbol at cursor")
+	  )
+	(let ((w (format "%s" word)))
+	  (cond
+	   ((eq major-mode 'markdown-mode)  (jbo--find-definition-at-point-markdown))
+	   (t  (xref-find-definitions w))
+	   )
+	  )
+	)
   )
 
 (defun jbo/find-references ()

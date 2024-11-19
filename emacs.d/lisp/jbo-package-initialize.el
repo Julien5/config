@@ -42,7 +42,7 @@
   )
 
 (defun load-copilot ()
-  (if (file-exists-p "~/.ssh/github-work/jbo-copilot.el")
+  (if (file-directory-p "~/.ssh/github-work/")
       ;; copilot is not available on elpa => install manually
       ;; see https://github.com/copilot-emacs/copilot.el
       (progn

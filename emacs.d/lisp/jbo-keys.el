@@ -42,6 +42,10 @@
 ; c-c c-v for copy paste
 (cua-mode t)
 (setq cua-keep-region-after-copy t)
+;; free M-v from cua mode...
+(define-key cua--cua-keys-keymap (kbd "M-v") nil)
+;; .. so that we can use it for as an alternative to M-x (better with atreus-42 keyboard)
+(global-set-key (kbd "M-v") 'execute-extended-command)
 
 ;; (global-set-key (kbd "<C-backspace>") 'jbo/backward-delete-word)
 (global-set-key (kbd "<M-backspace>") 'jbo/backward-delete-word)
