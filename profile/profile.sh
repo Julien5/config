@@ -104,6 +104,11 @@ if ! shopt -oq posix; then
 fi
 
 #export PS1='\[\e[0;36m\]\T \[\e[0;34m\]\u@\H \[\e[1;37m\]\w\[\e[0;37m\] \$ '
-export PS1='\e[1;37m\]\W\[\e[0;37m\] \$ '
+#export PS1='\[\e[0;36m\]\u@\H \[\e[1;37m\]\W\[\e[0;37m\] \$ '
+export PS1='[\u@\H] \[\e[1;37m\]\W \$\[\e[0;37m\] '
+
+if [ ! -z ${INSIDE_EMACS} ]; then
+	export PS1='\e[1;36m\]\W \$\[\e[0;36m\] '
+fi
 
 . ${JULIEN5CONFIGPATH}/profile/profile.dev.sh
