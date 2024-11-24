@@ -111,4 +111,5 @@ if [ ! -z ${INSIDE_EMACS} ]; then
 	export PS1='\e[1;36m\]\W \$\[\e[0;36m\] '
 fi
 
+. ${JULIEN5CONFIGPATH}/profile/profile.julien.sh
 . ${JULIEN5CONFIGPATH}/profile/profile.dev.sh
