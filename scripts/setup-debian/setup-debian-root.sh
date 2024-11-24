@@ -13,8 +13,8 @@ function install-packages() {
 	# build emacs needs:
 	apt install build-essential autoconf pkg-config gnutls-bin libtree-sitter-dev libgnutls28-dev libncurses-dev texinfo libjansson4 libjansson-dev
 
-	# cmake is good
-	apt install cmake
+	# cmake, screen good
+	apt install cmake screen clangd
 }
 
 function install-bitmap-fonts() {
