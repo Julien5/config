@@ -16,5 +16,6 @@ function dev.esp8266() {
 
 function dev.avr() {
 	initpath
-	export PATH=$PATH:/opt/avr/avr-gcc-14.1.0-x64-linux/bin/:/opt/avr/avrdude_Linux_64bit/bin/
+	echo sourcing $JULIEN5CONFIGPATH/profile/profile.avr.sh
+	. $JULIEN5CONFIGPATH/profile/profile.avr.sh
 }
