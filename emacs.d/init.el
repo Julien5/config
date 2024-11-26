@@ -81,8 +81,7 @@
 
 ;; (add-hook 'after-save-hook 'jbo/update-tags-for-file)
 (add-hook 'before-save-hook 'jbo/clang-format-buffer)
-(fido-mode nil)
-(ido-mode 't)
+(fido-mode 't)
 (xclip-mode 't)
 (projectile-mode t)
 (jbo/open-all-recent-files)
