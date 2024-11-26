@@ -211,7 +211,8 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun jbo/reload-init ()
   (interactive)
-  (load-file (expand-file-name "~/.emacs.d/init.el"))
+  ;;(load-file (expand-file-name "~/.emacs.d/init.el"))
+  (restart-emacs)
   )
 
 (defun jbo/mark-line ()
