@@ -2,6 +2,8 @@
 
 set -e
 
+SCRIPTDIR="$(dirname "$(realpath "$0")")"
+
 function install-packages() {
 	if hash git; then
 		echo "git is installed => packages are considered installed"
@@ -10,6 +12,9 @@ function install-packages() {
 	apt install git curl silversearcher-ag fontconfig
 	# build emacs needs:
 	apt install build-essential autoconf pkg-config gnutls-bin libtree-sitter-dev libgnutls28-dev libncurses-dev texinfo libjansson4 libjansson-dev
+
+	# cmake, screen good
+	apt install cmake screen clangd
 }
 
 function install-bitmap-fonts() {
@@ -32,10 +37,16 @@ function install-local-emacs() {
 	fi
 	/home/julien/projects/config/emacs.d/build-emacs.sh
 	apt install xclip
+	ln -s /usr/local/emacs-29.4/bin/emacsclient /usr/local/bin/
+	ln -s /usr/local/emacs-29.4/bin/emacs /usr/local/bin/
 }
 
 function hello() {
 	echo hello
+}
+
+function allow-tty-user() {
+	cp ${SCRIPTDIR}/50-tty-usb.rules /etc/udev/rules.d/
 }
 
 function main() {
