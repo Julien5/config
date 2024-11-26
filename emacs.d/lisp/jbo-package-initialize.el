@@ -104,6 +104,7 @@ There are two things you can do about this warning:
   (package-install 'cmake-mode)
   (package-install 'xclip)
   (package-install 'popup-switcher)
+  (package-install 'git-timemachine) ;; did no work until i installed git-timemachine manually
   )
 
 (jbo-package-initialize)
