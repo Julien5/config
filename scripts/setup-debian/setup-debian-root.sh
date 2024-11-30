@@ -15,6 +15,10 @@ function install-packages() {
 
 	# cmake, screen good
 	apt install cmake screen clangd
+
+	# pip3 in not really necessary
+	# apt install python3-pip
+	apt install python3-serial
 }
 
 function install-bitmap-fonts() {
