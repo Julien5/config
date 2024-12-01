@@ -61,8 +61,6 @@
 
 (global-set-key (kbd "M-t") 'jbo/next-code-buffer)
 (global-set-key (kbd "M-r") 'jbo/prev-code-buffer)
-;;(global-set-key (kbd "<C-S-tab>") 'ido-switch-buffer)
-(global-set-key  (jbo-c-s-tab) 'ido-switch-buffer)
 
 (global-set-key (kbd "C-S-p") 'jbo/kill-invisible-buffers)
 (global-set-key (kbd "C-p") 'jbo/clean-buffers)
