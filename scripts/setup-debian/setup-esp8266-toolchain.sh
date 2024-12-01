@@ -16,17 +16,43 @@ function download-sdk() {
 	wget $URL -O ~/Downloads/$SDKTARBALL
 }
 
+function init() {
+	owner=$(stat --format '%U' /opt)
+	if [ "${owner}" != "julien" ]; then
+		echo please run as root:
+		echo chown -R julien:julien /opt/
+	fi
+	DEST=/opt/esp8266-toolchain
+	rm -Rf ${DEST}
+	mkdir -p ${DEST}
+}
+
 function unpack-sdk() {
-	local DEST=/opt/esp8266-toolchain
 	if [ ! -d ${DEST}/xtensa-lx106-elf ]; then
-		rm -Rf ${DEST}
-		mkdir -p ${DEST}
 		tar -C ${DEST}/ -xvf $HOME/Downloads/$SDKTARBALL
 	fi
 	if [ ! -d ${DEST}/xtensa-lx106-elf ]; then
 		echo could not find ${DEST}/xtensa-lx106-elf
 		return 1
 	fi
+}
+
+function surun() {
+	ROOTEXE=$SCRIPTDIR/setup-debian-root.sh
+	su root $ROOTEXE "$@"
+}
+
+function fix-dependencies() {
+	surun install-esp8266-packages
+	# debian version of pyparsing is 3.0.4, which is >= 2.4 and does not fit.
+	if [ ! -f ~/Downloads/pyparsing-2.3.1.tar.gz ]; then
+		wget https://files.pythonhosted.org/packages/b9/b8/6b32b3e84014148dcd60dd05795e35c2e7f4b72f918616c61fdce83d27fc/pyparsing-2.3.1.tar.gz -O ~/Downloads/pyparsing-2.3.1.tar.gz
+	fi
+	cd /tmp/
+	tar xvf ~/Downloads/pyparsing-2.3.1.tar.gz
+	cd pyparsing-2.3.1/
+	python3 setup.py build
+	python3 setup.py install --prefix=${DEST}/python-dependencies
 }
 
 RTOSTARBALL=v3.4.tar.gz
@@ -40,24 +66,14 @@ function download-rtos() {
 }
 
 function unpack-rtos() {
-	local DEST=/opt/esp8266-toolchain/
-	if [ ! -d ${DEST}/ESP8266_RTOS_SDK ]; then
-		rm -Rf ${DEST}
-		mkdir -p ${DEST}
+	if [ ! -d ${DEST}/ESP8266_RTOS_SDK* ]; then
 		tar -C ${DEST}/ -xvf $HOME/Downloads/$RTOSTARBALL
 	fi
-	if [ ! -d ${DEST}/ESP8266_RTOS_SDK ]; then
+	if [ ! -d ${DEST}/ESP8266_RTOS_SDK* ]; then
 		echo coul not find ${DEST}/ESP8266_RTOS_SDK
 		return 1
 	fi
-}
-
-function init() {
-	owner=$(stat --format '%U' /opt)
-	if [ "${owner}" != "julien" ]; then
-		echo please run as root:
-		echo chown -R julien:julien /opt/
-	fi
+	ln -s ${DEST}/ESP8266_RTOS_SDK* ${DEST}/ESP8266_RTOS_SDK
 }
 
 function main() {
@@ -67,6 +83,8 @@ function main() {
 
 	download-rtos
 	unpack-rtos
+
+	fix-dependencies
 }
 
 main "$@"
