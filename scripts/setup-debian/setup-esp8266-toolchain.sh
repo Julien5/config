@@ -45,15 +45,8 @@ function surun() {
 
 function fix-dependencies() {
 	surun install-esp8266-packages
-	# debian version of pyparsing is 3.0.4, which is >= 2.4 and does not fit.
-	if [ ! -f ~/Downloads/pyparsing-2.3.1.tar.gz ]; then
-		wget https://files.pythonhosted.org/packages/b9/b8/6b32b3e84014148dcd60dd05795e35c2e7f4b72f918616c61fdce83d27fc/pyparsing-2.3.1.tar.gz -O ~/Downloads/pyparsing-2.3.1.tar.gz
-	fi
-	cd /tmp/
-	tar xvf ~/Downloads/pyparsing-2.3.1.tar.gz
-	cd pyparsing-2.3.1/
-	python3 setup.py build
-	python3 setup.py install --prefix=${DEST}/python-dependencies
+	pip install --target ${DEST}/python-dependencies cryptography==3.4.8
+	pip install --target ${DEST}/python-dependencies pyparsing==2.3.1
 }
 
 RTOSTARBALL=ESP8266_RTOS_SDK.tar.gz

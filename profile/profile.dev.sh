@@ -12,7 +12,7 @@ function dev.esp8266() {
     export PATH=$PATH:$DIR/xtensa-lx106-elf/bin
     export IDF_PATH=$DIR/ESP8266_RTOS_SDK
     export SDK_PATH=$DIR/ESP8266_RTOS_SDK
-	export PYTHONPATH=$(find ${DIR}/python-dependencies/ -name "pyparsing-*.egg" -type d)
+	export PYTHONPATH=/opt/esp8266-toolchain/python-dependencies/
 }
 
 function dev.avr() {

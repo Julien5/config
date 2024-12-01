@@ -15,10 +15,6 @@ function install-packages() {
 
 	# cmake, screen good
 	apt install cmake screen clangd
-
-	# pip3 in not really necessary
-	# apt install python3-pip
-	apt install python3-serial
 }
 
 function install-bitmap-fonts() {
@@ -54,6 +50,9 @@ function allow-tty-user() {
 }
 
 function install-esp8266-packages() {
+	# pip3 is necessary for esp8266 dependencies (see setup-esp8266-toolchain.sh )
+	apt install python3-pip
+	apt install python3-serial
 	apt install python3-click python3-future python3-cryptography python3-pyelftools
 	if ! which python; then
 		ln -s /usr/bin/python3 /usr/local/bin/python
