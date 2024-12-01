@@ -6,6 +6,7 @@ set -x
 # see
 # https://docs.espressif.com/projects/esp8266-rtos-sdk/en/latest/get-started/linux-setup.html
 
+SCRIPTDIR="$(dirname $(realpath "$0"))"
 SDKTARBALL=xtensa-lx106-elf-gcc8_4_0-esp-2020r3-linux-amd64.tar.gz
 
 function download-sdk() {
@@ -55,14 +56,21 @@ function fix-dependencies() {
 	python3 setup.py install --prefix=${DEST}/python-dependencies
 }
 
-RTOSTARBALL=v3.4.tar.gz
-
+RTOSTARBALL=ESP8266_RTOS_SDK.tar.gz
 function download-rtos() {
-	URL=https://github.com/espressif/ESP8266_RTOS_SDK/archive/refs/tags/$RTOSTARBALL
 	if [ -f ~/Downloads/$RTOSTARBALL ]; then
 		return
 	fi
-	wget $URL -O ~/Downloads/$RTOSTARBALL
+	rm -Rf /tmp/dl
+	mkdir -p /tmp/dl
+	pushd /tmp/dl
+	URL=https://github.com/espressif/ESP8266_RTOS_SDK.git
+	git clone --recursive ${URL} --depth 1
+	mv ESP8266_RTOS_SDK/.git dotgit
+	tar zcf ESP8266_RTOS_SDK.tar.gz ESP8266_RTOS_SDK/
+	mv ESP8266_RTOS_SDK.tar.gz ~/Downloads
+	popd
+	rm -Rf /tmp/dl
 }
 
 function unpack-rtos() {
@@ -73,7 +81,9 @@ function unpack-rtos() {
 		echo coul not find ${DEST}/ESP8266_RTOS_SDK
 		return 1
 	fi
-	ln -s ${DEST}/ESP8266_RTOS_SDK* ${DEST}/ESP8266_RTOS_SDK
+	if [ ! -f ${DEST}/ESP8266_RTOS_SDK ]; then
+		ln -s ${DEST}/ESP8266_RTOS_SDK* ${DEST}/ESP8266_RTOS_SDK
+	fi
 }
 
 function main() {

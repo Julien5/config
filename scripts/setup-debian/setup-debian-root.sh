@@ -53,6 +53,13 @@ function allow-tty-user() {
 	cp ${SCRIPTDIR}/50-tty-usb.rules /etc/udev/rules.d/
 }
 
+function install-esp8266-packages() {
+	apt install python3-click python3-future python3-cryptography python3-pyelftools
+	if ! which python; then
+		ln -s /usr/bin/python3 /usr/local/bin/python
+	fi
+}
+
 function main() {
 	local F=$1
 	shift
