@@ -15,6 +15,9 @@ function install-packages() {
 
 	# cmake, screen good
 	apt install cmake screen clangd
+
+	# for my gps/garmin
+	apt install libxml2-utils python3-gpxpy python3-geopy python3-dateutil
 }
 
 function install-bitmap-fonts() {
