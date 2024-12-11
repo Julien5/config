@@ -1,13 +1,7 @@
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-;; (package-initialize)
-
 (setq inhibit-startup-screen t)
-(switch-to-buffer "*Messages*") 
-;; menubar/toolbar blocks F12 in xubuntu-emacs
+(switch-to-buffer "*Messages*")
 
+;; menubar/toolbar blocks F12 in xubuntu-emacs
 (menu-bar-mode -1)
 ;;(tool-bar-mode -1)
 (setq visible-bell t)
@@ -20,11 +14,9 @@
 (setq completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
+
 ;; remove warning "package cl is deprecated"
 (setq byte-compile-warnings '(cl-functions))
-
-;; Tell emacs where is your personal elisp lib dir
-;;{{{ Set up package and use-package
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (load "jbo-package-initialize")
@@ -75,7 +67,6 @@
 (setq large-file-warning-threshold 100000000)
 
 (jbo-fix-project-roots)
-
 ;; projectile-globally-ignored-directories (append '("*__pycache__/")
 ;; projectile-globally-ignored-directories)
 
