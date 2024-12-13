@@ -577,3 +577,9 @@ Version 2016-07-18"
 	  )
 	)
   )
+
+(defun jbo/indent-whole-buffer ()
+  "Indent the entire buffer."
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max))))
