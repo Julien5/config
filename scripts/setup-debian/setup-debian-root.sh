@@ -18,6 +18,15 @@ function install-packages() {
 
 	# for my gps/garmin
 	apt install libxml2-utils python3-gpxpy python3-geopy python3-dateutil
+
+	# for comptes
+	apt install locales-all
+
+	# python lsp
+	apt install pyflakes3 python3-pylsp
+
+	# pycodestyle generate too many errors and warnings => comment out
+	# apt install pycodestyle
 }
 
 function install-bitmap-fonts() {
