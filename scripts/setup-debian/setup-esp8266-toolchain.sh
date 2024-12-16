@@ -79,6 +79,21 @@ function unpack-rtos() {
 	fi
 }
 
+function install-arduino-core-esp8266() {
+	URL=https://github.com/esp8266/Arduino/archive/refs/tags/3.1.2.tar.gz
+	TARBALL=/opt/esp8266-toolchain/Arduino-3.1.2.tar.gz
+	if [ -f $HOME/Downloads/Arduino-3.1.2.tar.gz ]; then
+		cp $HOME/Downloads/Arduino-3.1.2.tar.gz ${TARBALL}
+	fi
+	if [ ! -f ${TARBALL} ]; then
+		wget ${URL} -O ${TARBALL}
+	fi
+	cd /opt/esp8266-toolchain/
+	if [ ! -d Arduino-3.* ]; then
+		tar xf ${TARBALL}
+	fi
+}
+
 function main() {
 	init
 	download-sdk
@@ -88,6 +103,8 @@ function main() {
 	unpack-rtos
 
 	fix-dependencies
+
+	install-arduino-core-esp8266
 }
 
 main "$@"
