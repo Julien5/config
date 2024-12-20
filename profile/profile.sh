@@ -3,7 +3,8 @@
 function initpath() {
 	export PATH="/usr/local/bin:/usr/bin"
 	export PATH="$HOME/projects/config/scripts:$PATH"
-	export PATH="$HOME/.local/bin:$PATH"
+	export PYTHONPATH=/opt/python3/self:/opt/python3/pip
+	#export PATH="$HOME/.local/bin:$PATH"
 }
 
 if [[ -z "$JULIEN5CONFIGPATH" ]]; then
