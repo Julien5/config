@@ -32,6 +32,9 @@ function install-packages() {
 	apt install python3-matplotlib python3-pyproj python3-requests
 	apt install gnuplot-nox
 	apt install texlive-latex-base
+
+	# android file transfert
+	apt install go-mtpfs
 }
 
 function install-bitmap-fonts() {
