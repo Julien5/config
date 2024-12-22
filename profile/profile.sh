@@ -112,5 +112,15 @@ if [ ! -z ${INSIDE_EMACS} ]; then
 	export PS1='\e[1;36m\]\W \$\[\e[0;36m\] '
 fi
 
+# meld hangs on exit
+# probably due to dbus/preferences
+# https://wiki.gnome.org/Apps(2f)Meld(2f)GConfWorkarounds.html
+if [ ! -f ~/.config/meld/meldrc.ini ]; then
+	mkdir -p ~/.config/meld
+	touch ~/.config/meld/use-rc-prefs
+	touch ~/.config/meld/meldrc.ini
+fi
+
+
 . ${JULIEN5CONFIGPATH}/profile/profile.julien.sh
 . ${JULIEN5CONFIGPATH}/profile/profile.dev.sh

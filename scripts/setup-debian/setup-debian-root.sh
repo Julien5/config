@@ -35,6 +35,9 @@ function install-packages() {
 
 	# android file transfert
 	apt install go-mtpfs
+
+	# usefull
+	apt install strace
 }
 
 function install-bitmap-fonts() {
