@@ -10,3 +10,14 @@
 (load "jbo-cmake")
 (load "jbo-elisp")
 
+
+(custom-set-faces '(ediff-current-diff-A ((t (:foreground "White" :background "Blue")))))
+(custom-set-faces '(ediff-current-diff-B ((t (:foreground "White" :background "Blue")))))
+(custom-set-faces '(ediff-odd-diff-A ((t (:foreground "White" :background "Darkslategray")))))
+(custom-set-faces '(ediff-odd-diff-B ((t (:foreground "White" :background "Darkslategray")))))
+(custom-set-faces '(ediff-even-diff-A ((t (:foreground "White" :background "Darkslategray")))))
+(custom-set-faces '(ediff-even-diff-B ((t (:foreground "White" :background "Darkslategray")))))
+(custom-set-faces '(ediff-fine-diff-A ((t (:foreground "White" :background "Dimgray")))))
+(custom-set-faces '(ediff-fine-diff-B ((t (:foreground "White" :background "Dimgray")))))
+
+
