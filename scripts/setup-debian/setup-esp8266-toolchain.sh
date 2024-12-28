@@ -76,7 +76,7 @@ function unpack-rtos() {
 	fi
 	if [ ! -f ${DEST}/ESP8266_RTOS_SDK ]; then
 		ln -s ${DEST}/ESP8266_RTOS_SDK* ${DEST}/ESP8266_RTOS_SDK
-	fi
+ 	fi
 }
 
 function install-arduino-core-esp8266() {
@@ -92,6 +92,22 @@ function install-arduino-core-esp8266() {
 	if [ ! -d Arduino-3.* ]; then
 		tar xf ${TARBALL}
 	fi
+
+	DEPDIR=/opt/esp8266-toolchain/arduino-core-dependencies/
+	mkdir -p $DEPDIR
+	cd $DEPDIR
+	URL=https://github.com/greiman/SdFat/archive/refs/tags/2.2.3.tar.gz
+	TARBALL=$DEPDIR/sdfat-3.1.2.tar.gz
+	if [ -f $HOME/Downloads/sdfat-3.1.2.tar.gz ]; then
+		cp $HOME/Downloads/sdfat-3.1.2.tar.gz ${TARBALL}
+	fi
+	if [ ! -f ${TARBALL} ]; then
+		wget ${URL} -O ${TARBALL}
+	fi
+	tar xvf ${TARBALL}
+	DIR=$(tar --list --file ${TARBALL} | head -1 | tr -d "/")
+	ln -s $DIR SdFat
+	cp -v ${SCRIPTDIR}/SdFatConfig.h SdFat/src/
 }
 
 function main() {
