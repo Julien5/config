@@ -4,11 +4,10 @@
                  . ("clangd"
                     "-j=2"
                     "--log=error"
-                    "--background-index"
                     "--clang-tidy"
                     "--cross-file-rename"
                     "--completion-style=detailed"
-                    "--pch-storage=memory"
+                    "--pch-storage=disk"
                     "--header-insertion=never"
                     "--header-insertion-decorators=0"
 					"--compile-commands-dir=/tmp/builds/build"
@@ -36,4 +35,3 @@
 	(compile make-command)
 	)
   )
-
