@@ -70,7 +70,8 @@
 
 (setq large-file-warning-threshold 100000000)
 
-(jbo-fix-project-roots)
+;;(load "jbo-project")
+;;(jbo-fix-project-roots)
 ;; projectile-globally-ignored-directories (append '("*__pycache__/")
 ;; projectile-globally-ignored-directories)
 
