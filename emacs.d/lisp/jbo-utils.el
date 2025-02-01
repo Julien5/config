@@ -529,12 +529,34 @@ Version 2016-07-18"
 	)
   )
 
+;; buffer menu
+
+;; ibuffer-projectile
+;; https://github.com/purcell/ibuffer-projectile?tab=readme-ov-file
+
+(add-hook 'ibuffer-hook
+    (lambda ()
+      (ibuffer-projectile-set-filter-groups)
+      (unless (eq ibuffer-sorting-mode 'alphabetic)
+        (ibuffer-do-sort-by-alphabetic))))
+
+(setq ibuffer-formats
+      '((mark modified read-only " "
+              (name 18 18 :left :elide)
+              " "
+              (size 9 -1 :right)
+              " "
+              (mode 16 16 :left :elide)
+              " "
+              project-relative-file)))
+
 (defun jbo/buffer-menu ()
   (interactive)
-  (psw-switch-buffer 'nil)
+  ;;(projectile-ibuffer t)
+  ;;(psw-switch-buffer 'nil)
 				  
-  ;;(ibuffer)
-  ;;(ibuffer-do-sort-by-recency)
+  (ibuffer)
+  (ibuffer-do-sort-by-recency)
   ;;(ibuffer-invert-sorting)
 
   ;;(ibuffer-do-sort-by-alphabetic)
@@ -542,6 +564,8 @@ Version 2016-07-18"
 
   ;;(ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list))))
   )
+
+;;
 
 (defun jbo/copy-file-name ()
   "Copy the current buffer file name to the clipboard."
