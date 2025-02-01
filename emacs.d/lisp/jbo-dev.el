@@ -9,6 +9,7 @@
 (load "jbo-shell")
 (load "jbo-cmake")
 (load "jbo-elisp")
+(load "jbo-rust")
 
 
 (custom-set-faces '(ediff-current-diff-A ((t (:foreground "White" :background "Blue")))))
