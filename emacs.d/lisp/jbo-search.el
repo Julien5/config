@@ -17,8 +17,9 @@
 	(message "find-references %s in %s" word jbo-dir)
 	(if word
 		(let ((w word))
-		  (require 'ag)
-		  (ag/search w jbo-dir :file-regex ".cpp$|.c$|.h$|.sh$|.py$|.pro$|.el|Jenkinsfile$|[^.]*$")
+		  (require 'projectile)
+		  (projectile-ag w)
+		  ;;(ag/search w jbo-dir :file-regex ".cpp$|.c$|.h$|.sh$|.py$|.pro$|.el|Jenkinsfile$|[^.]*$")
 		  )
 	  (message "no symbol at cursor")
 	  )
