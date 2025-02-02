@@ -104,6 +104,9 @@ There are two things you can do about this warning:
   (package-install 'cmake-mode)
   (package-install 'xclip)
   (package-install 'popup-switcher)
+  (package-install 'rust-mode)
+  (package-install 'ibuffer-projectile)
+  (package-install 'ibuffer-vc)
   ;;(package-install 'git-timemachine) ;; did no work until i installed git-timemachine manually
   )
 
