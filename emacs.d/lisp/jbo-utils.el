@@ -535,28 +535,31 @@ Version 2016-07-18"
 ;; https://github.com/purcell/ibuffer-projectile?tab=readme-ov-file
 
 (add-hook 'ibuffer-hook
-    (lambda ()
-      (ibuffer-projectile-set-filter-groups)
-      (unless (eq ibuffer-sorting-mode 'alphabetic)
-        (ibuffer-do-sort-by-alphabetic))))
+		  (lambda ()
+			(ibuffer-projectile-set-filter-groups)
+			(unless (eq ibuffer-sorting-mode 'alphabetic)
+			  (ibuffer-do-sort-by-alphabetic))))
 
 (setq ibuffer-formats
-      '((mark modified read-only " "
-              (name 18 18 :left :elide)
-              " "
-              (size 9 -1 :right)
+      '(
+		(mark modified read-only " "
+              (name 40 40 :left :elide))
+		(mark modified read-only " "
+              (name 40 40 :left :elide)
               " "
               (mode 16 16 :left :elide)
               " "
-              project-relative-file)))
+              project-relative-file)
+		)
+	  )
 
 (defun jbo/buffer-menu ()
   (interactive)
   ;;(projectile-ibuffer t)
-  ;;(psw-switch-buffer 'nil)
-				  
-  (ibuffer)
-  (ibuffer-do-sort-by-recency)
+  (psw-switch-buffer 'nil)
+  
+  ;;(ibuffer)
+  ;;(ibuffer-do-sort-by-recency)
   ;;(ibuffer-invert-sorting)
 
   ;;(ibuffer-do-sort-by-alphabetic)
