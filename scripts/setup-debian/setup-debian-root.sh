@@ -27,6 +27,17 @@ function install-packages() {
 
 	# pycodestyle generate too many errors and warnings => comment out
 	# apt install pycodestyle
+
+	# for gps code
+	apt install python3-matplotlib python3-pyproj python3-requests
+	apt install gnuplot-nox
+	apt install texlive-latex-base
+
+	# android file transfert
+	apt install go-mtpfs
+
+	# usefull
+	apt install strace
 }
 
 function install-bitmap-fonts() {

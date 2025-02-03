@@ -6,7 +6,7 @@
  '(cua-mode t)
  '(custom-enabled-themes '(deeper-blue))
  '(package-selected-packages
-   '(git-timemachine dash use-package copilot-chat copilot f editorconfig quelpa-use-package quelpa eglot xclip smartscan projectile popup-switcher markdown-mode magit flycheck expand-region company cmake-mode ag))
+   '(popup-switcher ibuffer-vc ibuffer-projectile rust-mode git-timemachine dash use-package copilot-chat copilot f editorconfig quelpa-use-package quelpa eglot xclip smartscan projectile markdown-mode magit flycheck expand-region company cmake-mode ag))
  '(tool-bar-mode nil))
 
 (custom-set-faces
@@ -14,4 +14,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "TamzenForPowerline" :foundry "UNKN" :slant normal :weight medium :height 119 :width normal)))))
+ '(default ((t (:family "TamzenForPowerline" :foundry "UNKN" :slant normal :weight medium :height 119 :width normal))))
+ '(ediff-current-diff-A ((t (:foreground "White" :background "Blue"))))
+ '(ediff-current-diff-B ((t (:foreground "White" :background "Blue"))))
+ '(ediff-even-diff-A ((t (:foreground "White" :background "Darkslategray"))))
+ '(ediff-even-diff-B ((t (:foreground "White" :background "Darkslategray"))))
+ '(ediff-fine-diff-A ((t (:foreground "White" :background "Dimgray"))))
+ '(ediff-fine-diff-B ((t (:foreground "White" :background "Dimgray"))))
+ '(ediff-odd-diff-A ((t (:foreground "White" :background "Darkslategray"))))
+ '(ediff-odd-diff-B ((t (:foreground "White" :background "Darkslategray")))))

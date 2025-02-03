@@ -19,6 +19,15 @@ function build-tree-sitter() {
 	popd
 }
 
+function build-tree-sitter-languages() {
+	git clone https://github.com/casouri/tree-sitter-module.git
+	pushd tree-sitter-module/
+	JOBS=8 ./batch.sh
+	echo now run as root:
+	echo "cp -v $(realpath .)/dist/* /usr/local/lib/"
+	popd
+}
+
 function build-emacs() {
 	rebuild=$1
 	shift

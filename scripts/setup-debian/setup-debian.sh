@@ -100,6 +100,8 @@ function install-emacs() {
 	mkdir -p ${D}; 
 	cp -v $HOME/projects/config/emacs.d/emacs.desktop ${D}
 	ln -s $HOME/projects/config/emacs.d ~/.emacs.d
+	# disable many pycodestyle warnings.
+	ln -s $HOME/projects/config/emacs.d/pycodestyle ~/.config/pycodestyle
 }
 
 function main() {

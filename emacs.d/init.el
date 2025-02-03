@@ -15,6 +15,10 @@
 (setq read-file-name-completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
 
+(require 'treesit)
+(treesit-available-p)  ;; t
+(setq treesit-extra-load-path '("/usr/local/lib"))
+
 ;; remove warning "package cl is deprecated"
 (setq byte-compile-warnings '(cl-functions))
 
@@ -66,7 +70,8 @@
 
 (setq large-file-warning-threshold 100000000)
 
-(jbo-fix-project-roots)
+;;(load "jbo-project")
+;;(jbo-fix-project-roots)
 ;; projectile-globally-ignored-directories (append '("*__pycache__/")
 ;; projectile-globally-ignored-directories)
 

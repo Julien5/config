@@ -234,34 +234,6 @@ If buffer-or-name is nil return current buffer's mode."
   (add-hook 'special-mode-hook 'jbo-fix-expand-region-for-line-p)
   )
 
-(defun jbo/project-try (dir)
-  (cons 'jbo dir)
-  )
-
-;; (head jbo) :  https://www.gnu.org/software/emacs/manual/html_node/elisp/Generic-Functions.html
-(cl-defmethod project-root ((project (head jbo)))
-  "Return root directory of current PROJECT."
-  (message "project-root:  %s" project)
-  ;; returns the cdr from (cons 'jbo dir)
-  ;; => dir.
-  (cdr project)
-  )
-
-(cl-defmethod project-external-roots ((project (head jbo)))
-  ;; jbo-projectiles + current dir
-  (message "project-external-roots: %s" project)
-  (setq P (list (project-root project)))
-  (setq R (jbo-projectiles))
-  (set-difference R P :test #'equal)
-  )
-
-;; must be called in init.el
-;; why? i dont remember
-(defun jbo-fix-project-roots ()
-  (setq project-find-functions nil)
-  (add-hook 'project-find-functions 'jbo/project-try)
-  )
-
 (defun jbo-clang-format-buffer-p ()
   (require 'clang-format)
   (setq clang-format-style-option nil)
@@ -446,6 +418,12 @@ Version 2016-07-18"
 	)
   )
 
+(defun jbo-rust-desktop ()
+  (setenv "PATH" "/opt/rust/cargo/bin:/home/julien/projects/config/scripts:/usr/local/bin:/usr/bin")
+  (setenv "CARGO_HOME" "/opt/rust/cargo")
+  (setenv "RUSTUP_HOME" "/opt/rust/rustup")
+  )
+
 (defun has-lsp ()
   (if (jbo-lsp-root)
 	  t
@@ -551,10 +529,35 @@ Version 2016-07-18"
 	)
   )
 
+;; buffer menu
+
+;; ibuffer-projectile
+;; https://github.com/purcell/ibuffer-projectile?tab=readme-ov-file
+
+(add-hook 'ibuffer-hook
+		  (lambda ()
+			(ibuffer-projectile-set-filter-groups)
+			(unless (eq ibuffer-sorting-mode 'alphabetic)
+			  (ibuffer-do-sort-by-alphabetic))))
+
+(setq ibuffer-formats
+      '(
+		(mark modified read-only " "
+              (name 40 40 :left :elide))
+		(mark modified read-only " "
+              (name 40 40 :left :elide)
+              " "
+              (mode 16 16 :left :elide)
+              " "
+              project-relative-file)
+		)
+	  )
+
 (defun jbo/buffer-menu ()
   (interactive)
+  ;;(projectile-ibuffer t)
   (psw-switch-buffer 'nil)
-				  
+  
   ;;(ibuffer)
   ;;(ibuffer-do-sort-by-recency)
   ;;(ibuffer-invert-sorting)
@@ -564,6 +567,8 @@ Version 2016-07-18"
 
   ;;(ibuffer-jump-to-buffer (buffer-name (cadr (buffer-list))))
   )
+
+;;
 
 (defun jbo/copy-file-name ()
   "Copy the current buffer file name to the clipboard."

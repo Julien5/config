@@ -3,7 +3,8 @@
 function initpath() {
 	export PATH="/usr/local/bin:/usr/bin"
 	export PATH="$HOME/projects/config/scripts:$PATH"
-	export PATH="$HOME/.local/bin:$PATH"
+	export PYTHONPATH=/opt/python3/self:/opt/python3/pip
+	#export PATH="$HOME/.local/bin:$PATH"
 }
 
 if [[ -z "$JULIEN5CONFIGPATH" ]]; then
@@ -110,6 +111,16 @@ export PS1='[\u@\H] \[\e[1;37m\]\W \$\[\e[0;37m\] '
 if [ ! -z ${INSIDE_EMACS} ]; then
 	export PS1='\e[1;36m\]\W \$\[\e[0;36m\] '
 fi
+
+# meld hangs on exit
+# probably due to dbus/preferences
+# https://wiki.gnome.org/Apps(2f)Meld(2f)GConfWorkarounds.html
+if [ ! -f ~/.config/meld/meldrc.ini ]; then
+	mkdir -p ~/.config/meld
+	touch ~/.config/meld/use-rc-prefs
+	touch ~/.config/meld/meldrc.ini
+fi
+
 
 . ${JULIEN5CONFIGPATH}/profile/profile.julien.sh
 . ${JULIEN5CONFIGPATH}/profile/profile.dev.sh
