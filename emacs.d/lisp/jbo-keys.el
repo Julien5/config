@@ -20,7 +20,8 @@
 
 (global-set-key (kbd "C-e") 'jbo/projectile-ag)
 (global-set-key (kbd "C-u") 'jbo/expand-region)
-(global-set-key (kbd "C-q") 'jbo/buffer-menu)
+(global-set-key (kbd "C-a") 'jbo/buffer-menu)
+(global-set-key (kbd "C-q") 'jbo/buffer-popup)
 
 (global-set-key (kbd "<f5>") 'jbo/make)
 (global-set-key (kbd "<S-f5>") 'jbo/make-shift)

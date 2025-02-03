@@ -516,10 +516,10 @@ Version 2016-07-18"
   (setq recentf-list '())
   (dolist (buf (buffer-list))
     (if (buffer-file-name buf)
-	  (progn
-		(message "add: %s" (buffer-file-name buf))
-		(add-to-list 'recentf-list (buffer-file-name buf))
-		)
+		(progn
+		  (message "add: %s" (buffer-file-name buf))
+		  (add-to-list 'recentf-list (buffer-file-name buf))
+		  )
 	  (message "ignore: %s" (buffer-name buf))
 	  )
 	)
@@ -542,18 +542,29 @@ Version 2016-07-18"
 
 (setq ibuffer-formats
       '(
-		(mark modified read-only " "
-              (name 40 40 :left :elide))
+		(mark (modified 4 4 :left)
+			  " "
+			  (read-only 4 4 :left)
+			  " "
+			  (mode 16 16 :left :elide)
+			  " "
+              (name 40 40 :left :elide)
+              " "
+              project-relative-file)
 		(mark modified read-only " "
               (name 40 40 :left :elide)
               " "
               (mode 16 16 :left :elide)
-              " "
-              project-relative-file)
+			  )
 		)
 	  )
 
 (defun jbo/buffer-menu ()
+  (interactive)
+  (ibuffer)
+  )
+
+(defun jbo/buffer-popup ()
   (interactive)
   ;;(projectile-ibuffer t)
   (psw-switch-buffer 'nil)
