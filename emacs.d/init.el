@@ -12,6 +12,7 @@
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 (setq completion-ignore-case t)
+(setq company-dabbrev-downcase nil)
 (setq read-file-name-completion-ignore-case t)
 (setq read-buffer-completion-ignore-case t)
 
