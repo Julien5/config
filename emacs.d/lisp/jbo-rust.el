@@ -1,4 +1,5 @@
 (with-eval-after-load 'eglot
+  (jbo-dev-rust)
   (add-to-list 'eglot-server-programs
 			   '((rust-mode rust-ts-mode)  .
 				 ("/opt/rust/analyzer/bin/rust-analyzer" ))
@@ -14,11 +15,9 @@
 
 (defun jbo-dev-rust ()
   ;; TODO: run dev.rust script and fetch the variables
-  ;; CARGO_HOME="/opt/rust/cargo"
   (setenv "CARGO_HOME" "/opt/rust/cargo")
-  ;; RUSTUP_HOME="/opt/rust/rustup"
   (setenv "RUSTUP_HOME" "/opt/rust/rustup")
-  ;; PATH="/opt/rust/cargo/bin:/home/julien/projects/config/scripts:/usr/local/bin:/usr/bin"
+  (setenv "CARGO_TARGET_DIR" (concat (getenv "HOME") "/delme/rust-targets"))
   (setenv "PATH"
 		  (concat
 		   "/opt/rust/cargo/bin" ":"
@@ -27,5 +26,3 @@
 		   "/usr/bin"
 		   ))
   )
-
-(jbo-dev-rust)
