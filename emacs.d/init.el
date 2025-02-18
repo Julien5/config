@@ -36,6 +36,16 @@
 (load "jbo-colors-linux")
 (load "jbo-keys")
 
+(let ((file (expand-file-name "setup/profile/profile.sh" (getenv "HOME"))))
+  (if (file-exists-p file)
+	  (progn
+		(load "jbo-medica")
+		(message "Welcome to the office.")
+		)
+    (message "Welcome at home.")
+	))
+
+
 (jbo/fix-python-indentation)
 
 (require 'cc-mode)
