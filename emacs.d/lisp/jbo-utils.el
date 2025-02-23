@@ -183,6 +183,7 @@ If buffer-or-name is nil return current buffer's mode."
 	   ((eq major-mode 'emacs-lisp-mode)  (jbo-run-elisp))
 	   ((eq major-mode 'python-mode)  (jbo-make-python-mode))
 	   ((eq major-mode 'markdown-mode)  (jbo-make-markdown-mode))
+	   ((eq major-mode 'rust-mode)  (jbo-make-rust-mode))
 	   )
 	  ))
   
