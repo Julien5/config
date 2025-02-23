@@ -603,3 +603,11 @@ Version 2016-07-18"
   (interactive)
   (save-excursion
     (indent-region (point-min) (point-max))))
+
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (ansi-color-apply-on-region compilation-filter-start (point))
+  )
+(defun jbo/fix-colors-in-compilation-buffer ()
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+  )

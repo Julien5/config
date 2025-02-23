@@ -37,6 +37,7 @@
 (load "jbo-keys")
 
 (jbo/fix-python-indentation)
+(jbo/fix-colors-in-compilation-buffer)
 
 (require 'cc-mode)
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
