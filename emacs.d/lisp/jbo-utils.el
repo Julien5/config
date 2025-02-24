@@ -28,21 +28,24 @@
   (projectile-find-file)
   )
 
+(defun disable-y-or-n-p (orig-fun &rest args)
+  (cl-letf (((symbol-function 'y-or-n-p) (lambda (prompt) t)))
+    (apply orig-fun args)))
+
+(advice-add 'ediff-quit :around #'disable-y-or-n-p)
+
 (defun jbo/diff ()
   (interactive)
-  (setq jbo-diff "git-or-svn-unfixed")
-  (if (locate-dominating-file buffer-file-name ".git")
-	  (setq jbo-diff "git difftool")
-	(if (locate-dominating-file buffer-file-name ".svn")
-		(setq jbo-diff "psvn diff")))
-  (let* ((file (expand-file-name (buffer-file-name (current-buffer)))))
-	(if (file-exists-p file)
-		(progn (setq cmd (format "%s %s &" jbo-diff file))
-			   (message "exe:%s" cmd)
-			   (call-process-shell-command cmd nil 0)
-			   )
-	  (message "file not found:%s" file))
-	))
+  (custom-set-variables
+   '(ediff-window-setup-function 'ediff-setup-windows-plain)
+   '(ediff-diff-options "-w")
+   '(ediff-split-window-function 'split-window-horizontally))
+  (let ((filename buffer-file-name))
+	(message "filename:%s" filename)
+	(magit-ediff-show-unstaged filename)
+	(ediff-next-difference)
+	)
+  )
 
 
 (defun jbo/restore-window-configuration ()
@@ -183,6 +186,7 @@ If buffer-or-name is nil return current buffer's mode."
 	   ((eq major-mode 'emacs-lisp-mode)  (jbo-run-elisp))
 	   ((eq major-mode 'python-mode)  (jbo-make-python-mode))
 	   ((eq major-mode 'markdown-mode)  (jbo-make-markdown-mode))
+	   ((eq major-mode 'rust-mode)  (jbo-make-rust-mode))
 	   )
 	  ))
   
@@ -542,3 +546,11 @@ Version 2016-07-18"
   (interactive)
   (save-excursion
     (indent-region (point-min) (point-max))))
+
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (ansi-color-apply-on-region compilation-filter-start (point))
+  )
+(defun jbo/fix-colors-in-compilation-buffer ()
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+  )
