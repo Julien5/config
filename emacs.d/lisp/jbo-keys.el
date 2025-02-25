@@ -76,6 +76,8 @@
 (global-set-key (kbd "C-b") 'jbo/split-window-below)
 (global-set-key (kbd "C-t") 'jbo/split-window-right)
 (global-set-key (kbd "C-r") 'jbo/fix-and-zoom-window)
+;; for shell mode:
+(define-key comint-mode-map (kbd "C-r") 'comint-history-isearch-backward)
 
 (global-set-key (kbd "<S-f12>") 'jbo/save-window-configuration)
 (global-set-key (kbd "<f12>") 'jbo/restore-window-configuration)
