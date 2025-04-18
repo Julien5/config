@@ -87,8 +87,6 @@
 ;; projectile-globally-ignored-directories (append '("*__pycache__/")
 ;; projectile-globally-ignored-directories)
 
-;; (add-hook 'after-save-hook 'jbo/update-tags-for-file)
-(add-hook 'before-save-hook 'jbo/clang-format-buffer)
 (fido-mode 't)
 (fido-vertical-mode)
 (xclip-mode 't)

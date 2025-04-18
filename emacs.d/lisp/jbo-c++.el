@@ -15,6 +15,7 @@
   )
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'before-save-hook 'jbo/clang-format-buffer)
 
 ;; example to overwrite the logic:
 ;; (setq jbo-compilation-command "make")
