@@ -30,10 +30,22 @@ function dev.pc() {
 	ln -s /tmp/builds/PC /tmp/builds/build
 }
 
-function dev.rust.desktop() {
+function dev.rust() {
 	initpath
 	local F=$JULIEN5CONFIGPATH/profile/profile.rust-desktop.sh
 	echo sourcing ${F} 
 	. ${F}
 	
+}
+
+function dev.only-flutter() {
+	initpath
+	export PATH=${PATH}:/opt/flutter/flutter/bin
+	export CHROME_EXECUTABLE=/opt/flutter/chrome/opt/google/chrome/google-chrome
+}
+
+function dev.flutter-rust() {
+	dev.rust
+	export PATH=${PATH}:/opt/flutter/flutter/bin
+	export CHROME_EXECUTABLE=/opt/flutter/chrome/opt/google/chrome/google-chrome
 }
