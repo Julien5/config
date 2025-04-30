@@ -66,6 +66,11 @@
 	)
   )
 
+(defun load-typst ()
+  (add-to-list 'load-path "~/.emacs.d/lisp/typst/typst-ts-mode")
+  (load "typst-ts-mode")
+  )
+
 (defun jbo-package-initialize ()
   (setq elpa-dirname (expand-file-name "~/.emacs.d/elpa/"))
   (jbo-setup-package-0);
@@ -113,3 +118,4 @@ There are two things you can do about this warning:
 (jbo-package-initialize)
 (load-chatgpt)
 (load-copilot)
+(load-typst)
