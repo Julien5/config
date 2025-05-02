@@ -26,6 +26,6 @@
   )
 
 
-(add-hook 'rust-mode-hook (jbo-dev-rust))
+(add-hook 'rust-mode-hook 'jbo-dev-rust)
 (add-hook 'rust-ts-mode-hook 'eglot-ensure)
 (add-hook 'rust-mode-hook 'eglot-ensure)
