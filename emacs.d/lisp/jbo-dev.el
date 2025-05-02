@@ -10,6 +10,7 @@
 (load "jbo-cmake")
 (load "jbo-elisp")
 (load "jbo-rust")
+(load "jbo-flutter")
 
 
 (custom-set-faces '(ediff-current-diff-A ((t (:foreground "White" :background "Blue")))))
