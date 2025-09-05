@@ -34,7 +34,7 @@
 
 (advice-add 'ediff-quit :around #'disable-y-or-n-p)
 
-(defun jbo/diff ()
+(defun jbo/emacsdiff ()
   (interactive)
   (custom-set-variables
    '(ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -47,6 +47,18 @@
 	)
   )
 
+(defun jbo/difftool ()
+  (interactive)
+  (setq jbo-diff "git difftool")
+  (let* ((file (expand-file-name (buffer-file-name (current-buffer)))))
+	(if (file-exists-p file)
+		(progn (setq cmd (format "%s %s &" jbo-diff file))
+			   (message "exe:%s" cmd)
+			   (call-process-shell-command cmd nil 0)
+			   )
+	  (message "file not found:%s" file))
+	)
+  )
 
 (defun jbo/restore-window-configuration ()
   (interactive)
