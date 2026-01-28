@@ -33,6 +33,7 @@
 (load "jbo-search")
 (load "jbo-utils")
 (load "jbo-dev")
+(load "jbo-intl-fr")
 (load "jbo-colors-linux")
 (load "jbo-keys")
 
