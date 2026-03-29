@@ -1,5 +1,6 @@
 (defun jbo-make-rust-mode ()
-  (rust-compile)
+  ;; (rust-compile)
+  (rust-check)
   )
 
 (defun jbo-dev-rust ()
