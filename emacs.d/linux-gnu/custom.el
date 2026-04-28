@@ -5,8 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(cua-mode t)
  '(custom-enabled-themes '(deeper-blue))
- '(package-selected-packages
-   '(popup-switcher ibuffer-vc ibuffer-projectile rust-mode git-timemachine dash use-package copilot-chat copilot f editorconfig quelpa-use-package quelpa eglot xclip smartscan projectile markdown-mode magit flycheck expand-region company cmake-mode ag))
+ '(package-selected-packages nil)
  '(tool-bar-mode nil))
 
 (custom-set-faces

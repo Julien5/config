@@ -6,6 +6,7 @@ function initpath() {
 	export PYTHONPATH=/opt/python3/self:/opt/python3/pip
 	#export PATH="$HOME/.local/bin:$PATH"
 }
+export -f initpath
 
 if [[ -z "$JULIEN5CONFIGPATH" ]]; then
 	SCRIPTPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/"

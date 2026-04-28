@@ -37,15 +37,18 @@ function dev.rust() {
 	. ${F}
 	
 }
-
-function dev.only-flutter() {
-	initpath
-	export PATH=${PATH}:/opt/flutter/flutter/bin
-	export CHROME_EXECUTABLE=/opt/flutter/chrome/opt/google/chrome/google-chrome
-}
+export -f dev.rust
 
 function dev.flutter-rust() {
 	dev.rust
 	export PATH=${PATH}:/opt/flutter/flutter/bin:/opt/flutter/VSCode-linux-x64/bin/
 	export CHROME_EXECUTABLE=/opt/flutter/chrome/opt/google/chrome/google-chrome
+}
+export -f dev.flutter-rust 
+
+function dev.blog() {
+	export GEM_HOME="/opt/jekyll/gems"
+	echo "loading Ruby Gems from ${GEM_HOME}"
+	echo "build: jekyll build"
+	export PATH="${GEM_HOME}/bin:$PATH"
 }
