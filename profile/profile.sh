@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-function initpath() {
+function dev.initpath() {
 	export PATH="/usr/local/bin:/usr/bin"
 	export PATH="$HOME/projects/config/scripts:$PATH"
 	export PYTHONPATH=/opt/python3/self:/opt/python3/pip
 	#export PATH="$HOME/.local/bin:$PATH"
 }
-export -f initpath
+export -f dev.initpath
 
 if [[ -z "$JULIEN5CONFIGPATH" ]]; then
 	SCRIPTPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/"
 	export JULIEN5CONFIGPATH="$(realpath $SCRIPTPATH/..)"
 fi
-initpath;
+dev.initpath;
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
