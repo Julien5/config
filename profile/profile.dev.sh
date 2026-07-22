@@ -18,7 +18,7 @@ export -f dev.flutter
 
 
 function dev.android() {
-	local F=$JULIEN5CONFIGPATH/profile/profile.flutter-android.sh
+	local F=$JULIEN5CONFIGPATH/profile/profile.android.sh
 	echo sourcing ${F}
 	. ${F}
 	
