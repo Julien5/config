@@ -32,8 +32,3 @@ function dev.blog() {
 	export PATH="${GEM_HOME}/bin:$PATH"
 }
 
-# ee with tab completion
-alias ee='emacsclient'
-complete -F _longopt ee
-
-alias oc=$HOME/.opencode/bin/opencode

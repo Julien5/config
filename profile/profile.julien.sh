@@ -35,3 +35,34 @@ function mount-android() {
 	fi
 	xdg-open ${DIRNAME}
 }
+
+# ee with tab completion
+alias ee='emacsclient'
+complete -F _longopt ee
+
+alias oc=$HOME/.opencode/bin/opencode
+
+function jbo-copy() {
+	xclip -selection c -i
+}
+
+function md-to-pdf() {
+  if [ $# -lt 1 ]; then
+    echo "Usage: md-to-pdf <input.md> [output.pdf] [font_name] [extra pandoc args...]"
+    return 1
+  fi
+
+  local input_file="$1"
+  local output_file="${2:-${input_file%.*}.pdf}"
+  local font="${3:-Liberation Serif}"
+
+  # Shift off the first 3 positional parameters (if provided)
+  # so any extra arguments pass through directly to pandoc
+  shift 3 2>/dev/null || shift $#
+
+  /opt/pandoc/pandoc-3.1.11/bin/pandoc "$input_file" \
+    --pdf-engine=/opt/typst/typst-x86_64-unknown-linux-musl/typst \
+    -V mainfont="$font" \
+    -o "$output_file" \
+    "$@"
+}
