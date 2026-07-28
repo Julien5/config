@@ -5,29 +5,8 @@ set -e
 
 DIR=$(realpath $(dirname $0))
 cd $DIR
-# backup file.
-( pushd keyboards/atreus/keymaps/jbo/ &> /dev/null;  cp -v jbo.json jbo.bak.$(find -name "*.json" | wc -l).json  )
-QMKDIR="$(realpath /opt/qmk/qmk_firmware)"
-find ~/Downloads/ -name "*.json" -type f | while read file; do
-	cp -v $file keyboards/atreus/keymaps/jbo/jbo.json;
-	mv -v $file $QMKDIR/keyboards/atreus/keymaps/jbo/jbo.json;
-done
 
-#pushd ~/qmk/qmk_firmware/keyboards/atreus/keymaps/jbo/
-#\~/qmk/qmk_firmware/bin/qmk compile
-#popd
-if [[ -z $1 ]]; then
-	pushd $QMKDIR
-	echo "clean"
-	rm -Rf .build
-	qmk compile $DIR/keyboards/atreus/keymaps/jbo/jbo.json
-	# make -v atreus/promicro:jbo
-	HEX=$(find $QMKDIR/.build/ -name "*.hex")
-	popd
-else
-	HEX=$1
-fi
-
+HEX=$1
 if [[ ! -f $HEX ]]; then
 	echo could not find $HEX
 	echo "missing filename?"
@@ -35,6 +14,8 @@ if [[ ! -f $HEX ]]; then
 fi
 
 function flash() {
+	# sudo apt install avrdude
+	# https://github.com/avrdudes/avrdude/releases
 	avrdude  -p atmega32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:$HEX
 }
 
