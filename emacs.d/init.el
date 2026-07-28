@@ -31,6 +31,7 @@
 (load "qt-pro-mode")
 
 (load "jbo-search")
+(load "jbo-project")
 (load "jbo-utils")
 (load "jbo-dev")
 (load "jbo-intl-fr")
@@ -75,18 +76,13 @@
 ;; follow the output
 (setq compilation-scroll-output t)
 ;; stops at the first error or warning
-;;(setq compilation-scroll-output 'first-error)
+(setq compilation-scroll-output 'first-error)
 
 (setq-default tab-width 4)
 ;; reload files if changed on disk
 (global-auto-revert-mode t)
 
 (setq large-file-warning-threshold 100000000)
-
-;;(load "jbo-project")
-;;(jbo-fix-project-roots)
-;; projectile-globally-ignored-directories (append '("*__pycache__/")
-;; projectile-globally-ignored-directories)
 
 (fido-mode 't)
 (fido-vertical-mode)

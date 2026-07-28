@@ -25,10 +25,15 @@ function dev.android() {
 }
 export -f dev.android
 
-
 function dev.blog() {
 	export GEM_HOME="/opt/jekyll/gems"
 	echo "loading Ruby Gems from ${GEM_HOME}"
 	echo "build: jekyll build"
 	export PATH="${GEM_HOME}/bin:$PATH"
 }
+
+# ee with tab completion
+alias ee='emacsclient'
+complete -F _longopt ee
+
+alias oc=$HOME/.opencode/bin/opencode

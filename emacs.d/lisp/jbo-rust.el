@@ -19,14 +19,13 @@
   (add-to-list 'exec-path "/opt/rust/cargo/bin")
   (define-key rust-mode-map (kbd "<f2>") 'eglot-rename)
   (define-key rust-mode-map (kbd "<f8>") 'eglot-code-actions)
-  )
 
-;;(with-eval-after-load 'eglot
-;;  (add-to-list 'eglot-server-programs
-;;			   '((rust-mode rust-ts-mode)  .
-;;				 ("/opt/rust/analyzer/bin/rust-analyzer" ))
-;;			   )
-;;  )
+  ;; this is usefull for eglot to find the project root
+  ;; in rust
+  (message "calling fix project roots")
+  (jbo-fix-project-roots)
+  (setq rust-format-on-save t)
+  )
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
@@ -36,5 +35,4 @@
   )
 
 (add-hook 'rust-mode-hook 'jbo-dev-rust)
-;;(add-hook 'rust-mode-hook 'eglot-ensure)
-(setq rust-format-on-save t)
+(message "jbo-rust loaded")
