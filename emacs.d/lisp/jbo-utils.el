@@ -568,3 +568,38 @@ Version 2016-07-18"
 (defun jbo/fix-colors-in-compilation-buffer ()
   (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
   )
+
+(defun jbo-prev-window ()  (interactive)  (other-window -1))
+(defun jbo-next-window ()  (interactive)  (other-window +1))
+
+;; see tmux.conf
+(defun jbo-next-tmux-pane ()
+  "Switch to the next window if opened, otherwise select next tmux pane."
+  (interactive)
+  (call-process "tmux" nil nil nil "select-pane" "-t" ":.+")
+  )
+
+(defun jbo-prev-tmux-pane ()
+  (interactive)
+  "Switch to the prev window if opened, otherwise select prev tmux pane."
+  (call-process "tmux" nil nil nil "select-pane" "-t" ":.-")
+  )
+
+;; see tmux.conf
+(defun jbo-next-window-tmux ()
+  (interactive)
+  "Switch to the next window if opened, otherwise select next tmux pane."
+  (interactive)
+  (if (eq (next-window) (get-buffer-window))
+	  (jbo-next-tmux-pane)
+    (jbo-next-window))
+  )
+
+(defun jbo-prev-window-tmux ()
+  (interactive)
+  "Switch to the prev window if opened, otherwise select prev tmux pane."
+  (interactive)
+  (if (eq (next-window) (get-buffer-window))
+      (jbo-prev-tmux-pane)
+    (jbo-prev-window))
+  )

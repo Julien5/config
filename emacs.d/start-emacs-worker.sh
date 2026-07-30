@@ -36,6 +36,18 @@ function start-nw() {
 	"${EXE}" -mm -nw &>> /tmp/emacs.nw.out
 }
 
+function start-nw() {
+	local P=$HOME/setup/profile/profile.sh
+	if [ -f $P ]; then 
+		source ${P}
+	fi
+	export TERM=xterm-256color
+	local EXE=$(find-emacs)
+	cd $HOME
+	printf "starting [%s -mm -nw]\n" "${EXE}" >> /tmp/emacs.nw.out
+	exec "${EXE}" -mm -nw
+}
+
 function main() {
 	if [ $# -gt 0 ]; then
 		cmd="$1"

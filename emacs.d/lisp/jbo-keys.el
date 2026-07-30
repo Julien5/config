@@ -67,11 +67,14 @@
 (global-set-key (kbd "C-p") 'jbo/clean-buffers)
 (global-set-key (kbd "C-o") 'jbo/list-buffers)
 
-(defun jbo-prev-window ()  (interactive)  (other-window -1))
-(defun jbo-next-window ()  (interactive)  (other-window +1))
 ;;default ? (global-set-key (kbd "<C-home>") 'beginning-of-buffer)
-(global-set-key (kbd "<C-prior>") 'jbo-prev-window)
-(global-set-key (kbd "<C-next>") 'jbo-next-window)
+(global-set-key (kbd "<C-prior>") 'jbo-prev-window-tmux)
+(global-set-key (kbd "<C-next>") 'jbo-next-window-tmux)
+
+(global-set-key (kbd "<M-prior>") 'jbo-prev-tmux-pane)
+(global-set-key (kbd "<M-next>") 'jbo-next-tmux-pane)
+;; fix <End> key, which is sent ad E4 and interpreted as <select> by emacs.
+(define-key input-decode-map "\e[4~" [end])
 
 (global-set-key (kbd "C-b") 'jbo/split-window-below)
 (global-set-key (kbd "C-t") 'jbo/split-window-right)

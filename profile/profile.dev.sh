@@ -32,3 +32,6 @@ function dev.blog() {
 	export PATH="${GEM_HOME}/bin:$PATH"
 }
 
+function tmux.dev() {
+	~/projects/config/profile/start-tmux-session.sh
+}
