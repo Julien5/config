@@ -183,7 +183,7 @@
       "KC_PENT"
     ],
     [
-      "LCTL(KC_X)",
+      "LCTL(KC_TAB)",
       "KC_NO",
       "LALT(KC_F4)",
       "KC_NO",
@@ -193,7 +193,7 @@
       "KC_NO",
       "KC_NO",
       "KC_NO",
-      "LCTL(KC_Z)",
+      "LALT(KC_TAB)",
       "KC_NO",
       "KC_NO",
       "KC_NO",
@@ -203,7 +203,7 @@
       "KC_SLSH",
       "KC_NO",
       "LCTL(KC_PGUP)",
-      "LCTL(KC_G)",
+      "LCTL(KC_X)",
       "KC_NO",
       "KC_NO",
       "KC_NO",
